@@ -6,14 +6,19 @@
   <title>Bonnie's Quest</title>
   <style>
     :root {
-      --cream: #fff5df;
-      --parchment: #f8e8c8;
-      --rose: #d99a87;
-      --walnut: #4d3429;
-      --mahogany: #7b4938;
-      --sage: #87956a;
-      --shadow: rgba(68, 45, 34, 0.25);
-      --glow: rgba(255, 239, 194, 0.75);
+      --ivory: #f2e4cc;
+      --aged-paper: #d8bf91;
+      --brass: #b88937;
+      --deep-brass: #72501e;
+      --walnut: #2d1b14;
+      --dark-oak: #43281c;
+      --mahogany: #5f3424;
+      --oxblood: #6d2f25;
+      --forest: #314331;
+      --smoke: #271a16;
+      --shadow: rgba(16, 10, 7, 0.48);
+      --amber-glow: rgba(255, 207, 118, 0.78);
+      --lamplight: rgba(255, 222, 151, 0.36);
     }
 
     * {
@@ -24,22 +29,23 @@
       margin: 0;
       min-height: 100vh;
       font-family: Georgia, "Times New Roman", serif;
-      color: var(--walnut);
+      color: #352117;
       background:
-        radial-gradient(circle at top left, rgba(255, 236, 199, 0.9), transparent 32rem),
-        linear-gradient(135deg, #6e483b 0%, #b97a5b 46%, #f1c990 100%);
+        radial-gradient(circle at 50% -8%, rgba(255, 218, 152, 0.42), transparent 36rem),
+        radial-gradient(circle at 8% 16%, rgba(121, 72, 41, 0.82), transparent 27rem),
+        linear-gradient(135deg, #1b100d 0%, #44251c 46%, #8a5834 100%);
       display: grid;
       place-items: center;
       padding: 1rem;
     }
 
     .game-shell {
-      width: min(100%, 980px);
-      min-height: min(92vh, 720px);
-      background: var(--cream);
-      border: 8px solid var(--walnut);
-      border-radius: 24px;
-      box-shadow: 0 24px 60px var(--shadow);
+      width: min(100%, 1080px);
+      min-height: min(92vh, 760px);
+      background: #17100d;
+      border: 10px solid #24140e;
+      border-radius: 18px;
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.55), inset 0 0 0 2px rgba(191, 138, 71, 0.28);
       overflow: hidden;
       display: grid;
       grid-template-rows: auto 1fr auto;
@@ -47,8 +53,10 @@
 
     header,
     footer {
-      background: linear-gradient(90deg, var(--mahogany), #93624c);
-      color: var(--cream);
+      background:
+        linear-gradient(90deg, rgba(35, 18, 12, 0.96), rgba(82, 43, 29, 0.96)),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 14px);
+      color: var(--ivory);
       padding: 1rem 1.25rem;
     }
 
@@ -57,6 +65,7 @@
       justify-content: space-between;
       gap: 1rem;
       align-items: center;
+      border-bottom: 1px solid rgba(255, 215, 153, 0.26);
     }
 
     h1,
@@ -69,6 +78,7 @@
       margin-bottom: 0;
       font-size: clamp(1.6rem, 5vw, 3rem);
       letter-spacing: 0.04em;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.62);
     }
 
     .tagline {
@@ -81,8 +91,9 @@
     main {
       padding: clamp(1rem, 3vw, 2rem);
       background:
-        linear-gradient(rgba(255, 245, 223, 0.85), rgba(255, 245, 223, 0.85)),
-        repeating-linear-gradient(90deg, transparent 0 34px, rgba(77, 52, 41, 0.05) 34px 36px);
+        radial-gradient(circle at 50% 4%, rgba(255, 220, 145, 0.26), transparent 20rem),
+        linear-gradient(rgba(44, 27, 19, 0.76), rgba(27, 16, 12, 0.84)),
+        repeating-linear-gradient(90deg, #4a2d20 0 32px, #42271d 32px 64px);
     }
 
     .screen {
@@ -101,12 +112,14 @@
     }
 
     .title-card {
-      max-width: 720px;
-      background: rgba(248, 232, 200, 0.92);
-      border: 3px solid #b88b5b;
-      border-radius: 20px;
+      max-width: 740px;
+      background:
+        linear-gradient(rgba(238, 218, 179, 0.9), rgba(207, 176, 125, 0.92)),
+        repeating-linear-gradient(105deg, rgba(75, 43, 24, 0.08) 0 2px, transparent 2px 12px);
+      border: 1px solid rgba(255, 231, 177, 0.7);
+      border-radius: 14px;
       padding: clamp(1.5rem, 5vw, 3rem);
-      box-shadow: inset 0 0 24px rgba(255, 255, 255, 0.55), 0 14px 30px var(--shadow);
+      box-shadow: inset 0 0 42px rgba(77, 42, 24, 0.28), 0 22px 48px var(--shadow);
     }
 
     .title-card h2 {
@@ -126,40 +139,57 @@
       padding: 0.9rem 1.4rem;
       cursor: pointer;
       font: 700 1rem Arial, sans-serif;
-      color: var(--cream);
-      background: linear-gradient(180deg, var(--rose), #a95f4c);
-      box-shadow: 0 6px 0 #723e33, 0 12px 22px var(--shadow);
-      transition: transform 140ms ease, box-shadow 140ms ease;
+      color: #fff3d7;
+      background: linear-gradient(180deg, #a56045, #672d22);
+      box-shadow: 0 6px 0 #331711, 0 12px 22px var(--shadow);
+      transition: transform 140ms ease, box-shadow 140ms ease, filter 140ms ease;
     }
 
     button:hover,
     button:focus-visible {
       transform: translateY(-2px);
-      box-shadow: 0 8px 0 #723e33, 0 16px 24px var(--shadow);
-      outline: 3px solid var(--glow);
+      box-shadow: 0 8px 0 #331711, 0 16px 24px var(--shadow);
+      outline: 3px solid var(--amber-glow);
       outline-offset: 3px;
+      filter: saturate(1.08);
     }
 
     .quest-layout {
-      grid-template-columns: minmax(0, 1fr) 260px;
+      grid-template-columns: minmax(0, 1fr) 280px;
       gap: 1rem;
       align-items: stretch;
     }
 
     .scene-panel,
     .side-panel {
-      background: rgba(248, 232, 200, 0.9);
-      border: 3px solid #b88b5b;
-      border-radius: 18px;
-      box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.45);
+      background: rgba(218, 190, 143, 0.94);
+      border: 1px solid rgba(229, 190, 119, 0.74);
+      border-radius: 16px;
+      box-shadow: inset 0 0 28px rgba(61, 34, 19, 0.28), 0 16px 38px rgba(0, 0, 0, 0.28);
     }
 
+    /* The shop scene is painted with layered CSS gradients so the app stays in one file. */
     .scene-panel {
       position: relative;
-      min-height: 430px;
+      min-height: 500px;
       overflow: hidden;
+      isolation: isolate;
       background:
-        linear-gradient(to bottom, #c99467 0 22%, #8d5a43 22% 24%, #ead5ab 24% 100%);
+        linear-gradient(to bottom, rgba(255, 220, 143, 0.18), rgba(255, 220, 143, 0) 38%),
+        repeating-linear-gradient(90deg, rgba(72, 40, 25, 0.2) 0 2px, transparent 2px 46px),
+        linear-gradient(to bottom, #513023 0 61%, #261510 61% 62%, #5a3524 62% 100%);
+    }
+
+    .scene-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(circle at 50% 14%, rgba(255, 221, 151, 0.54), transparent 16rem),
+        radial-gradient(circle at 14% 74%, rgba(0, 0, 0, 0.28), transparent 13rem),
+        radial-gradient(circle at 80% 76%, rgba(0, 0, 0, 0.34), transparent 15rem);
+      pointer-events: none;
     }
 
     .shop-name {
@@ -167,147 +197,379 @@
       top: 1rem;
       left: 50%;
       transform: translateX(-50%);
-      padding: 0.45rem 1.1rem;
-      border: 3px solid var(--walnut);
-      background: #f4dcaa;
-      border-radius: 6px;
+      padding: 0.48rem 1.35rem;
+      border: 2px solid #3a2116;
+      background:
+        linear-gradient(180deg, #d9b36d, #7d521f),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.12) 0 1px, transparent 1px 10px);
+      border-radius: 4px;
+      color: #1f120d;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       text-align: center;
-      box-shadow: 0 4px 0 var(--shadow);
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.46), inset 0 1px 0 rgba(255, 235, 178, 0.7);
+    }
+
+    .wall-gallery {
+      position: absolute;
+      inset: 4.5rem 2rem auto;
+      height: 92px;
+      display: grid;
+      grid-template-columns: 74px 1fr 88px;
+      gap: 1.25rem;
+      align-items: start;
+      pointer-events: none;
+    }
+
+    .frame {
+      height: 72px;
+      border: 8px solid #8a5c2b;
+      background: linear-gradient(135deg, #a48255, #47301f 48%, #c9a36a 49% 54%, #5a3722 55%);
+      box-shadow: inset 0 0 0 3px #24150e, 0 7px 16px rgba(0, 0, 0, 0.38);
+    }
+
+    .frame.small {
+      width: 68px;
+      height: 58px;
+      justify-self: end;
+    }
+
+    .wall-clock {
+      position: relative;
+      width: 76px;
+      height: 92px;
+      justify-self: center;
+      border-radius: 40px 40px 32px 32px;
+      background: linear-gradient(180deg, #74472d, #2d1a12);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45), inset 0 0 0 4px rgba(184, 128, 58, 0.24);
+    }
+
+    .wall-clock::before {
+      content: "";
+      position: absolute;
+      width: 45px;
+      height: 45px;
+      margin: 10px 0 0 15px;
+      border-radius: 50%;
+      border: 5px solid #b8873c;
+      background:
+        linear-gradient(90deg, transparent 48%, #2d1a12 49% 52%, transparent 53%),
+        linear-gradient(20deg, transparent 48%, #2d1a12 49% 52%, transparent 53%),
+        #ead7b3;
     }
 
     .shelves {
       position: absolute;
-      inset: 6.5rem 2rem 7.5rem;
+      inset: 8.7rem 1.25rem 9.2rem;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 1rem;
     }
 
     .shelf {
-      border-bottom: 14px solid #6b3d2e;
+      position: relative;
+      min-height: 118px;
       display: flex;
       align-items: end;
       justify-content: center;
-      gap: 0.5rem;
-      padding-bottom: 0.4rem;
+      gap: 0.45rem;
+      padding: 0 0.6rem 1rem;
+    }
+
+    .shelf::before,
+    .counter::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 18px;
+      border-radius: 3px;
+      background:
+        linear-gradient(180deg, rgba(255, 206, 134, 0.22), transparent 45%),
+        repeating-linear-gradient(105deg, rgba(255, 232, 171, 0.11) 0 2px, transparent 2px 15px),
+        linear-gradient(90deg, #3b2015, #805132 50%, #32180f);
+      box-shadow: 0 8px 14px rgba(0, 0, 0, 0.42), inset 0 2px 0 rgba(255, 227, 157, 0.2);
     }
 
     .vase,
     .clock,
     .book,
     .lamp,
-    .box {
+    .box,
+    .bottle,
+    .photo-stack,
+    .music-box {
       display: inline-block;
-      filter: drop-shadow(0 5px 2px rgba(0, 0, 0, 0.18));
+      filter: drop-shadow(0 8px 5px rgba(0, 0, 0, 0.34));
+      position: relative;
+      flex: 0 0 auto;
     }
 
     .vase {
-      width: 38px;
-      height: 58px;
-      border-radius: 16px 16px 22px 22px;
-      background: #7d9162;
+      width: 34px;
+      height: 62px;
+      border-radius: 15px 15px 20px 20px;
+      background: linear-gradient(90deg, #27362b, #627451 45%, #18231e);
+      border-top: 8px solid #222d23;
     }
 
     .clock {
-      width: 52px;
-      height: 52px;
+      width: 55px;
+      height: 55px;
       border-radius: 50%;
-      border: 7px solid #7b4938;
-      background: #f7ecd0;
+      border: 7px solid #8a5d2d;
+      background:
+        linear-gradient(90deg, transparent 48%, #2b1a12 49% 52%, transparent 53%),
+        linear-gradient(145deg, transparent 48%, #2b1a12 49% 52%, transparent 53%),
+        #eadfca;
     }
 
     .book {
-      width: 26px;
-      height: 66px;
-      background: #8c4650;
-      border-left: 6px solid #d6aa74;
+      width: 22px;
+      height: 72px;
+      background: linear-gradient(90deg, #351d18, #8d4439 70%, #291613);
+      border-left: 5px solid #c8a15d;
+    }
+
+    .book.tall {
+      height: 86px;
+      background: linear-gradient(90deg, #17241a, #496043 72%, #111811);
     }
 
     .lamp {
-      width: 60px;
-      height: 50px;
-      clip-path: polygon(20% 0, 80% 0, 100% 65%, 0 65%);
-      background: #d6a34e;
+      width: 64px;
+      height: 78px;
+    }
+
+    .lamp::before {
+      content: "";
+      position: absolute;
+      left: 8px;
+      top: 0;
+      width: 48px;
+      height: 35px;
+      clip-path: polygon(20% 0, 80% 0, 100% 72%, 0 72%);
+      background: linear-gradient(180deg, #f0ca73, #8e6428);
+      box-shadow: 0 0 30px var(--amber-glow);
+    }
+
+    .lamp::after {
+      content: "";
+      position: absolute;
+      left: 28px;
+      bottom: 0;
+      width: 9px;
+      height: 47px;
+      background: linear-gradient(90deg, #5b3a20, #bb883a, #3d2416);
+      box-shadow: 0 43px 0 8px #4c2d1b;
     }
 
     .box {
-      width: 70px;
+      width: 72px;
       height: 42px;
-      background: #9e6d45;
-      border: 4px solid #704129;
+      background: linear-gradient(135deg, #5b351e, #93613a 54%, #3b2115);
+      border: 3px solid #26150e;
+    }
+
+    .bottle {
+      width: 26px;
+      height: 66px;
+      border-radius: 9px 9px 12px 12px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.24), transparent 28%), linear-gradient(180deg, #174448, #0c2528);
+      border-top: 13px solid #0d2022;
+    }
+
+    .photo-stack {
+      width: 58px;
+      height: 48px;
+      transform: rotate(-7deg);
+      border: 5px solid #d4bd8f;
+      background: linear-gradient(135deg, #56412e, #b89e70);
+    }
+
+    .music-box {
+      width: 78px;
+      height: 46px;
+      border-radius: 8px 8px 4px 4px;
+      background:
+        radial-gradient(circle at 24% 50%, #d7af55 0 4px, transparent 5px),
+        radial-gradient(circle at 76% 50%, #d7af55 0 4px, transparent 5px),
+        linear-gradient(135deg, #6e3c24, #b37b45 52%, #432416);
+      border: 3px solid #24130c;
+    }
+
+    .counter {
+      position: absolute;
+      right: 7%;
+      bottom: 2.4rem;
+      width: min(46%, 360px);
+      height: 110px;
+      background:
+        linear-gradient(rgba(255, 204, 120, 0.14), rgba(0, 0, 0, 0.12)),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.08) 0 2px, transparent 2px 36px),
+        linear-gradient(90deg, #3b2015, #7d4b2e 48%, #2b160e);
+      border: 2px solid #20110b;
+      border-radius: 8px 8px 2px 2px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.48), inset 0 2px 0 rgba(255, 227, 157, 0.18);
+    }
+
+    .counter::before {
+      top: -14px;
+      bottom: auto;
+      height: 19px;
+    }
+
+    .drawer {
+      position: absolute;
+      width: 31%;
+      height: 38px;
+      left: 9%;
+      top: 39px;
+      border: 2px solid rgba(28, 15, 10, 0.85);
+      background: rgba(64, 34, 22, 0.36);
+    }
+
+    .drawer:nth-child(2) { left: 58%; }
+
+    .drawer::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 10px;
+      height: 10px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: #c99d4c;
+      box-shadow: 0 0 8px rgba(255, 208, 105, 0.42);
     }
 
     .bonnie {
       position: absolute;
-      left: 8%;
-      bottom: 1.2rem;
-      width: 130px;
-      text-align: center;
+      left: 6%;
+      bottom: 1.5rem;
+      width: 170px;
+      height: 290px;
+      filter: drop-shadow(16px 18px 13px rgba(0, 0, 0, 0.42));
     }
 
     .bonnie-portrait {
-      width: 84px;
-      height: 84px;
-      margin: 0 auto;
-      border-radius: 50% 50% 42% 42%;
+      position: absolute;
+      left: 47px;
+      top: 9px;
+      width: 76px;
+      height: 92px;
+      border-radius: 43% 43% 46% 46%;
       background:
-        radial-gradient(circle at 32% 42%, #4d3429 0 4px, transparent 5px),
-        radial-gradient(circle at 65% 42%, #4d3429 0 4px, transparent 5px),
-        radial-gradient(circle at 49% 58%, #c57362 0 5px, transparent 6px),
-        #f2c6a8;
-      border: 6px solid #6c3d31;
-      box-shadow: 0 5px 0 var(--shadow);
+        radial-gradient(ellipse at 36% 43%, #2c1c16 0 3px, transparent 4px),
+        radial-gradient(ellipse at 64% 43%, #2c1c16 0 3px, transparent 4px),
+        radial-gradient(ellipse at 50% 62%, rgba(124, 61, 54, 0.58) 0 6px, transparent 7px),
+        linear-gradient(90deg, #c98563, #e5b08b 48%, #a66a4e);
+      box-shadow: inset -9px -5px 12px rgba(74, 42, 31, 0.24), inset 8px 5px 12px rgba(255, 232, 197, 0.2);
+    }
+
+    .bonnie-portrait::before {
+      content: "";
+      position: absolute;
+      inset: -13px -11px 28px;
+      z-index: -1;
+      border-radius: 48% 48% 42% 42%;
+      background: linear-gradient(90deg, #1b1311, #4d342b 52%, #1a1110);
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .bonnie-portrait::after {
+      content: "";
+      position: absolute;
+      left: 23px;
+      bottom: 13px;
+      width: 30px;
+      height: 2px;
+      border-radius: 50%;
+      background: rgba(70, 38, 33, 0.72);
+      box-shadow: 1px -18px 0 -1px rgba(106, 59, 44, 0.38);
     }
 
     .bonnie-body {
-      width: 88px;
-      height: 92px;
-      margin: -5px auto 0;
-      border-radius: 28px 28px 10px 10px;
-      background: var(--sage);
-      border: 5px solid #596343;
+      position: absolute;
+      left: 32px;
+      bottom: 0;
+      width: 106px;
+      height: 205px;
+      border-radius: 46px 46px 14px 14px;
+      background:
+        linear-gradient(100deg, rgba(255, 255, 255, 0.1), transparent 30%),
+        linear-gradient(90deg, #182318, var(--forest) 52%, #121a12);
+      box-shadow: inset -12px 0 20px rgba(0, 0, 0, 0.25), inset 10px 0 16px rgba(255, 255, 255, 0.06);
+    }
+
+    .bonnie-body::before,
+    .bonnie-body::after {
+      content: "";
+      position: absolute;
+      top: 35px;
+      width: 30px;
+      height: 136px;
+      border-radius: 18px;
+      background: linear-gradient(90deg, #151f15, #3e573b);
+      transform-origin: top center;
+    }
+
+    .bonnie-body::before {
+      left: -18px;
+      transform: rotate(8deg);
+    }
+
+    .bonnie-body::after {
+      right: -18px;
+      transform: rotate(-8deg);
     }
 
     .clue-button {
       position: absolute;
-      right: 17%;
-      bottom: 4.6rem;
-      width: 74px;
+      right: 23%;
+      bottom: 9.3rem;
+      width: 118px;
       height: 58px;
       border-radius: 8px;
       padding: 0;
       color: transparent;
       background:
-        linear-gradient(145deg, rgba(255, 255, 255, 0.25), transparent),
-        #b58352;
-      border: 4px solid #5d3528;
-      box-shadow: 0 7px 0 #4b2b21, 0 0 0 0 var(--glow);
+        linear-gradient(145deg, rgba(255, 241, 188, 0.35), transparent 35%),
+        linear-gradient(135deg, #5b2e1e, #9d6532 48%, #33190f);
+      border: 2px solid #1d0f09;
+      box-shadow: 0 8px 14px rgba(0, 0, 0, 0.48), inset 0 1px 0 rgba(255, 217, 149, 0.34);
     }
 
     .clue-button::before {
       content: "";
       position: absolute;
-      inset: 12px 18px;
-      border: 3px solid #f0d7a2;
+      left: 14px;
+      top: 12px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
+      border: 7px solid #c49a43;
+      background: radial-gradient(circle, transparent 0 10px, rgba(76, 45, 18, 0.52) 11px 13px, transparent 14px);
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.42), 33px 11px 0 -10px #c49a43, 53px 11px 0 -10px #c49a43;
     }
 
     .clue-button::after {
-      content: "?";
+      content: "";
       position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      color: #f7e7bd;
-      font-size: 2rem;
-      font-weight: 700;
+      left: 47px;
+      top: 26px;
+      width: 57px;
+      height: 8px;
+      border-radius: 8px;
+      background: linear-gradient(180deg, #f2cf70, #8c651f);
+      box-shadow: 34px 8px 0 -2px #8c651f, 42px 8px 0 -2px #8c651f, 0 0 18px rgba(255, 216, 105, 0.36);
     }
 
     .clue-button.found {
       opacity: 0.45;
-      filter: grayscale(40%);
+      filter: grayscale(45%);
       cursor: default;
     }
 
@@ -319,11 +581,14 @@
     }
 
     .info-box {
-      background: rgba(255, 245, 223, 0.75);
-      border: 2px dashed #bd9065;
-      border-radius: 14px;
+      background:
+        linear-gradient(rgba(242, 228, 204, 0.84), rgba(206, 177, 128, 0.86)),
+        repeating-linear-gradient(102deg, rgba(78, 47, 27, 0.08) 0 2px, transparent 2px 15px);
+      border: 1px solid rgba(85, 48, 26, 0.34);
+      border-radius: 12px;
       padding: 0.9rem;
       line-height: 1.45;
+      box-shadow: inset 0 0 20px rgba(76, 45, 26, 0.16);
     }
 
     .info-box h3 {
@@ -339,17 +604,18 @@
     }
 
     .inventory-list li {
-      background: #fff8e8;
-      border: 2px solid #c29765;
+      background: rgba(255, 244, 220, 0.78);
+      border: 1px solid rgba(93, 56, 30, 0.38);
       border-radius: 10px;
       margin-bottom: 0.5rem;
       padding: 0.6rem;
       font-family: Arial, sans-serif;
       font-size: 0.92rem;
+      box-shadow: 0 4px 10px rgba(50, 28, 18, 0.14);
     }
 
     .empty-slot {
-      color: #8f7566;
+      color: #6b5746;
       font-style: italic;
     }
 
@@ -357,6 +623,7 @@
       font-family: Arial, sans-serif;
       font-size: 0.9rem;
       text-align: center;
+      border-top: 1px solid rgba(255, 215, 153, 0.22);
     }
 
     @keyframes fadeIn {
@@ -364,7 +631,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    @media (max-width: 760px) {
+    @media (max-width: 820px) {
       header {
         align-items: flex-start;
         flex-direction: column;
@@ -380,21 +647,27 @@
       }
 
       .scene-panel {
-        min-height: 390px;
+        min-height: 470px;
       }
 
+      .wall-gallery,
       .shelves {
         inset-inline: 1rem;
       }
 
       .bonnie {
-        left: 3%;
-        transform: scale(0.86);
+        left: 2%;
+        transform: scale(0.82);
         transform-origin: bottom left;
       }
 
+      .counter {
+        right: 4%;
+        width: 54%;
+      }
+
       .clue-button {
-        right: 9%;
+        right: 19%;
       }
     }
   </style>
@@ -424,20 +697,32 @@
       </section>
 
       <section id="quest-screen" class="screen quest-layout" aria-labelledby="location-heading">
-        <div class="scene-panel" aria-label="The first location, an antique shop">
+        <div class="scene-panel" aria-label="The first location, a warmly lit antique shop">
           <div class="shop-name">Mabel's Antiques</div>
-          <div class="shelves" aria-hidden="true">
-            <div class="shelf"><span class="vase"></span><span class="book"></span><span class="clock"></span></div>
-            <div class="shelf"><span class="lamp"></span><span class="book"></span><span class="box"></span></div>
-            <div class="shelf"><span class="clock"></span><span class="vase"></span><span class="book"></span></div>
+
+          <div class="wall-gallery" aria-hidden="true">
+            <span class="frame small"></span>
+            <span class="wall-clock"></span>
+            <span class="frame"></span>
           </div>
 
-          <div class="bonnie" aria-label="Bonnie, a curious antique hunter">
+          <div class="shelves" aria-hidden="true">
+            <div class="shelf"><span class="vase"></span><span class="book tall"></span><span class="clock"></span><span class="bottle"></span></div>
+            <div class="shelf"><span class="lamp"></span><span class="book"></span><span class="box"></span><span class="photo-stack"></span></div>
+            <div class="shelf"><span class="music-box"></span><span class="vase"></span><span class="book tall"></span><span class="clock"></span></div>
+          </div>
+
+          <div class="counter" aria-hidden="true">
+            <span class="drawer"></span>
+            <span class="drawer"></span>
+          </div>
+
+          <div class="bonnie" aria-label="Bonnie, a realistic silhouette of a curious antique hunter">
             <div class="bonnie-portrait"></div>
             <div class="bonnie-body"></div>
           </div>
 
-          <button id="clue-button" class="clue-button" type="button" aria-label="Inspect the small locked keepsake box">
+          <button id="clue-button" class="clue-button" type="button" aria-label="Inspect the old brass key on the wooden counter">
             Inspect clue
           </button>
         </div>
@@ -446,8 +731,8 @@
           <div class="info-box">
             <h2 id="location-heading">Antique Shop</h2>
             <p id="story-text">
-              Bonnie adjusts her green field coat and smiles. "Every old thing has
-              a story," she says. "We just have to listen carefully."
+              Bonnie adjusts her green field coat beneath the amber shop lamps.
+              "Every old thing has a story," she says. "We just have to listen carefully."
             </p>
           </div>
 
@@ -496,9 +781,9 @@
 
       clueFound = true;
       clueButton.classList.add('found');
-      clueButton.setAttribute('aria-label', 'The keepsake box clue has already been collected');
-      storyText.textContent = 'Inside the small keepsake box, Bonnie finds a faded receipt for a rosewood music box signed with the initials E. V. The mystery has begun.';
-      inventory.innerHTML = '<li>Faded receipt: Rosewood music box, signed E. V.</li>';
+      clueButton.setAttribute('aria-label', 'The old brass key clue has already been collected');
+      storyText.textContent = 'Bonnie lifts the heavy brass key from the counter. A paper tag tied to it reads: Rosewood music box, drawer three, E. V. The mystery has begun.';
+      inventory.innerHTML = '<li>Old brass key: tagged "Rosewood music box, drawer three, E. V."</li>';
     });
   </script>
 </body>
