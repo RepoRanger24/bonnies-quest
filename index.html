@@ -606,10 +606,11 @@
     .hotspot:hover,
     .hotspot:focus-visible {
       color: transparent;
-      background: rgba(255, 225, 151, 0.13);
-      outline: 3px solid rgba(255, 223, 145, 0.64);
-      box-shadow: 0 0 28px rgba(255, 214, 121, 0.25);
+      background: rgba(255, 225, 151, 0.18);
+      outline: 3px solid rgba(255, 223, 145, 0.74);
+      box-shadow: 0 0 22px rgba(255, 214, 121, 0.48), inset 0 0 18px rgba(255, 236, 184, 0.32);
       transform: none;
+      filter: drop-shadow(0 0 9px rgba(255, 223, 145, 0.58));
     }
 
     .hotspot.collected,
@@ -1061,6 +1062,155 @@
       82% { opacity: 0.5; }
     }
 
+
+
+    .audio-control-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 1rem;
+    }
+
+    .mute-button {
+      min-width: 132px;
+      border-radius: 12px;
+      padding: 0.6rem 0.85rem;
+      font-size: 0.85rem;
+      background: linear-gradient(180deg, #6d4a2a, #2b1810);
+      box-shadow: 0 4px 0 #1b0e09, 0 9px 15px rgba(0, 0, 0, 0.32);
+    }
+
+    .hover-description {
+      position: absolute;
+      left: 50%;
+      bottom: 5.4rem;
+      z-index: 8;
+      max-width: min(90%, 520px);
+      transform: translateX(-50%);
+      padding: 0.7rem 0.95rem;
+      border: 1px solid rgba(255, 229, 169, 0.72);
+      border-radius: 999px;
+      color: #2c1a11;
+      background: rgba(239, 214, 170, 0.94);
+      box-shadow: 0 12px 22px rgba(0, 0, 0, 0.38), inset 0 0 18px rgba(94, 54, 27, 0.16);
+      font: 700 0.9rem Arial, sans-serif;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 150ms ease, transform 150ms ease;
+    }
+
+    .hover-description.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-4px);
+    }
+
+    .light-beam {
+      position: absolute;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.48;
+      mix-blend-mode: screen;
+      filter: blur(0.3px);
+    }
+
+    .light-beam.shop-beam {
+      left: 42%;
+      top: 3.4rem;
+      width: 270px;
+      height: 450px;
+      clip-path: polygon(38% 0, 62% 0, 100% 100%, 0 100%);
+      background: linear-gradient(180deg, rgba(255, 236, 176, 0.42), rgba(255, 220, 150, 0.04));
+    }
+
+    .dust-motes {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .dust-motes span {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: rgba(255, 236, 190, 0.72);
+      box-shadow: 0 0 9px rgba(255, 230, 172, 0.78);
+      animation: dustDrift 9s linear infinite;
+    }
+
+    .dust-motes span:nth-child(1) { left: 48%; top: 14%; animation-delay: -1s; }
+    .dust-motes span:nth-child(2) { left: 57%; top: 22%; animation-delay: -5s; animation-duration: 11s; }
+    .dust-motes span:nth-child(3) { left: 64%; top: 32%; animation-delay: -3s; animation-duration: 10s; }
+    .dust-motes span:nth-child(4) { left: 43%; top: 44%; animation-delay: -7s; animation-duration: 12s; }
+    .dust-motes span:nth-child(5) { left: 72%; top: 50%; animation-delay: -4s; }
+    .dust-motes span:nth-child(6) { left: 39%; top: 25%; animation-delay: -8s; animation-duration: 13s; }
+
+    .strange-symbol {
+      position: absolute;
+      right: 22%;
+      bottom: 10.7rem;
+      width: 34px;
+      height: 34px;
+      opacity: 0;
+      transform: rotate(22deg) scale(0.8);
+      border: 3px solid #382014;
+      border-radius: 50%;
+      transition: opacity 220ms ease, transform 220ms ease;
+      pointer-events: none;
+    }
+
+    .strange-symbol::before,
+    .strange-symbol::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 4px;
+      height: 30px;
+      background: #382014;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    .strange-symbol::after {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    .strange-symbol.visible {
+      opacity: 0.82;
+      transform: rotate(22deg) scale(1);
+    }
+
+    .hotspot.false-compass { left: 55%; top: 64%; width: 74px; height: 54px; border-radius: 50%; }
+    .hotspot.loose-floorboard { left: 16%; bottom: 4.1rem; width: 120px; height: 32px; border-radius: 999px; opacity: 0.16; }
+
+    .journal-list {
+      min-height: 118px;
+      margin: 0;
+      padding-left: 1.1rem;
+      display: grid;
+      gap: 0.45rem;
+      font-family: Arial, sans-serif;
+      font-size: 0.9rem;
+    }
+
+    .journal-list li {
+      padding-left: 0.15rem;
+    }
+
+    .journal-list .empty-slot {
+      list-style: none;
+      margin-left: -1.1rem;
+    }
+
+    @keyframes dustDrift {
+      0% { transform: translate3d(0, 16px, 0); opacity: 0; }
+      15% { opacity: 0.65; }
+      55% { opacity: 0.95; }
+      100% { transform: translate3d(38px, -78px, 0); opacity: 0; }
+    }
+
     @media (max-width: 860px) {
       header {
         align-items: flex-start;
@@ -1122,7 +1272,12 @@
   <div class="game-shell" role="application" aria-label="Bonnie's Quest adventure game">
     <header>
       <h1>Bonnie's Quest</h1>
-      <p class="tagline">A cozy antique mystery</p>
+      <div>
+        <p class="tagline">A cozy antique mystery</p>
+        <div class="audio-control-row">
+          <button id="mute-button" class="mute-button" type="button" aria-pressed="false">Sound On</button>
+        </div>
+      </div>
     </header>
 
     <main>
@@ -1144,6 +1299,9 @@
 
       <section id="quest-screen" class="screen quest-layout" aria-labelledby="location-heading">
         <div id="scene-panel" class="scene-panel" data-room="shop" aria-label="A warmly lit antique shop mystery scene">
+          <div class="light-beam shop-beam" aria-hidden="true"></div>
+          <div class="dust-motes" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div id="hover-description" class="hover-description" aria-live="polite"></div>
           <div id="room-shop" class="room active" aria-label="Main Antique Shop">
             <div class="shop-name">Mabel's Antiques</div>
 
@@ -1188,6 +1346,7 @@
 
             <button class="hotspot receipt" type="button" data-object="oldReceipt" aria-label="Inspect the curled old receipt on the storage shelf">Inspect receipt</button>
             <button class="hotspot torn-photo" type="button" data-object="tornPhotograph" aria-label="Inspect the torn photograph wedged between boxes">Inspect photograph</button>
+            <button class="hotspot false-compass" type="button" data-object="falseCompass" aria-label="Inspect a tarnished compass near the floor">Inspect compass</button>
             <button class="hotspot trunk-lock" type="button" data-object="lockedTrunk" aria-label="Inspect the brass-bound storage trunk">Inspect trunk</button>
             <button class="hotspot storage-lamp" type="button" data-object="storageLamp" aria-label="Inspect the flickering storage room light">Inspect light</button>
             <button class="hotspot back-stairs" type="button" data-nav="office" aria-label="Climb the narrow stairs to the upstairs office">Go upstairs</button>
@@ -1202,11 +1361,13 @@
               <span id="office-drawer-art" class="office-drawer"></span>
             </div>
             <div id="hidden-note-art" class="hidden-note" aria-hidden="true"></div>
+            <div id="strange-symbol-art" class="strange-symbol" aria-hidden="true"></div>
 
             <button class="hotspot office-drawer-hotspot" type="button" data-object="officeDrawer" aria-label="Try the locked upstairs office drawer">Inspect drawer</button>
             <button class="hotspot typewriter-hotspot" type="button" data-object="typewriter" aria-label="Inspect the old office typewriter">Inspect typewriter</button>
             <button class="hotspot portrait-hotspot" type="button" data-object="officePortrait" aria-label="Inspect the stern portrait above the desk">Inspect portrait</button>
             <button class="hotspot office-window-hotspot" type="button" data-object="officeWindow" aria-label="Look out the upstairs office window">Inspect window</button>
+            <button class="hotspot loose-floorboard" type="button" data-object="looseFloorboard" aria-label="Feel along an almost invisible loose floorboard">Search floorboard</button>
           </div>
 
           <div class="nav-controls" aria-label="Room navigation">
@@ -1246,28 +1407,39 @@
               <li class="empty-slot">No clues yet.</li>
             </ul>
           </div>
+
+          <div class="info-box">
+            <h3>Quest Notes</h3>
+            <ul id="quest-notes" class="journal-list" aria-live="polite">
+              <li class="empty-slot">Bonnie's journal is waiting for the first real clue.</li>
+            </ul>
+          </div>
         </aside>
       </section>
     </main>
 
     <footer>
-      Version 2: Explore three rooms, collect clues, and unlock the upstairs mystery.
+      Version 3: Immersive clues, atmospheric audio, a living journal, and deeper Hollow Oak mystery.
     </footer>
   </div>
 
   <script>
     const startButton = document.querySelector('#start-button');
+    const muteButton = document.querySelector('#mute-button');
     const titleScreen = document.querySelector('#title-screen');
     const questScreen = document.querySelector('#quest-screen');
     const scenePanel = document.querySelector('#scene-panel');
     const storyText = document.querySelector('#story-text');
     const locationHeading = document.querySelector('#location-heading');
     const inventory = document.querySelector('#inventory');
+    const questNotes = document.querySelector('#quest-notes');
+    const hoverDescription = document.querySelector('#hover-description');
     const navBack = document.querySelector('#nav-back');
     const navForward = document.querySelector('#nav-forward');
     const roomMapButtons = document.querySelectorAll('[data-map-room]');
     const drawerArt = document.querySelector('#office-drawer-art');
     const hiddenNoteArt = document.querySelector('#hidden-note-art');
+    const strangeSymbolArt = document.querySelector('#strange-symbol-art');
 
     // Room graph: each location knows where Bonnie can go next.
     const rooms = {
@@ -1308,11 +1480,25 @@
         icon: 'photo',
         description: 'Half a sepia portrait showing a woman beside Mabel\'s front window.'
       },
-      hiddenNote: {
-        name: 'Hidden Note',
+      hiddenLetter: {
+        name: 'Handwritten Letter',
         icon: 'note',
-        description: 'A warning: "Find the other half before the anniversary bell rings."'
+        description: 'A brittle letter bearing a strange symbol and the words "The Hollow Oak Estate."'
+      },
+      floorboardScrap: {
+        name: 'Floorboard Scrap',
+        icon: 'note',
+        description: 'A hidden scrap: "Hollow Oak has no bell tower. Listen underground."'
       }
+    };
+
+    const journalEntries = {
+      brassKey: 'The brass key is tagged for drawer three and marked E. V.; it likely belongs upstairs.',
+      oldReceipt: 'The rosewood music box was sold to E. Vale exactly forty years ago.',
+      tornPhotograph: 'The torn photograph shows a woman with a bell-shaped locket at Mabel\'s front window.',
+      hiddenLetter: 'The locked drawer contained a handwritten letter, a strange crossed-circle symbol, and a direct clue: The Hollow Oak Estate.',
+      floorboardScrap: 'A nearly invisible floorboard hotspot revealed that Hollow Oak has no bell tower; the sound may come from below ground.',
+      falseCompass: 'Red herring: the tarnished compass points toward North Pier, but its needle is glued in place.'
     };
 
     const objectText = {
@@ -1321,20 +1507,136 @@
       ledgerBook: 'The ledger lists estate purchases in Mabel\'s careful hand. One line is underlined twice: E. Vale, rosewood music box.',
       lockedTrunk: 'The trunk is strapped tight with cracked leather. Bonnie decides forcing it would destroy whatever memory it is guarding.',
       storageLamp: 'The storage bulb flutters, briefly revealing chalk marks on the floor that point toward the stairs.',
+      falseCompass: 'A tarnished compass lies under a crate. It points toward North Pier, but Bonnie notices the needle has been glued in place. A deliberate red herring.',
       typewriter: 'The typewriter ribbon is dry, but one key is polished from recent use: the letter V.',
       officePortrait: 'The portrait\'s stern eyes resemble the woman in the torn photograph. Bonnie whispers, "E. Vale, perhaps?"',
       officeWindow: 'From the office window, Bonnie can see the shop sign reflected backward in the rainy glass: SEITNA SLEBAM.'
     };
 
+    const hoverText = {
+      brassKey: 'A warm brass key rests on the counter, tagged in old ink.',
+      greenVase: 'A green vase catches lamplight and a ring of undisturbed dust.',
+      wallClock: 'The wall clock ticks softly above the gallery frames.',
+      ledgerBook: 'A ledger waits open near the lamp, its page edges curled.',
+      oldReceipt: 'A curled receipt peeks from the shelf.',
+      tornPhotograph: 'A torn sepia photograph is wedged between boxes.',
+      falseCompass: 'A dull compass sits where a clue might be—or might not.',
+      lockedTrunk: 'A brass-bound trunk guards its memories.',
+      storageLamp: 'The bare bulb flickers over chalk marks and dust.',
+      officeDrawer: 'The desk drawer has a brass keyhole and refuses to budge.',
+      typewriter: 'An old typewriter smells faintly of dry ink.',
+      officePortrait: 'A stern portrait watches Bonnie from above the desk.',
+      officeWindow: 'Rain beads on the upstairs window glass.',
+      looseFloorboard: 'One floorboard sits a hair higher than the rest.',
+      storage: 'Footsteps lead through the curtain into the back room.',
+      office: 'The narrow stairs climb toward the upstairs office.'
+    };
+
     let currentRoom = 'shop';
-    const collected = new Set();
     let drawerUnlocked = false;
+    let audioContext;
+    let masterGain;
+    let ambientGain;
+    let tickTimer;
+    let isMuted = false;
+    const collected = new Set();
+    const noted = new Set();
 
     function setNarration(message) {
       storyText.textContent = message;
     }
 
+    function ensureAudio() {
+      if (audioContext) {
+        if (audioContext.state === 'suspended') audioContext.resume();
+        return;
+      }
+
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      masterGain = audioContext.createGain();
+      ambientGain = audioContext.createGain();
+      masterGain.gain.value = isMuted ? 0 : 0.85;
+      ambientGain.gain.value = 0.055;
+      ambientGain.connect(masterGain);
+      masterGain.connect(audioContext.destination);
+      startAmbientMusic();
+      tickTimer = window.setInterval(() => playEffect('tick'), 2400);
+    }
+
+    // Gentle generated audio keeps the single-file structure: no external sound assets are required.
+    function startAmbientMusic() {
+      const baseNotes = [196, 246.94, 293.66];
+      baseNotes.forEach((frequency, index) => {
+        const oscillator = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        oscillator.type = index === 0 ? 'sine' : 'triangle';
+        oscillator.frequency.value = frequency;
+        gain.gain.value = index === 0 ? 0.35 : 0.18;
+        oscillator.connect(gain);
+        gain.connect(ambientGain);
+        oscillator.start();
+      });
+    }
+
+    function playTone(frequency, duration, type = 'sine', volume = 0.16, when = 0) {
+      if (!audioContext || isMuted) return;
+      const startTime = audioContext.currentTime + when;
+      const oscillator = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      oscillator.type = type;
+      oscillator.frequency.setValueAtTime(frequency, startTime);
+      gain.gain.setValueAtTime(0.0001, startTime);
+      gain.gain.exponentialRampToValueAtTime(volume, startTime + 0.015);
+      gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+      oscillator.connect(gain);
+      gain.connect(masterGain);
+      oscillator.start(startTime);
+      oscillator.stop(startTime + duration + 0.04);
+    }
+
+    function playEffect(effectName) {
+      if (!audioContext || isMuted) return;
+      if (effectName === 'drawer') {
+        playTone(130, 0.11, 'sawtooth', 0.12);
+        playTone(82, 0.18, 'triangle', 0.09, 0.1);
+      } else if (effectName === 'paper') {
+        playTone(900, 0.04, 'triangle', 0.08);
+        playTone(1260, 0.05, 'sine', 0.05, 0.06);
+      } else if (effectName === 'tick') {
+        playTone(1320, 0.025, 'square', 0.035);
+      } else if (effectName === 'footsteps') {
+        playTone(95, 0.08, 'triangle', 0.13);
+        playTone(80, 0.08, 'triangle', 0.11, 0.22);
+      }
+    }
+
+    function toggleMute() {
+      isMuted = !isMuted;
+      if (audioContext && masterGain) {
+        masterGain.gain.value = isMuted ? 0 : 0.85;
+      }
+      muteButton.textContent = isMuted ? 'Sound Off' : 'Sound On';
+      muteButton.setAttribute('aria-pressed', String(isMuted));
+    }
+
+    function addJournalEntry(entryId) {
+      if (!journalEntries[entryId] || noted.has(entryId)) return;
+      noted.add(entryId);
+      updateJournal();
+    }
+
+    function updateJournal() {
+      if (noted.size === 0) {
+        questNotes.innerHTML = '<li class="empty-slot">Bonnie\'s journal is waiting for the first real clue.</li>';
+        return;
+      }
+
+      questNotes.innerHTML = Array.from(noted).map((entryId) => `<li>${journalEntries[entryId]}</li>`).join('');
+    }
+
     function changeRoom(roomName, customMessage) {
+      ensureAudio();
+      playEffect('footsteps');
       currentRoom = roomName;
       document.querySelectorAll('.room').forEach((room) => room.classList.remove('active'));
       document.querySelector(`#room-${roomName}`).classList.add('active');
@@ -1378,19 +1680,25 @@
     }
 
     function collectItem(itemId, message, button) {
+      ensureAudio();
       if (collected.has(itemId)) {
         setNarration(`Bonnie already has the ${items[itemId].name.toLowerCase()} tucked safely in her satchel.`);
         return;
       }
 
       collected.add(itemId);
-      button.classList.add('collected');
-      button.setAttribute('aria-label', `${items[itemId].name} has already been collected`);
+      if (button) {
+        button.classList.add('collected');
+        button.setAttribute('aria-label', `${items[itemId].name} has already been collected`);
+      }
+      playEffect('paper');
       setNarration(message);
       updateInventory();
+      addJournalEntry(itemId);
     }
 
     function inspectObject(objectId, button) {
+      ensureAudio();
       switch (objectId) {
         case 'brassKey':
           collectItem('brassKey', 'Bonnie lifts the heavy brass key from the counter. A paper tag tied to it reads: Rosewood music box, drawer three, E. V. The mystery has begun.', button);
@@ -1401,6 +1709,17 @@
         case 'tornPhotograph':
           collectItem('tornPhotograph', 'A torn photograph slips from behind a crate. Only half remains: a woman at Mabel\'s front window, wearing a locket shaped like a bell.', button);
           break;
+        case 'falseCompass':
+          setNarration(objectText.falseCompass);
+          addJournalEntry('falseCompass');
+          break;
+        case 'looseFloorboard':
+          collectItem('floorboardScrap', 'Bonnie presses the nearly invisible raised floorboard. A scrap of paper slides free: "Hollow Oak has no bell tower. Listen underground."', button);
+          break;
+        case 'wallClock':
+          playEffect('tick');
+          setNarration(objectText.wallClock);
+          break;
         case 'officeDrawer':
           inspectOfficeDrawer(button);
           break;
@@ -1409,10 +1728,10 @@
       }
     }
 
-    // The main puzzle: the brass key from the shop unlocks the upstairs drawer and reveals the note.
+    // The main puzzle: the brass key from the shop unlocks the upstairs drawer and reveals the letter.
     function inspectOfficeDrawer(button) {
       if (drawerUnlocked) {
-        setNarration('The drawer is open. The hidden note inside hints that this mystery reaches beyond Mabel\'s Antiques.');
+        setNarration('The drawer is open. The handwritten letter and strange symbol point Bonnie toward The Hollow Oak Estate.');
         return;
       }
 
@@ -1424,18 +1743,34 @@
       drawerUnlocked = true;
       drawerArt.classList.add('unlocked');
       hiddenNoteArt.classList.add('visible');
+      strangeSymbolArt.classList.add('visible');
       button.classList.add('used');
       button.setAttribute('aria-label', 'The upstairs office drawer is unlocked and open');
-      collected.add('hiddenNote');
-      setNarration('The brass key turns with a reluctant click. Inside the drawer, Bonnie finds a hidden note: "Find the other half before the anniversary bell rings."');
-      updateInventory();
+      playEffect('drawer');
+      collectItem('hiddenLetter', 'The brass key turns with a reluctant click. Inside the drawer, Bonnie finds an old handwritten letter, a strange crossed-circle symbol, and one chilling line: "Begin at The Hollow Oak Estate, where the bell rings without a tower."', button);
+    }
+
+    function showHoverText(button) {
+      const key = button.dataset.object || button.dataset.nav || button.dataset.mapRoom;
+      hoverDescription.textContent = hoverText[key] || button.getAttribute('aria-label') || '';
+      hoverDescription.classList.toggle('visible', Boolean(hoverDescription.textContent));
+    }
+
+    function hideHoverText() {
+      hoverDescription.classList.remove('visible');
     }
 
     startButton.addEventListener('click', () => {
+      ensureAudio();
       titleScreen.classList.remove('active');
       questScreen.classList.add('active');
       document.querySelector('[data-object="brassKey"]').focus();
       updateNavigation();
+    });
+
+    muteButton.addEventListener('click', () => {
+      ensureAudio();
+      toggleMute();
     });
 
     document.querySelectorAll('[data-object]').forEach((button) => {
@@ -1448,6 +1783,13 @@
 
     roomMapButtons.forEach((button) => {
       button.addEventListener('click', () => changeRoom(button.dataset.mapRoom));
+    });
+
+    document.querySelectorAll('.hotspot, [data-map-room], .nav-button').forEach((button) => {
+      button.addEventListener('mouseenter', () => showHoverText(button));
+      button.addEventListener('focus', () => showHoverText(button));
+      button.addEventListener('mouseleave', hideHoverText);
+      button.addEventListener('blur', hideHoverText);
     });
 
     navBack.addEventListener('click', () => {
