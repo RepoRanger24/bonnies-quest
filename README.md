@@ -1,22 +1,25 @@
 # Bonnie's Quest
 
-A single-file, browser-based cozy mystery adventure inspired by classic point-and-click games like King's Quest.
+A single-file, browser-based cinematic cozy mystery adventure inspired by classic point-and-click games like King's Quest.
 
 ## Current features
 
-- Title screen with intro story text and a Start Quest button
+- Title screen introducing the larger Hollow Oak Estate mystery
 - Three explorable rooms: Main Antique Shop, Back Storage Room, and Upstairs Office
-- CSS-painted cozy antique shop visuals with richer wood and wall textures
-- Ambient generated antique-shop music with an optional mute button
-- Subtle generated sound effects for drawer opening, paper pickup, clock ticking, and footsteps between rooms
+- Mabel dialogue interactions with branching choices, clue reveals, and deliberate misdirection
+- Missing antique collector Evelyn Blackwood and a hidden family secret tied to Mabel's Antiques
+- CSS-painted cozy antique shop visuals with richer wood, wall textures, warm lighting, rain, moving shadows, and dust motes
+- Cinematic room transitions, typewriter-style narration, and soft camera zoom effects when clues are discovered
+- Ambient generated antique-shop music, suspense tones in important rooms, optional mute button, and generated sound effects
 - Hover glow effects and short hover descriptions for clickable objects
 - Inventory for collected clues
-- Quest Notes journal that updates automatically as Bonnie discovers clues
+- Quest Notes journal that updates automatically as Bonnie discovers real clues and red herrings
+- Investigation Board that visually connects Evelyn Blackwood, Hollow Oak Estate, the music box, torn photograph, and hidden symbol
 - Upstairs Office locked-drawer puzzle unlocked by the Brass Key
-- Drawer reveal containing an old handwritten letter, a strange symbol, and a clue about The Hollow Oak Estate
-- Dust particles floating through light beams and subtle flickering lights
-- A misleading clue/red herring and a hidden hotspot for careful explorers
-- Responsive desktop-friendly design
+- Hidden wall safe with a four-digit code-breaking puzzle built from clues across multiple rooms
+- Timed atmospheric lightning, power flicker, and hidden hallway shadow event
+- Browser save/load system using local storage
+- Responsive desktop-friendly layout
 
 ## How to run
 
@@ -30,4 +33,4 @@ python3 -m http.server 8000
 
 Then visit <http://localhost:8000>.
 
-> Note: Browser audio starts after the first player interaction, which keeps the game compatible with modern autoplay rules.
+> Note: Browser audio starts after the first player interaction, which keeps the game compatible with modern autoplay rules. Saved games are stored only in the current browser with local storage.
