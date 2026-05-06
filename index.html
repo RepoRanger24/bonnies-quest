@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bonnie's Quest</title>
+  <style>
+    :root {
+      --cream: #fff5df;
+      --parchment: #f8e8c8;
+      --rose: #d99a87;
+      --walnut: #4d3429;
+      --mahogany: #7b4938;
+      --sage: #87956a;
+      --shadow: rgba(68, 45, 34, 0.25);
+      --glow: rgba(255, 239, 194, 0.75);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--walnut);
+      background:
+        radial-gradient(circle at top left, rgba(255, 236, 199, 0.9), transparent 32rem),
+        linear-gradient(135deg, #6e483b 0%, #b97a5b 46%, #f1c990 100%);
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+    }
+
+    .game-shell {
+      width: min(100%, 980px);
+      min-height: min(92vh, 720px);
+      background: var(--cream);
+      border: 8px solid var(--walnut);
+      border-radius: 24px;
+      box-shadow: 0 24px 60px var(--shadow);
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    header,
+    footer {
+      background: linear-gradient(90deg, var(--mahogany), #93624c);
+      color: var(--cream);
+      padding: 1rem 1.25rem;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    h1,
+    h2,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 0;
+      font-size: clamp(1.6rem, 5vw, 3rem);
+      letter-spacing: 0.04em;
+    }
+
+    .tagline {
+      margin: 0;
+      font-size: 0.95rem;
+      opacity: 0.9;
+      text-align: right;
+    }
+
+    main {
+      padding: clamp(1rem, 3vw, 2rem);
+      background:
+        linear-gradient(rgba(255, 245, 223, 0.85), rgba(255, 245, 223, 0.85)),
+        repeating-linear-gradient(90deg, transparent 0 34px, rgba(77, 52, 41, 0.05) 34px 36px);
+    }
+
+    .screen {
+      display: none;
+      height: 100%;
+      animation: fadeIn 320ms ease-out;
+    }
+
+    .screen.active {
+      display: grid;
+    }
+
+    .title-screen {
+      place-items: center;
+      text-align: center;
+    }
+
+    .title-card {
+      max-width: 720px;
+      background: rgba(248, 232, 200, 0.92);
+      border: 3px solid #b88b5b;
+      border-radius: 20px;
+      padding: clamp(1.5rem, 5vw, 3rem);
+      box-shadow: inset 0 0 24px rgba(255, 255, 255, 0.55), 0 14px 30px var(--shadow);
+    }
+
+    .title-card h2 {
+      font-size: clamp(2rem, 7vw, 4.5rem);
+      line-height: 1;
+      margin-bottom: 0.7rem;
+    }
+
+    .intro-text {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      line-height: 1.65;
+    }
+
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 0.9rem 1.4rem;
+      cursor: pointer;
+      font: 700 1rem Arial, sans-serif;
+      color: var(--cream);
+      background: linear-gradient(180deg, var(--rose), #a95f4c);
+      box-shadow: 0 6px 0 #723e33, 0 12px 22px var(--shadow);
+      transition: transform 140ms ease, box-shadow 140ms ease;
+    }
+
+    button:hover,
+    button:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 0 #723e33, 0 16px 24px var(--shadow);
+      outline: 3px solid var(--glow);
+      outline-offset: 3px;
+    }
+
+    .quest-layout {
+      grid-template-columns: minmax(0, 1fr) 260px;
+      gap: 1rem;
+      align-items: stretch;
+    }
+
+    .scene-panel,
+    .side-panel {
+      background: rgba(248, 232, 200, 0.9);
+      border: 3px solid #b88b5b;
+      border-radius: 18px;
+      box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.45);
+    }
+
+    .scene-panel {
+      position: relative;
+      min-height: 430px;
+      overflow: hidden;
+      background:
+        linear-gradient(to bottom, #c99467 0 22%, #8d5a43 22% 24%, #ead5ab 24% 100%);
+    }
+
+    .shop-name {
+      position: absolute;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 0.45rem 1.1rem;
+      border: 3px solid var(--walnut);
+      background: #f4dcaa;
+      border-radius: 6px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-align: center;
+      box-shadow: 0 4px 0 var(--shadow);
+    }
+
+    .shelves {
+      position: absolute;
+      inset: 6.5rem 2rem 7.5rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .shelf {
+      border-bottom: 14px solid #6b3d2e;
+      display: flex;
+      align-items: end;
+      justify-content: center;
+      gap: 0.5rem;
+      padding-bottom: 0.4rem;
+    }
+
+    .vase,
+    .clock,
+    .book,
+    .lamp,
+    .box {
+      display: inline-block;
+      filter: drop-shadow(0 5px 2px rgba(0, 0, 0, 0.18));
+    }
+
+    .vase {
+      width: 38px;
+      height: 58px;
+      border-radius: 16px 16px 22px 22px;
+      background: #7d9162;
+    }
+
+    .clock {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 7px solid #7b4938;
+      background: #f7ecd0;
+    }
+
+    .book {
+      width: 26px;
+      height: 66px;
+      background: #8c4650;
+      border-left: 6px solid #d6aa74;
+    }
+
+    .lamp {
+      width: 60px;
+      height: 50px;
+      clip-path: polygon(20% 0, 80% 0, 100% 65%, 0 65%);
+      background: #d6a34e;
+    }
+
+    .box {
+      width: 70px;
+      height: 42px;
+      background: #9e6d45;
+      border: 4px solid #704129;
+    }
+
+    .bonnie {
+      position: absolute;
+      left: 8%;
+      bottom: 1.2rem;
+      width: 130px;
+      text-align: center;
+    }
+
+    .bonnie-portrait {
+      width: 84px;
+      height: 84px;
+      margin: 0 auto;
+      border-radius: 50% 50% 42% 42%;
+      background:
+        radial-gradient(circle at 32% 42%, #4d3429 0 4px, transparent 5px),
+        radial-gradient(circle at 65% 42%, #4d3429 0 4px, transparent 5px),
+        radial-gradient(circle at 49% 58%, #c57362 0 5px, transparent 6px),
+        #f2c6a8;
+      border: 6px solid #6c3d31;
+      box-shadow: 0 5px 0 var(--shadow);
+    }
+
+    .bonnie-body {
+      width: 88px;
+      height: 92px;
+      margin: -5px auto 0;
+      border-radius: 28px 28px 10px 10px;
+      background: var(--sage);
+      border: 5px solid #596343;
+    }
+
+    .clue-button {
+      position: absolute;
+      right: 17%;
+      bottom: 4.6rem;
+      width: 74px;
+      height: 58px;
+      border-radius: 8px;
+      padding: 0;
+      color: transparent;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.25), transparent),
+        #b58352;
+      border: 4px solid #5d3528;
+      box-shadow: 0 7px 0 #4b2b21, 0 0 0 0 var(--glow);
+    }
+
+    .clue-button::before {
+      content: "";
+      position: absolute;
+      inset: 12px 18px;
+      border: 3px solid #f0d7a2;
+      border-radius: 50%;
+    }
+
+    .clue-button::after {
+      content: "?";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: #f7e7bd;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .clue-button.found {
+      opacity: 0.45;
+      filter: grayscale(40%);
+      cursor: default;
+    }
+
+    .side-panel {
+      padding: 1rem;
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 1rem;
+    }
+
+    .info-box {
+      background: rgba(255, 245, 223, 0.75);
+      border: 2px dashed #bd9065;
+      border-radius: 14px;
+      padding: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .info-box h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1.05rem;
+    }
+
+    .inventory-list {
+      min-height: 86px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .inventory-list li {
+      background: #fff8e8;
+      border: 2px solid #c29765;
+      border-radius: 10px;
+      margin-bottom: 0.5rem;
+      padding: 0.6rem;
+      font-family: Arial, sans-serif;
+      font-size: 0.92rem;
+    }
+
+    .empty-slot {
+      color: #8f7566;
+      font-style: italic;
+    }
+
+    footer {
+      font-family: Arial, sans-serif;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 760px) {
+      header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .tagline {
+        text-align: left;
+      }
+
+      .quest-layout.active {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .scene-panel {
+        min-height: 390px;
+      }
+
+      .shelves {
+        inset-inline: 1rem;
+      }
+
+      .bonnie {
+        left: 3%;
+        transform: scale(0.86);
+        transform-origin: bottom left;
+      }
+
+      .clue-button {
+        right: 9%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="game-shell" role="application" aria-label="Bonnie's Quest adventure game">
+    <header>
+      <h1>Bonnie's Quest</h1>
+      <p class="tagline">A cozy antique mystery</p>
+    </header>
+
+    <main>
+      <section id="title-screen" class="screen title-screen active" aria-labelledby="title-heading">
+        <div class="title-card">
+          <h2 id="title-heading">Bonnie's Quest</h2>
+          <p class="intro-text">
+            When a brass bell rings after closing time, Bonnie follows a trail of
+            old receipts, velvet-lined drawers, and whispered family legends into
+            the warm glow of an antique shop.
+          </p>
+          <p class="intro-text">
+            Tonight, one small clue may reveal why a missing heirloom has returned
+            to town after forty years.
+          </p>
+          <button id="start-button" type="button">Start Quest</button>
+        </div>
+      </section>
+
+      <section id="quest-screen" class="screen quest-layout" aria-labelledby="location-heading">
+        <div class="scene-panel" aria-label="The first location, an antique shop">
+          <div class="shop-name">Mabel's Antiques</div>
+          <div class="shelves" aria-hidden="true">
+            <div class="shelf"><span class="vase"></span><span class="book"></span><span class="clock"></span></div>
+            <div class="shelf"><span class="lamp"></span><span class="book"></span><span class="box"></span></div>
+            <div class="shelf"><span class="clock"></span><span class="vase"></span><span class="book"></span></div>
+          </div>
+
+          <div class="bonnie" aria-label="Bonnie, a curious antique hunter">
+            <div class="bonnie-portrait"></div>
+            <div class="bonnie-body"></div>
+          </div>
+
+          <button id="clue-button" class="clue-button" type="button" aria-label="Inspect the small locked keepsake box">
+            Inspect clue
+          </button>
+        </div>
+
+        <aside class="side-panel">
+          <div class="info-box">
+            <h2 id="location-heading">Antique Shop</h2>
+            <p id="story-text">
+              Bonnie adjusts her green field coat and smiles. "Every old thing has
+              a story," she says. "We just have to listen carefully."
+            </p>
+          </div>
+
+          <div class="info-box">
+            <h3>Bonnie</h3>
+            <p>
+              Antique hunter, note taker, and careful observer of dusty corners.
+            </p>
+          </div>
+
+          <div class="info-box">
+            <h3>Inventory</h3>
+            <ul id="inventory" class="inventory-list" aria-live="polite">
+              <li class="empty-slot">No clues yet.</li>
+            </ul>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <footer>
+      Version 1: Find the first clue in Mabel's Antiques.
+    </footer>
+  </div>
+
+  <script>
+    const startButton = document.querySelector('#start-button');
+    const titleScreen = document.querySelector('#title-screen');
+    const questScreen = document.querySelector('#quest-screen');
+    const clueButton = document.querySelector('#clue-button');
+    const storyText = document.querySelector('#story-text');
+    const inventory = document.querySelector('#inventory');
+
+    let clueFound = false;
+
+    startButton.addEventListener('click', () => {
+      titleScreen.classList.remove('active');
+      questScreen.classList.add('active');
+      clueButton.focus();
+    });
+
+    clueButton.addEventListener('click', () => {
+      if (clueFound) {
+        return;
+      }
+
+      clueFound = true;
+      clueButton.classList.add('found');
+      clueButton.setAttribute('aria-label', 'The keepsake box clue has already been collected');
+      storyText.textContent = 'Inside the small keepsake box, Bonnie finds a faded receipt for a rosewood music box signed with the initials E. V. The mystery has begun.';
+      inventory.innerHTML = '<li>Faded receipt: Rosewood music box, signed E. V.</li>';
+    });
+  </script>
+</body>
+</html>
