@@ -6,6 +6,7 @@ A single-file, browser-based cinematic cozy mystery adventure inspired by classi
 
 - Title screen introducing the larger Hollow Oak Estate mystery
 - Three explorable rooms: Main Antique Shop, Back Storage Room, and Upstairs Office
+- Classic point-and-click Bonnie movement with walkable floor limits, object approach points, smooth facing, and idle/walking poses
 - Mabel dialogue interactions with branching choices, clue reveals, and deliberate misdirection
 - Missing antique collector Evelyn Blackwood and a hidden family secret tied to Mabel's Antiques
 - CSS-painted cozy antique shop visuals with richer wood, wall textures, warm lighting, rain, moving shadows, dust motes, and layered semi-realistic portrait-style character art
