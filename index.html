@@ -2287,6 +2287,199 @@
       to { background-position: 26px 58px, 0 0; }
     }
 
+
+
+    /* Reference-inspired cinematic pass: image-led scenes, compact dark-gold UI, visible hotspot rings. */
+    .game-shell {
+      width: min(calc(100vw - 16px), 1280px);
+      height: min(calc(100vh - 16px), 760px);
+      border-color: #0e0805;
+      background: linear-gradient(135deg, #080504, #24120b 58%, #110907);
+      box-shadow: 0 32px 90px rgba(0,0,0,.72), inset 0 0 0 1px rgba(255, 207, 126, .28), inset 0 0 44px rgba(172, 93, 37, .18);
+      grid-template-rows: 46px minmax(0, 1fr) 20px;
+    }
+
+    header,
+    footer {
+      background: linear-gradient(90deg, #120905, #31170d 44%, #1b0d08), repeating-linear-gradient(90deg, rgba(241, 194, 103, .08) 0 1px, transparent 1px 18px);
+    }
+
+    h1 { font-size: clamp(1.15rem, 1.7vw, 1.55rem); color: #ffe5ac; }
+    .tagline { color: #cfa25d; }
+
+    main {
+      padding: .5rem;
+      background: radial-gradient(circle at 36% 0, rgba(255, 203, 111, .22), transparent 30rem), linear-gradient(135deg, #190d08, #382012 48%, #130907);
+    }
+
+    .quest-layout {
+      grid-template-columns: minmax(0, 1fr) 286px;
+      grid-template-rows: minmax(0, 1fr) 158px;
+      gap: .52rem;
+    }
+
+    .scene-panel,
+    .side-panel,
+    .info-box {
+      border-color: rgba(217, 165, 82, .58);
+      background: linear-gradient(180deg, rgba(41, 22, 13, .96), rgba(22, 12, 8, .98));
+      color: #f0d7a8;
+      box-shadow: inset 0 0 0 1px rgba(255, 226, 166, .08), inset 0 0 32px rgba(0,0,0,.4), 0 18px 34px rgba(0,0,0,.38);
+    }
+
+    .scene-panel {
+      border-width: 2px;
+      border-radius: 16px;
+    }
+
+    .scene-panel::before {
+      z-index: 2;
+      background: radial-gradient(circle at 53% 20%, rgba(255, 219, 145, .18), transparent 16rem), radial-gradient(circle at 50% 100%, rgba(0,0,0,.28), transparent 26rem), linear-gradient(90deg, rgba(0,0,0,.34), transparent 18%, transparent 78%, rgba(0,0,0,.48));
+      mix-blend-mode: multiply;
+    }
+
+    .room.active {
+      transform: scale(.965);
+      filter: saturate(1.06) contrast(1.04);
+    }
+
+    .background-art img { filter: saturate(1.08) contrast(1.06); }
+    .room.asset-loaded .scene-fallback { opacity: .06; }
+
+    .side-panel {
+      border-radius: 14px;
+      padding: .48rem;
+      gap: .42rem;
+    }
+
+    .info-box {
+      border-radius: 12px;
+      padding: .48rem;
+      background: linear-gradient(180deg, rgba(54, 30, 18, .95), rgba(27, 14, 9, .96)), radial-gradient(circle at 20% 0, rgba(228, 176, 91, .2), transparent 11rem);
+    }
+
+    .info-box h3,
+    .side-panel h2,
+    .dialogue-content h3 {
+      color: #f4c875;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      font-family: Arial, sans-serif;
+    }
+
+    .objective-text { color: #ffe1a1; }
+    .side-panel p, .dialogue-content p, .how-to-list { color: #dfc397; }
+
+    button,
+    .room-map button,
+    .dialogue-choices button,
+    .save-controls button,
+    .directions-inline {
+      color: #ffe8b7;
+      background: linear-gradient(180deg, #8f5a2b, #4a2413 55%, #221009);
+      border: 1px solid rgba(255, 213, 134, .38);
+      box-shadow: 0 3px 0 #0f0704, 0 10px 18px rgba(0,0,0,.36), inset 0 1px 0 rgba(255, 226, 170, .18);
+    }
+
+    .room-map button[aria-current="location"] {
+      color: #1f1008;
+      background: linear-gradient(180deg, #f1cf7d, #b9782c);
+      border-color: rgba(255, 238, 181, .75);
+    }
+
+    .inventory-list li,
+    .quest-notes li,
+    .empty-slot {
+      background: rgba(18, 9, 5, .55);
+      color: #e7cfa2;
+      border-color: rgba(205, 150, 70, .36);
+    }
+
+    .inventory-list strong { color: #ffd98b; }
+
+    .bottom-panels {
+      grid-template-columns: .95fr 1.5fr 1.45fr;
+    }
+
+    .bonnie-dialogue-panel {
+      border: 1px solid rgba(217, 165, 82, .58);
+      background: linear-gradient(180deg, rgba(48, 25, 15, .96), rgba(20, 10, 7, .96));
+    }
+
+    .bonnie-cameo {
+      border: 1px solid rgba(239, 194, 105, .35);
+      background: radial-gradient(circle at 52% 15%, rgba(255, 218, 140, .36), transparent 44%), linear-gradient(180deg, #3b2115, #0e0705);
+    }
+
+    .evidence-board {
+      border-color: #8e5d2d;
+      background: radial-gradient(circle at 42% 42%, rgba(158, 55, 41, .15), transparent 7rem), repeating-linear-gradient(105deg, rgba(67, 36, 18, .16) 0 2px, transparent 2px 14px), linear-gradient(180deg, #7b5935, #3c2416);
+    }
+
+    .evidence-node {
+      color: #f4ddb0;
+      background: linear-gradient(180deg, #4b2b19, #22110b);
+      border-color: rgba(237, 188, 96, .38);
+    }
+
+    .evidence-node.discovered {
+      color: #211108;
+      background: linear-gradient(180deg, #ffe8aa, #c88832);
+    }
+
+    .hotspot {
+      border: 2px solid rgba(255, 225, 145, .48);
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(255, 221, 132, .15), rgba(255, 221, 132, .02) 58%, transparent 66%);
+      box-shadow: 0 0 16px rgba(255, 205, 100, .22), inset 0 0 14px rgba(255, 234, 170, .12);
+      opacity: .64;
+    }
+
+    .hotspot:hover,
+    .hotspot:focus-visible {
+      background: radial-gradient(circle, rgba(255, 235, 170, .24), rgba(255, 206, 101, .07) 62%, transparent 72%);
+      outline: 2px solid rgba(255, 237, 177, .96);
+      box-shadow: 0 0 26px rgba(255, 215, 118, .7), inset 0 0 18px rgba(255, 239, 190, .22);
+      opacity: 1;
+    }
+
+    .hotspot:not(.clue-button)::before {
+      inset: 28%;
+      border: 2px solid rgba(255, 236, 170, .68);
+      box-shadow: 0 0 16px rgba(255, 214, 116, .42);
+    }
+
+    .clue-button {
+      border-radius: 24px;
+      background: radial-gradient(circle, rgba(255, 232, 146, .28), transparent 58%);
+    }
+
+    .hover-description {
+      color: #ffe4a7;
+      border-color: rgba(238, 187, 92, .74);
+      background: linear-gradient(180deg, rgba(48, 25, 14, .96), rgba(19, 10, 7, .96));
+      text-shadow: 0 1px 1px rgba(0,0,0,.7);
+    }
+
+    .asset-marker { opacity: .55; filter: drop-shadow(0 0 16px rgba(255, 221, 128, .78)); }
+
+    .sprite-art img { filter: contrast(1.08) saturate(1.06) drop-shadow(14px 20px 16px rgba(0,0,0,.46)); }
+
+    .hotspot.grandfather-clock { left: 44.5%; top: 12%; width: 70px; height: 132px; }
+    .hotspot.velvet-cabinet { left: 8%; bottom: 6.4rem; width: 118px; height: 108px; border-radius: 14px; }
+    .hotspot.shop-rug { left: 22%; bottom: 2.9rem; width: 250px; height: 54px; }
+    .hotspot.picture-bin-hotspot { left: 43%; bottom: 6.1rem; width: 108px; height: 72px; border-radius: 12px; }
+    .hotspot.hat-box-hotspot { left: 24%; bottom: 8.3rem; width: 84px; height: 64px; border-radius: 18px; }
+    .hotspot.old-camera-hotspot { left: 82%; top: 27%; width: 74px; height: 54px; border-radius: 12px; }
+    .hotspot.estate-map-hotspot { left: 49%; top: 49%; width: 96px; height: 62px; border-radius: 12px; }
+    .hotspot.blackwood-crate-hotspot { left: 46%; top: 31%; width: 104px; height: 70px; border-radius: 12px; }
+    .hotspot.photo-envelope-hotspot { left: 42%; top: 50%; width: 92px; height: 58px; border-radius: 12px; }
+    .hotspot.stair-banister-hotspot { right: 8%; top: 24%; width: 70px; height: 160px; border-radius: 18px; }
+    .hotspot.rain-streaks-hotspot { left: 10%; top: 14%; width: 122px; height: 110px; border-radius: 12px; }
+    .hotspot.blackwood-portrait-plaque { right: 14%; top: 30%; width: 120px; height: 34px; border-radius: 10px; }
+    .hotspot.inkwell-hotspot { left: 53%; bottom: 11rem; width: 54px; height: 42px; border-radius: 50%; }
+    .hotspot.safe-shadow-hotspot { right: 25%; top: 29%; width: 64px; height: 92px; border-radius: 12px; opacity: .26; }
+
     @media (max-width: 860px) {
       body {
         overflow: auto;
@@ -2463,6 +2656,12 @@
             <button class="hotspot gallery-photos-hotspot" type="button" data-object="galleryPhotos" data-label="Old frames" aria-label="Inspect the old framed photographs">Inspect frames</button>
             <button class="hotspot shop-painting-hotspot" type="button" data-object="redHerringPainting" data-label="Painting" aria-label="Inspect the dramatic seascape painting">Inspect painting</button>
             <button class="hotspot hidden-counter-mark" type="button" data-object="hiddenCounterMark" data-label="Tiny mark" aria-label="Inspect a tiny scratched mark under the counter lip">Inspect tiny mark</button>
+            <button class="hotspot grandfather-clock" type="button" data-object="grandfatherClock" data-label="Grandfather clock" aria-label="Inspect the tall grandfather clock and brass pendulum">Inspect grandfather clock</button>
+            <button class="hotspot velvet-cabinet" type="button" data-object="velvetCabinet" data-label="Cabinet" aria-label="Inspect the velvet-lined display cabinet">Inspect cabinet</button>
+            <button class="hotspot shop-rug" type="button" data-object="shopRug" data-label="Worn rug" aria-label="Inspect the worn patterned rug">Inspect rug</button>
+            <button class="hotspot picture-bin-hotspot" type="button" data-object="pictureBin" data-label="Picture bin" aria-label="Inspect the leaning bin of framed photographs">Inspect picture bin</button>
+            <button class="hotspot hat-box-hotspot" type="button" data-object="hatBoxes" data-label="Hat boxes" aria-label="Inspect the stacked antique hat boxes">Inspect hat boxes</button>
+            <button class="hotspot old-camera-hotspot" type="button" data-object="oldCamera" data-label="Camera" aria-label="Inspect the old folding camera on the shelf">Inspect camera</button>
           </div>
 
           <div id="room-storage" class="room" aria-label="Back Storage Room">
@@ -2497,6 +2696,10 @@
             <button class="hotspot stair-dust" type="button" data-object="stairDust" data-label="Dust" aria-label="Inspect dusty marks on the stairs">Inspect stair dust</button>
             <button class="hotspot odd-antique" type="button" data-object="oddAntique" data-label="Odd antique" aria-label="Inspect a strange brass automaton">Inspect odd antique</button>
             <button class="hotspot hidden-crate-mark" type="button" data-object="hiddenCrateMark" data-label="Chalk mark" aria-label="Inspect a hidden chalk mark behind a crate">Inspect chalk mark</button>
+            <button class="hotspot estate-map-hotspot" type="button" data-object="estateMap" data-label="Estate map" aria-label="Inspect a rolled Hollow Oak estate map">Inspect estate map</button>
+            <button class="hotspot blackwood-crate-hotspot" type="button" data-object="blackwoodCrate" data-label="B.W. crate" aria-label="Inspect a Blackwood-stamped crate">Inspect Blackwood crate</button>
+            <button class="hotspot photo-envelope-hotspot" type="button" data-object="photoEnvelope" data-label="Envelope" aria-label="Inspect a brittle envelope of old photographs">Inspect photo envelope</button>
+            <button class="hotspot stair-banister-hotspot" type="button" data-object="stairBanister" data-label="Banister" aria-label="Inspect the carved stair banister">Inspect banister</button>
           </div>
 
           <div id="room-office" class="room" aria-label="Upstairs Office">
@@ -2530,6 +2733,10 @@
             <button class="hotspot office-floor-marks" type="button" data-object="officeFloorMarks" data-label="Floor marks" aria-label="Inspect scuff marks on the office floor">Inspect floor marks</button>
             <button class="hotspot cabinet-doors-hotspot" type="button" data-object="cabinetDoors" data-label="Cabinet" aria-label="Inspect the lower cabinet doors">Inspect cabinet</button>
             <button class="hotspot hidden-desk-underside" type="button" data-object="hiddenDeskUnderside" data-label="Underside" aria-label="Inspect hidden writing under the desk lip">Inspect underside</button>
+            <button class="hotspot rain-streaks-hotspot" type="button" data-object="rainStreaks" data-label="Rain" aria-label="Inspect the rain-streaked upstairs window details">Inspect rain streaks</button>
+            <button class="hotspot blackwood-portrait-plaque" type="button" data-object="portraitPlaque" data-label="Nameplate" aria-label="Inspect the Blackwood portrait nameplate">Inspect nameplate</button>
+            <button class="hotspot inkwell-hotspot" type="button" data-object="inkwell" data-label="Inkwell" aria-label="Inspect the antique inkwell on the desk">Inspect inkwell</button>
+            <button class="hotspot safe-shadow-hotspot" type="button" data-object="safeShadow" data-label="Safe outline" aria-label="Inspect the faint safe outline behind the portrait">Inspect safe outline</button>
           </div>
 
           <div id="walk-target" class="walk-target" aria-hidden="true"></div>
@@ -2742,7 +2949,7 @@
         walkArea: { minX: 8, maxX: 92, minY: 73, maxY: 91 },
         blockers: [{ minX: 56, maxX: 93, minY: 70, maxY: 85 }],
         targets: {
-          brassKey: { x: 59, y: 85 }, greenVase: { x: 22, y: 76 }, wallClock: { x: 48, y: 75 }, ledgerBook: { x: 55, y: 78 }, mabel: { x: 66, y: 85 }, storage: { x: 91, y: 84 }
+          brassKey: { x: 59, y: 85 }, greenVase: { x: 22, y: 76 }, wallClock: { x: 48, y: 75 }, ledgerBook: { x: 55, y: 78 }, mabel: { x: 66, y: 85 }, storage: { x: 91, y: 84 }, grandfatherClock: { x: 48, y: 76 }, velvetCabinet: { x: 16, y: 86 }, shopRug: { x: 35, y: 88 }, pictureBin: { x: 48, y: 86 }, hatBoxes: { x: 28, y: 86 }, oldCamera: { x: 76, y: 78 }
         }
       },
       storage: {
@@ -2755,7 +2962,7 @@
         walkArea: { minX: 7, maxX: 92, minY: 72, maxY: 91 },
         blockers: [{ minX: 7, maxX: 66, minY: 58, maxY: 75 }, { minX: 73, maxX: 93, minY: 76, maxY: 90 }],
         targets: {
-          oldReceipt: { x: 23, y: 76 }, tornPhotograph: { x: 41, y: 78 }, falseCompass: { x: 58, y: 82 }, lockedTrunk: { x: 72, y: 85 }, storageLamp: { x: 12, y: 73 }, office: { x: 88, y: 76 }, shop: { x: 9, y: 86 }
+          oldReceipt: { x: 23, y: 76 }, tornPhotograph: { x: 41, y: 78 }, falseCompass: { x: 58, y: 82 }, lockedTrunk: { x: 72, y: 85 }, storageLamp: { x: 12, y: 73 }, office: { x: 88, y: 76 }, shop: { x: 9, y: 86 }, estateMap: { x: 52, y: 80 }, blackwoodCrate: { x: 48, y: 76 }, photoEnvelope: { x: 44, y: 78 }, stairBanister: { x: 84, y: 77 }
         }
       },
       office: {
@@ -2768,7 +2975,7 @@
         walkArea: { minX: 8, maxX: 91, minY: 73, maxY: 91 },
         blockers: [{ minX: 26, maxX: 78, minY: 66, maxY: 84 }],
         targets: {
-          wallSafe: { x: 76, y: 77 }, officeDrawer: { x: 73, y: 85 }, typewriter: { x: 33, y: 78 }, officePortrait: { x: 77, y: 76 }, officeWindow: { x: 18, y: 75 }, looseFloorboard: { x: 20, y: 87 }, storage: { x: 9, y: 86 }
+          wallSafe: { x: 76, y: 77 }, officeDrawer: { x: 73, y: 85 }, typewriter: { x: 33, y: 78 }, officePortrait: { x: 77, y: 76 }, officeWindow: { x: 18, y: 75 }, looseFloorboard: { x: 20, y: 87 }, storage: { x: 9, y: 86 }, rainStreaks: { x: 18, y: 75 }, portraitPlaque: { x: 77, y: 76 }, inkwell: { x: 55, y: 83 }, safeShadow: { x: 73, y: 76 }
         }
       }
     };
@@ -2867,7 +3074,22 @@
       safePlaque: 'A brass plaque reads: Blackwood Trust, private property. It is too official to be decorative and too polished to be forgotten.',
       officeFloorMarks: 'Scuff marks curve from the portrait to the desk, exactly where someone would drag a chair to reach a hidden safe.',
       cabinetDoors: 'The lower cabinet doors creak open on jars of nibs, ribbon spools, and enough dust to knit a small ghost.',
-      hiddenDeskUnderside: 'Bonnie feels beneath the desk lip and finds scratched words: Evelyn went below Hollow Oak. That is the clearest direction yet.'
+      hiddenDeskUnderside: 'Bonnie feels beneath the desk lip and finds scratched words: Evelyn went below Hollow Oak. That is the clearest direction yet.',
+
+      grandfatherClock: 'The grandfather clock towers over the shop like a witness. Its brass pendulum swings behind smoky glass, and the chime holes have been stuffed with velvet to keep one particular tune silent.',
+      velvetCabinet: 'Inside the velvet-lined cabinet, Bonnie finds empty impressions where a bell-shaped locket and a tiny music-box key once rested side by side.',
+      shopRug: 'The rug is worn thin along a path from the front counter to the storage curtain. Someone paced this route often, always stopping before the third drawer.',
+      pictureBin: 'Frames lean together in the picture bin. A landscape of Hollow Oak has been turned backward, hiding a penciled route to the cellar garden wall.',
+      hatBoxes: 'The hat boxes smell of lavender and rain. One lid is labeled Blackwood winter things, but the box is empty except for a strand of gray silk ribbon.',
+      oldCamera: 'The folding camera still holds a cracked glass plate. In the ghosted image, Evelyn stands in this very shop with the rosewood music box under one arm.',
+      estateMap: 'A rolled estate map shows Hollow Oak from above: no bell tower, three cellar doors, and a small X drawn beneath the oldest oak tree.',
+      blackwoodCrate: 'The Blackwood crate is newer than the dust around it. Fresh pry marks suggest someone recently searched it, then tried to make the room look untouched.',
+      photoEnvelope: 'The brittle envelope contains duplicates of Evelyn\'s shop photograph. Someone circled Mabel\'s counter in red pencil on every copy.',
+      stairBanister: 'The banister finial is polished by nervous hands. A hidden groove underneath repeats the crossed-circle symbol Bonnie keeps finding.',
+      rainStreaks: 'Rain streaks split the window reflection. For a second the shop sign aligns with the estate road, pointing straight toward Hollow Oak.',
+      portraitPlaque: 'The nameplate reads Evelyn Blackwood, Collector, Trustee, Heir. It has been cleaned recently, unlike the dusty frame around it.',
+      inkwell: 'The inkwell is almost dry, but a fresh crescent of black ink stains the rim. Someone wrote here tonight and left in a hurry.',
+      safeShadow: 'Bonnie sees a rectangular shadow behind the portrait: the wall safe has been opened often enough to leave a clean outline in the dust.',
     };
 
     const hoverText = {
@@ -2911,7 +3133,22 @@
       safePlaque: 'A small brass plaque catches the light.',
       officeFloorMarks: 'Scuffs curve across the office floor.',
       cabinetDoors: 'Lower cabinet doors have tiny brass pulls.',
-      hiddenDeskUnderside: 'Something rough scratches the desk underside.'
+      hiddenDeskUnderside: 'Something rough scratches the desk underside.',
+
+      grandfatherClock: 'A tall clock glows behind smoky glass.',
+      velvetCabinet: 'The velvet display cabinet holds suspicious empty spaces.',
+      shopRug: 'A patterned rug hides the path of many footsteps.',
+      pictureBin: 'A bin of old framed pictures leans by the counter.',
+      hatBoxes: 'Stacked hat boxes carry old estate labels.',
+      oldCamera: 'A folding camera waits on the high shelf.',
+      estateMap: 'A rolled map shows the Hollow Oak grounds.',
+      blackwoodCrate: 'A crate stamped B.W. has fresh pry marks.',
+      photoEnvelope: 'A brittle envelope peeks from the shelf.',
+      stairBanister: 'The banister is polished where hands lingered.',
+      rainStreaks: 'Rain turns the window into a dark mirror.',
+      portraitPlaque: 'A brass nameplate gleams beneath the portrait.',
+      inkwell: 'A dry inkwell sits open on the desk.',
+      safeShadow: 'A rectangular shadow marks the wall behind the portrait.',
     };
 
     const dialogueTree = {
