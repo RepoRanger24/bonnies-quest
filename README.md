@@ -12,8 +12,8 @@ A single-file, browser-based cinematic cozy mystery adventure inspired by classi
 - Reference-inspired cinematic one-screen layout with an immersive left room scene, polished right sidebar, and bottom action/evidence panels
 - Cinematic room transitions, typewriter-style narration, and soft camera zoom effects when clues are discovered
 - Ambient generated antique-shop music, rain bed, ticking clocks, creaking wood, soft room tone, suspense tones in important rooms, optional mute button, and generated sound effects
-- Image-based adventure room architecture: all three existing rooms now use cinematic full-scene art layers instead of relying on CSS-drawn furniture
-- Realistic cinematic visual pass with local photographic-style antique-shop room plates, semi-realistic Bonnie/Mabel character assets, subtle dust motes, warm volumetric light, window-limited rain streaks, vignette grading, and dark wood/brass UI styling
+- Image-based adventure room architecture: all three rooms prefer uploaded realistic room plates and keep generated CSS furniture only as a missing-asset fallback
+- Realistic cinematic visual pass that layers Bonnie, Mabel, prop overlays, invisible interaction zones, dust motes, warm volumetric light, rain, moving shadows, vignette grading, and dark wood/brass UI styling over the room photographs
 - Invisible point-and-click hotspot regions layered over the room art, with labels and subtle glints appearing only on hover, keyboard focus, or Bonnie proximity
 - Subtle hover/focus glow rings, object-name tooltips, short hover descriptions, smooth Bonnie walk-to-object movement, and gentle camera drift
 - More realistic high-detail Bonnie sprite with improved proportions, face shading, room-matched shadowing, idle breathing, and smoother walking animation over the static room background
@@ -27,6 +27,16 @@ A single-file, browser-based cinematic cozy mystery adventure inspired by classi
 - Timed atmospheric lightning, power flicker, and hidden hallway shadow event
 - Browser save/load system using local storage
 - Fixed-width centered desktop layout that keeps the full scene, slim side panels, inventory, quest notes, and room navigation visible without horizontal or vertical scrolling on standard desktop monitors
+
+## Using uploaded realistic room images
+
+Place the provided antique room images in `assets/rooms/` using these filenames so the game loads them as the actual in-game environments without generating replacement room art:
+
+- `assets/rooms/main-antique-shop.webp` (or `.jpg` / `.png`)
+- `assets/rooms/back-storage-room.webp` (or `.jpg` / `.png`)
+- `assets/rooms/upstairs-office.webp` (or `.jpg` / `.png`)
+
+The browser automatically uses the first matching realistic plate it can load. Bonnie, Mabel, prop callouts, invisible hotspots, interaction zones, cinematic lighting, rain, dust, and shadow atmosphere are layered on top of those backgrounds. The existing SVG room art remains only as a development fallback if the uploaded images are not present.
 
 ## How to run
 
