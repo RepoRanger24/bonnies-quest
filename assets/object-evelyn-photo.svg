@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 190" role="img" aria-label="framed photograph of Evelyn Blackwood">
+  <defs>
+    <linearGradient id="frame" x1="0" x2="1"><stop stop-color="#4a2915"/><stop offset=".42" stop-color="#c18a3d"/><stop offset=".72" stop-color="#6f431e"/><stop offset="1" stop-color="#f0c06a"/></linearGradient>
+    <linearGradient id="sepia" y1="0" y2="1"><stop stop-color="#d6bf92"/><stop offset="1" stop-color="#6a4d35"/></linearGradient>
+  </defs>
+  <rect x="8" y="6" width="134" height="178" rx="8" fill="url(#frame)" stroke="#170c07" stroke-width="8"/>
+  <rect x="23" y="22" width="104" height="138" rx="3" fill="url(#sepia)" stroke="#2a170e" stroke-width="5"/>
+  <path d="M32 139c20-34 39-39 56-17 12-30 25-34 34 14v20H32z" fill="#8b6a45" opacity=".85"/>
+  <ellipse cx="76" cy="70" rx="24" ry="31" fill="#c7926e"/>
+  <path d="M49 68c4-39 49-47 61-6-15-7-39-6-61 6z" fill="#3a241b"/>
+  <path d="M57 94c9 14 29 15 39 0" fill="none" stroke="#593523" stroke-width="4" stroke-linecap="round" opacity=".5"/>
+  <path d="M74 104l8 16 8-16" fill="none" stroke="#e7c677" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="39" y="164" width="72" height="12" rx="3" fill="#2a170e" opacity=".7"/>
+</svg>
