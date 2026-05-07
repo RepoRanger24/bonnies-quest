@@ -12,8 +12,10 @@ A single-file, browser-based cinematic cozy mystery adventure inspired by classi
 - Reference-inspired cinematic one-screen layout with an immersive left room scene, polished right sidebar, and bottom action/evidence panels
 - Cinematic room transitions, typewriter-style narration, and soft camera zoom effects when clues are discovered
 - Ambient generated antique-shop music, suspense tones in important rooms, optional mute button, and generated sound effects
-- Asset-based illustrated backgrounds and character sprites for the antique shop, storage room, upstairs office, Bonnie, and Mabel, with warm lighting, shadows, rugs, clocks, shelves, cabinets, framed photos, music boxes, and antique clutter
-- Visible glowing hotspot rings, many examine objects and hidden clue surfaces, short hover descriptions, and smooth Bonnie walk-to-object movement
+- Image-based adventure room architecture: the antique shop uses the full rendered background art instead of CSS-drawn furniture layers
+- Invisible point-and-click hotspot regions over clocks, gramophone, counter, drawers, music box, photographs, paintings, lamp, shelves, window, rug, and hidden compartments
+- Subtle hover/focus glow rings, object-name tooltips, short hover descriptions, and smooth Bonnie walk-to-object movement
+- Layered high-detail Bonnie sprite with smoother walking animation over the static room background
 - Quest Notes journal that updates automatically as Bonnie discovers real clues and red herrings
 - Inventory for collected clues
 - Investigation Board that visually connects Evelyn Blackwood, Hollow Oak Estate, the music box, torn photograph, and hidden symbol
