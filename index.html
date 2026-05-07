@@ -205,9 +205,9 @@
     }
 
     .quest-layout {
-      grid-template-columns: minmax(0, 800px) 312px;
-      justify-content: center;
-      gap: 0.5rem;
+      grid-template-columns: minmax(0, 1fr) 268px;
+      grid-template-rows: minmax(0, 1fr) 148px;
+      gap: 0.48rem;
       min-height: 0;
       align-items: stretch;
     }
@@ -518,8 +518,111 @@
       border: 3px solid #24130c;
     }
 
+    .shop-prop-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .shop-prop-layer span {
+      position: absolute;
+      filter: drop-shadow(0 9px 7px rgba(0, 0, 0, 0.38));
+    }
+
+    .floor-rug {
+      left: 14%;
+      bottom: 1.25rem;
+      width: 44%;
+      height: 88px;
+      border-radius: 50%;
+      background:
+        radial-gradient(ellipse, rgba(230, 177, 99, 0.25) 0 24%, transparent 25%),
+        repeating-radial-gradient(ellipse, #6f2c24 0 8px, #b1763e 9px 14px, #402018 15px 21px);
+      opacity: 0.72;
+      transform: perspective(280px) rotateX(58deg);
+    }
+
+    .cabinet-left {
+      left: 3.5%;
+      bottom: 4.1rem;
+      width: 116px;
+      height: 120px;
+      border: 4px solid #24140d;
+      border-radius: 8px 8px 3px 3px;
+      background:
+        radial-gradient(circle at 28% 54%, #c69a49 0 4px, transparent 5px),
+        radial-gradient(circle at 72% 54%, #c69a49 0 4px, transparent 5px),
+        linear-gradient(90deg, transparent 48%, rgba(30,16,10,0.72) 49% 51%, transparent 52%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.06) 0 2px, transparent 2px 26px),
+        linear-gradient(90deg, #3a1e14, #7a4a2f 52%, #2a150e);
+    }
+
+    .doll {
+      left: 11%;
+      bottom: 10.9rem;
+      width: 34px;
+      height: 74px;
+      border-radius: 16px 16px 8px 8px;
+      background:
+        radial-gradient(circle at 50% 16%, #dca982 0 12px, transparent 13px),
+        radial-gradient(circle at 38% 14%, #2b1914 0 2px, transparent 3px),
+        radial-gradient(circle at 62% 14%, #2b1914 0 2px, transparent 3px),
+        linear-gradient(180deg, transparent 0 31%, #7c2f38 32% 100%);
+    }
+
+    .hat-boxes {
+      left: 22%;
+      bottom: 5.2rem;
+      width: 92px;
+      height: 74px;
+      background:
+        linear-gradient(180deg, #7e5435 0 22px, #53301f 23px 46px, #a37745 47px 74px);
+      border-radius: 18px 18px 10px 10px;
+      border: 3px solid rgba(35, 18, 11, 0.9);
+    }
+
+    .standing-lamp {
+      left: 31%;
+      bottom: 4.1rem;
+      width: 74px;
+      height: 170px;
+      background:
+        radial-gradient(ellipse at 50% 12%, rgba(255, 223, 134, 0.82) 0 25px, rgba(151, 92, 38, 0.95) 26px 44px, transparent 45px),
+        linear-gradient(90deg, transparent 45%, #c49a43 46% 54%, transparent 55%),
+        radial-gradient(ellipse at 50% 96%, #4b2a19 0 29px, transparent 30px);
+      box-shadow: 0 0 34px rgba(255, 209, 119, 0.28);
+    }
+
+    .drawer-stack {
+      right: 3.8%;
+      bottom: 3.7rem;
+      width: 96px;
+      height: 150px;
+      border: 4px solid #21120c;
+      background:
+        radial-gradient(circle at 50% 22%, #caa051 0 4px, transparent 5px),
+        radial-gradient(circle at 50% 50%, #caa051 0 4px, transparent 5px),
+        radial-gradient(circle at 50% 78%, #caa051 0 4px, transparent 5px),
+        repeating-linear-gradient(180deg, transparent 0 43px, rgba(33,18,12,0.9) 44px 48px),
+        linear-gradient(90deg, #3a1d13, #885331 54%, #28140d);
+    }
+
+    .picture-bin {
+      left: 43%;
+      bottom: 4.5rem;
+      width: 92px;
+      height: 72px;
+      border: 5px solid #2b170f;
+      background:
+        linear-gradient(22deg, transparent 0 46%, #caa66e 47% 54%, transparent 55%),
+        linear-gradient(-18deg, transparent 0 38%, #8a5a2d 39% 49%, transparent 50%),
+        linear-gradient(180deg, #7c4d2f, #3b2015);
+    }
+
     .counter {
       position: absolute;
+      z-index: 4;
       right: 9%;
       bottom: 2.05rem;
       width: min(41%, 320px);
@@ -835,6 +938,22 @@
       cursor: default;
     }
 
+    .hotspot:not(.clue-button)::before {
+      content: "";
+      position: absolute;
+      inset: 22%;
+      border-radius: inherit;
+      border: 1px solid rgba(255, 231, 163, 0.42);
+      background: radial-gradient(circle, rgba(255, 226, 145, 0.22), transparent 62%);
+      box-shadow: 0 0 12px rgba(255, 213, 112, 0.28);
+      animation: hotspotBreath 2.8s ease-in-out infinite;
+    }
+
+    @keyframes hotspotBreath {
+      0%, 100% { opacity: 0.38; transform: scale(0.92); }
+      50% { opacity: 0.78; transform: scale(1.08); }
+    }
+
     .scene-panel.walk-ready {
       cursor: crosshair;
     }
@@ -860,6 +979,7 @@
     }
 
     .clue-button {
+      z-index: 5;
       right: 23%;
       bottom: 9.3rem;
       width: 118px;
@@ -1169,12 +1289,12 @@
     }
 
     .side-panel {
-      padding: 0.42rem;
+      padding: 0.38rem;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-auto-rows: min-content;
-      align-content: start;
-      gap: 0.38rem;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto minmax(0, 1fr) minmax(0, 1fr);
+      align-content: stretch;
+      gap: 0.36rem;
       max-height: none;
       min-height: 0;
       overflow: hidden;
@@ -1300,13 +1420,6 @@
       font-style: italic;
     }
 
-    .side-panel .info-box:first-child,
-    .dialogue-box,
-    .side-panel .info-box:has(#evidence-board) {
-      grid-column: 1 / -1;
-    }
-
-
     .side-panel h2 {
       margin: 0 0 0.2rem;
       font-size: 0.98rem;
@@ -1315,6 +1428,105 @@
     .side-panel p {
       margin-bottom: 0;
       font-size: 0.68rem;
+    }
+
+    .side-panel .info-box {
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .side-panel .save-controls {
+      grid-template-columns: 1fr 1fr;
+      margin-top: 0.32rem;
+    }
+
+    .side-panel .save-controls button {
+      padding: 0.28rem 0.32rem;
+      font-size: 0.62rem;
+      text-align: center;
+    }
+
+    .bottom-panels {
+      grid-column: 1 / -1;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 1fr 1.45fr 1.35fr;
+      gap: 0.48rem;
+    }
+
+    .bottom-panels .info-box {
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .how-to-list {
+      margin: 0;
+      padding-left: 1rem;
+      display: grid;
+      gap: 0.1rem;
+      font: 0.66rem/1.18 Arial, sans-serif;
+    }
+
+    .bonnie-dialogue-panel {
+      display: grid;
+      grid-template-columns: 86px minmax(0, 1fr);
+      gap: 0.5rem;
+      align-items: stretch;
+      border-color: rgba(126, 55, 36, 0.45);
+    }
+
+    .bonnie-cameo {
+      position: relative;
+      min-height: 120px;
+      border-radius: 11px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 52% 15%, rgba(255, 229, 171, 0.5), transparent 46%),
+        linear-gradient(180deg, #5b3727, #21130e);
+      box-shadow: inset 0 0 24px rgba(0,0,0,0.34);
+    }
+
+    .bonnie-cameo .bonnie {
+      left: 50%;
+      bottom: -24px;
+      transform: translateX(-50%) scale(0.5);
+      transform-origin: bottom center;
+    }
+
+    .dialogue-content {
+      min-width: 0;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: 0.28rem;
+    }
+
+    .dialogue-content h3 {
+      margin: 0;
+      font-size: 0.82rem;
+    }
+
+    .dialogue-content p {
+      margin: 0;
+      font-size: 0.72rem;
+      line-height: 1.25;
+      overflow: hidden;
+    }
+
+    .dialogue-box {
+      padding: 0;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .evidence-panel .evidence-board {
+      min-height: 112px;
+      height: calc(100% - 1.15rem);
+    }
+
+    .compact-list {
+      max-height: 100%;
+      overflow: hidden;
     }
 
     footer {
@@ -2048,6 +2260,16 @@
               <div class="shelf"><span class="music-box"></span><span class="vase"></span><span class="book tall"></span><span class="clock"></span></div>
             </div>
 
+            <div class="shop-prop-layer" aria-hidden="true">
+              <span class="floor-rug"></span>
+              <span class="cabinet-left"></span>
+              <span class="doll"></span>
+              <span class="hat-boxes"></span>
+              <span class="standing-lamp"></span>
+              <span class="picture-bin"></span>
+              <span class="drawer-stack"></span>
+            </div>
+
             <div class="counter" aria-hidden="true">
               <span class="drawer"></span>
               <span class="drawer"></span>
@@ -2142,46 +2364,16 @@
           </div>
         </div>
 
-        <aside class="side-panel">
+        <aside class="side-panel" aria-label="Compact investigation sidebar">
           <div class="info-box">
             <h2 id="location-heading">Main Antique Shop</h2>
-            <p id="story-text">
-              Bonnie adjusts her green field coat beneath the amber shop lamps.
-              "Every old thing has a story," she says. "We just have to listen carefully."
-            </p>
-          </div>
-
-          <div class="info-box">
-            <h3>Current Objective</h3>
+            <h3>Objective</h3>
             <p id="current-objective" class="objective-text">Find the clue that reveals why Evelyn Blackwood disappeared.</p>
-            <button id="game-directions-button" class="directions-inline" type="button">How to Play</button>
-          </div>
-
-          <div class="info-box dialogue-box" id="dialogue-box" hidden>
-            <h3 id="speaker-name">Mabel</h3>
-            <p id="dialogue-text"></p>
-            <div id="dialogue-choices" class="dialogue-choices"></div>
-          </div>
-
-          <div class="info-box save-box">
-            <h3>Save</h3>
-            <div class="save-controls">
-              <button id="save-button" type="button">Save Game</button>
-              <button id="load-button" type="button">Load Game</button>
+            <div class="save-controls" aria-label="Save and load controls">
+              <button id="save-button" type="button">Save</button>
+              <button id="load-button" type="button">Load</button>
             </div>
             <p id="save-status" aria-live="polite">Progress is kept in this browser.</p>
-          </div>
-
-          <div class="info-box">
-            <h3>Investigation Board</h3>
-            <div id="evidence-board" class="evidence-board" aria-label="Evidence board showing visual links between discovered clues">
-              <span class="evidence-connection c1"></span><span class="evidence-connection c2"></span><span class="evidence-connection c3"></span><span class="evidence-connection c4"></span>
-              <button type="button" class="evidence-node" data-evidence="evelynBlackwood">Evelyn Blackwood</button>
-              <button type="button" class="evidence-node" data-evidence="hollowOak">Hollow Oak Estate</button>
-              <button type="button" class="evidence-node" data-evidence="musicBox">music box</button>
-              <button type="button" class="evidence-node" data-evidence="tornPhotograph">torn photograph</button>
-              <button type="button" class="evidence-node" data-evidence="hiddenSymbol">hidden symbol</button>
-            </div>
           </div>
 
           <div class="info-box">
@@ -2193,20 +2385,69 @@
             </div>
           </div>
 
-          <div class="info-box">
+          <div class="info-box compact-list">
             <h3>Inventory</h3>
             <ul id="inventory" class="inventory-list" aria-live="polite">
               <li class="empty-slot">No clues yet.</li>
             </ul>
           </div>
 
-          <div class="info-box">
+          <div class="info-box compact-list">
             <h3>Quest Notes</h3>
             <ul id="quest-notes" class="journal-list" aria-live="polite">
               <li class="empty-slot">Bonnie's journal is waiting for the first real clue.</li>
             </ul>
           </div>
         </aside>
+
+        <section class="bottom-panels" aria-label="How to play, dialogue, and evidence board">
+          <div class="info-box how-to-card">
+            <h3>How to Play</h3>
+            <ul class="how-to-list">
+              <li>Click the floor to walk Bonnie around the room.</li>
+              <li>Hover glowing rings to find antiques and clues.</li>
+              <li>Examine everything; some clues unlock puzzles.</li>
+              <li>Use Rooms, Inventory, Notes, Save/Load, and Sound as you investigate.</li>
+            </ul>
+            <button id="game-directions-button" class="directions-inline" type="button">Full Guide</button>
+          </div>
+
+          <div class="info-box bonnie-dialogue-panel">
+            <div class="bonnie-cameo" aria-hidden="true">
+              <div class="bonnie">
+                <div class="bonnie-portrait"></div>
+                <div class="bonnie-body"></div>
+                <span class="bonnie-satchel"></span>
+                <span class="bonnie-boot left"></span>
+                <span class="bonnie-boot right"></span>
+              </div>
+            </div>
+            <div class="dialogue-content">
+              <h3>Bonnie</h3>
+              <p id="story-text">
+                Bonnie adjusts her green field coat beneath the amber shop lamps.
+                "Every old thing has a story," she says. "We just have to listen carefully."
+              </p>
+              <div class="dialogue-box" id="dialogue-box" hidden>
+                <h3 id="speaker-name">Mabel</h3>
+                <p id="dialogue-text"></p>
+                <div id="dialogue-choices" class="dialogue-choices"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-box evidence-panel">
+            <h3>Evidence Board</h3>
+            <div id="evidence-board" class="evidence-board" aria-label="Evidence board showing visual links between discovered clues">
+              <span class="evidence-connection c1"></span><span class="evidence-connection c2"></span><span class="evidence-connection c3"></span><span class="evidence-connection c4"></span>
+              <button type="button" class="evidence-node" data-evidence="evelynBlackwood">Evelyn Blackwood</button>
+              <button type="button" class="evidence-node" data-evidence="hollowOak">Hollow Oak Estate</button>
+              <button type="button" class="evidence-node" data-evidence="musicBox">music box</button>
+              <button type="button" class="evidence-node" data-evidence="tornPhotograph">torn photograph</button>
+              <button type="button" class="evidence-node" data-evidence="hiddenSymbol">hidden symbol</button>
+            </div>
+          </div>
+        </section>
       </section>
     </main>
 
@@ -2244,7 +2485,7 @@
     </div>
 
     <footer>
-      Version 7: richer examine hotspots, built-in directions, objective tracking, and more expressive illustrated character faces.
+      Version 8: one-screen cozy mystery layout with polished scene art, compact sidebar, bottom panels, and richly illustrated characters.
     </footer>
   </div>
 
