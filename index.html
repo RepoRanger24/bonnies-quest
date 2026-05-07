@@ -2667,6 +2667,99 @@
     .hotspot.final-compartment-hotspot { right: 33%; top: 39%; width: 74px; height: 54px; border-radius: 12px; opacity: .18; }
     .hotspot.dark-storage-corner { right: 33%; bottom: 11.2rem; width: 96px; height: 92px; border-radius: 16px; opacity: .18; }
 
+
+    /* Vertical slice polish: the Main Antique Shop exposes only eight story-critical hotspots. */
+    #room-shop .hotspot::before {
+      border-width: 1px;
+      background: radial-gradient(ellipse, rgba(255, 226, 152, 0), rgba(255, 210, 118, 0) 62%, transparent 74%);
+    }
+
+    #room-shop .hotspot:hover::before,
+    #room-shop .hotspot:focus-visible::before {
+      border-color: rgba(255, 224, 148, .32);
+      background: radial-gradient(ellipse, rgba(255, 231, 164, .11), rgba(255, 206, 101, .035) 62%, transparent 74%);
+      box-shadow: 0 0 18px rgba(255, 215, 118, .36), inset 0 0 16px rgba(255, 240, 194, .12);
+    }
+
+    #room-shop .hotspot::after {
+      top: -1.35rem;
+      font-size: .58rem;
+      opacity: 0;
+    }
+
+    #room-shop .background-art::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 38% 52%, rgba(255, 216, 132, .12), transparent 12rem),
+        linear-gradient(120deg, rgba(255,255,255,.035), transparent 30%, rgba(24, 10, 4, .18) 68%),
+        repeating-linear-gradient(108deg, rgba(255, 238, 188, .035) 0 2px, transparent 2px 18px);
+      mix-blend-mode: soft-light;
+    }
+
+    .hotspot.grandfather-clock { left: 44.4%; top: 21.8%; width: 8.4%; height: 36.4%; border-radius: 45% 45% 14% 14%; }
+    .hotspot.music-box-hotspot { left: 52.2%; top: 53.2%; width: 9.6%; height: 8.6%; border-radius: 12px; }
+    .hotspot.evelyn-photo-hotspot { left: 77.1%; top: 13.2%; width: 8.4%; height: 18.4%; border-radius: 10px; }
+    .hotspot.front-counter-hotspot { left: 62.2%; top: 61.8%; width: 31.5%; height: 17.5%; border-radius: 16px; }
+    .hotspot.locked-drawer-hotspot { left: 74.1%; top: 70.4%; width: 13.4%; height: 8.2%; border-radius: 9px; }
+    .hotspot.shop-window-hotspot { left: 6.2%; top: 31.2%; width: 13.4%; height: 22.4%; border-radius: 12px; }
+    .hotspot.shop-lamp-hotspot { left: 34.6%; top: 46.2%; width: 8.4%; height: 15.2%; border-radius: 40% 40% 18% 18%; }
+    .hotspot.shop-painting-hotspot { left: 6.8%; top: 9.2%; width: 28.2%; height: 15.8%; border-radius: 10px; }
+
+    .shop-hidden-symbol {
+      position: absolute;
+      z-index: 4;
+      left: 56.5%;
+      top: 56.2%;
+      width: 34px;
+      height: 34px;
+      transform: rotate(22deg) scale(.78);
+      opacity: 0;
+      border: 3px solid #2f1a11;
+      border-radius: 50%;
+      filter: drop-shadow(0 0 10px rgba(255, 215, 118, .55));
+      pointer-events: none;
+      transition: opacity 220ms ease, transform 220ms ease;
+    }
+
+    .shop-hidden-symbol::before,
+    .shop-hidden-symbol::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 4px;
+      height: 30px;
+      border-radius: 999px;
+      background: #2f1a11;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    .shop-hidden-symbol::after {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    .shop-hidden-symbol.visible {
+      opacity: .86;
+      transform: rotate(22deg) scale(1);
+    }
+
+    .player-bonnie:not(.walking) .sprite-art {
+      animation: bonnieIdle 2.8s ease-in-out infinite;
+    }
+
+    .player-bonnie.facing-right {
+      transform: translate(-50%, -100%) scale(var(--bonnie-scale));
+    }
+
+    @keyframes bonnieIdle {
+      0%, 100% { transform: translateY(0) rotate(0); }
+      50% { transform: translateY(-1.5px) rotate(.25deg); }
+    }
+
     @media (max-width: 860px) {
       body {
         overflow: auto;
@@ -2789,30 +2882,15 @@
           <div id="room-shop" class="room active" aria-label="Main Antique Shop">
             <div class="background-art" aria-hidden="true"><img class="asset-img" src="assets/background-antique-shop.svg" alt="" /></div>
             <div class="scene-fallback" aria-hidden="true"></div>
-            <button class="hotspot mabel-hotspot" type="button" data-label="Mabel" data-dialogue="mabel" aria-label="Talk with Mabel about the Hollow Oak mystery">Talk with Mabel</button>
-            <button class="hotspot clue-button" type="button" data-label="Key" data-object="brassKey" aria-label="Inspect the old brass key on the wooden counter">Inspect clue</button>
-            <button class="hotspot shelf-vase" type="button" data-label="Vase" data-object="greenVase" aria-label="Inspect the green vase and shelf clutter">Inspect vase</button>
-            <button class="hotspot shop-clock" type="button" data-label="Clock" data-object="wallClock" aria-label="Listen to the ticking wall clock">Inspect clock</button>
-            <button class="hotspot ledger-book" type="button" data-label="Ledger" data-object="ledgerBook" aria-label="Inspect the ledger book near the lamp">Inspect ledger</button>
-            <button class="hotspot shop-door" type="button" data-nav="storage" data-label="Storage" aria-label="Go through the curtain to the back storage room">Go to storage</button>
-            <button class="hotspot shop-shelves" type="button" data-object="shopShelves" data-label="Shelves" aria-label="Inspect the crowded antique shelves">Inspect shelves</button>
-            <button class="hotspot music-box-hotspot" type="button" data-object="shopMusicBox" data-label="Music box" aria-label="Inspect the rosewood music box on the high shelf">Inspect music box</button>
-            <button class="hotspot photo-stack-hotspot" type="button" data-object="shopPhotos" data-label="Photos" aria-label="Inspect the stack of faded shop photographs">Inspect photos</button>
-            <button class="hotspot shop-lamp-hotspot" type="button" data-object="shopLamp" data-label="Lamp" aria-label="Inspect the amber table lamp">Inspect lamp</button>
-            <button class="hotspot counter-drawers-hotspot" type="button" data-object="counterDrawers" data-label="Drawers" aria-label="Inspect the counter drawers">Inspect drawers</button>
-            <button class="hotspot gallery-photos-hotspot" type="button" data-object="galleryPhotos" data-label="Old frames" aria-label="Inspect the old framed photographs">Inspect frames</button>
-            <button class="hotspot shop-painting-hotspot" type="button" data-object="redHerringPainting" data-label="Painting" aria-label="Inspect the dramatic seascape painting">Inspect painting</button>
-            <button class="hotspot hidden-counter-mark" type="button" data-object="hiddenCounterMark" data-label="Tiny mark" aria-label="Inspect a tiny scratched mark under the counter lip">Inspect tiny mark</button>
             <button class="hotspot grandfather-clock" type="button" data-object="grandfatherClock" data-label="Grandfather clock" aria-label="Inspect the tall grandfather clock and brass pendulum">Inspect grandfather clock</button>
-            <button class="hotspot velvet-cabinet" type="button" data-object="velvetCabinet" data-label="Cabinet" aria-label="Inspect the velvet-lined display cabinet">Inspect cabinet</button>
-            <button class="hotspot shop-rug" type="button" data-object="shopRug" data-label="Worn rug" aria-label="Inspect the worn patterned rug">Inspect rug</button>
-            <button class="hotspot picture-bin-hotspot" type="button" data-object="pictureBin" data-label="Picture bin" aria-label="Inspect the leaning bin of framed photographs">Inspect picture bin</button>
-            <button class="hotspot hat-box-hotspot" type="button" data-object="hatBoxes" data-label="Hat boxes" aria-label="Inspect the stacked antique hat boxes">Inspect hat boxes</button>
-            <button class="hotspot old-camera-hotspot" type="button" data-object="oldCamera" data-label="Camera" aria-label="Inspect the old folding camera on the shelf">Inspect camera</button>
-            <button class="hotspot front-counter-hotspot" type="button" data-object="frontCounter" data-label="Front counter" aria-label="Inspect Mabel's polished front counter and display case">Inspect front counter</button>
-            <button class="hotspot gramophone-hotspot" type="button" data-object="gramophone" data-label="Gramophone" aria-label="Inspect the brass gramophone on the right shelf">Inspect gramophone</button>
-            <button class="hotspot shop-window-hotspot" type="button" data-object="shopWindow" data-label="Window" aria-label="Inspect the rain-streaked front shop window">Inspect window</button>
+            <button class="hotspot music-box-hotspot" type="button" data-object="shopMusicBox" data-label="Music box" aria-label="Inspect the rosewood music box on the shelf">Inspect music box</button>
             <button class="hotspot evelyn-photo-hotspot" type="button" data-object="evelynPhotograph" data-label="Evelyn photo" aria-label="Inspect the framed photograph of Evelyn Blackwood">Inspect Evelyn photograph</button>
+            <button class="hotspot front-counter-hotspot" type="button" data-object="frontCounter" data-label="Mabel’s counter" aria-label="Inspect Mabel's polished front counter and display case">Inspect Mabel's counter</button>
+            <button class="hotspot locked-drawer-hotspot" type="button" data-object="lockedDrawer" data-label="Locked drawer" aria-label="Inspect the locked drawer below Mabel's counter">Inspect locked drawer</button>
+            <button class="hotspot shop-window-hotspot" type="button" data-object="shopWindow" data-label="Window" aria-label="Inspect the rain-streaked front shop window">Inspect window</button>
+            <button class="hotspot shop-lamp-hotspot" type="button" data-object="shopLamp" data-label="Antique lamp" aria-label="Inspect the glowing antique lamp">Inspect antique lamp</button>
+            <button class="hotspot shop-painting-hotspot" type="button" data-object="framedPainting" data-label="Framed painting" aria-label="Inspect the large framed painting over the left wall">Inspect framed painting</button>
+            <div id="shop-symbol-art" class="shop-hidden-symbol" aria-hidden="true"></div>
           </div>
 
           <div id="room-storage" class="room" aria-label="Back Storage Room">
@@ -3064,6 +3142,7 @@
     const drawerArt = document.querySelector('#office-drawer-art');
     const hiddenNoteArt = document.querySelector('#hidden-note-art');
     const strangeSymbolArt = document.querySelector('#strange-symbol-art');
+    const shopSymbolArt = document.querySelector('#shop-symbol-art');
     const wallSafeArt = document.querySelector('#wall-safe-art');
     const dialogueBox = document.querySelector('#dialogue-box');
     const dialogueText = document.querySelector('#dialogue-text');
@@ -3114,7 +3193,7 @@
         walkArea: { minX: 8, maxX: 92, minY: 73, maxY: 91 },
         blockers: [{ minX: 56, maxX: 93, minY: 70, maxY: 85 }],
         targets: {
-          brassKey: { x: 59, y: 85 }, greenVase: { x: 18, y: 82 }, wallClock: { x: 48, y: 76 }, ledgerBook: { x: 28, y: 80 }, mabel: { x: 66, y: 85 }, storage: { x: 91, y: 84 }, grandfatherClock: { x: 48, y: 76 }, velvetCabinet: { x: 16, y: 86 }, shopRug: { x: 35, y: 88 }, pictureBin: { x: 48, y: 86 }, hatBoxes: { x: 28, y: 86 }, oldCamera: { x: 76, y: 78 }, frontCounter: { x: 67, y: 85 }, counterDrawers: { x: 73, y: 86 }, gramophone: { x: 80, y: 79 }, shopWindow: { x: 18, y: 80 }, evelynPhotograph: { x: 78, y: 78 }, shopMusicBox: { x: 55, y: 80 }, shopPhotos: { x: 48, y: 86 }, galleryPhotos: { x: 78, y: 78 }, redHerringPainting: { x: 22, y: 77 }, shopLamp: { x: 39, y: 80 }, shopShelves: { x: 35, y: 78 }, hiddenCounterMark: { x: 69, y: 86 }
+          grandfatherClock: { x: 48, y: 76 }, shopMusicBox: { x: 56, y: 80 }, evelynPhotograph: { x: 80, y: 78 }, frontCounter: { x: 68, y: 85 }, lockedDrawer: { x: 76, y: 86 }, shopWindow: { x: 18, y: 80 }, shopLamp: { x: 39, y: 80 }, framedPainting: { x: 22, y: 77 }
         }
       },
       storage: {
@@ -3195,7 +3274,7 @@
       hiddenSymbol: {
         name: 'Hidden Symbol',
         icon: 'note',
-        description: 'A crossed-circle symbol copied from the locked drawer letter.'
+        description: 'A crossed-circle symbol revealed beneath the rosewood music box tune plate.'
       },
       matchedPhotograph: {
         name: 'Matched Photograph',
@@ -3240,7 +3319,7 @@
       hiddenLetter: 'The locked drawer contained a handwritten letter, a strange crossed-circle symbol, and a direct clue: The Hollow Oak Estate.',
       floorboardScrap: 'A nearly invisible floorboard revealed that Hollow Oak has zero bell towers; the safe code may include 0.',
       typewriterCode: 'The typewriter points to BLACKWOOD; its nine letters form the final safe digit.',
-      hiddenSymbol: 'The drawer symbol is a crossed circle used as the Hollow Oak crest and as a hidden-compartment marker.',
+      hiddenSymbol: 'The rosewood music box revealed a crossed-circle symbol, updating the Hollow Oak thread on the evidence board.',
       matchedPhotograph: 'The torn photograph and hidden symbol align into a map of the office wall seam.',
       lantern: 'A hooded lantern can reveal clues in the storage room\'s darkest corner.',
       litMessage: 'Lamp light reveals Evelyn\'s message: return the missing heirloom and read the secret ledger.',
@@ -3267,12 +3346,14 @@
       officePortrait: 'The portrait\'s stern eyes resemble the woman in the torn photograph. A scratched plaque reads: "Evelyn Blackwood, collector and heir."',
       officeWindow: 'Rain runs down the upstairs window. In the reflection, Bonnie sees the shop sign and a crossed-circle symbol briefly align.',
       shopShelves: 'The shelves sag with candlesticks, chipped figurines, and books that smell like pepper and dust. Bonnie finds labeled aisles: clocks, letters, Blackwood consignments.',
-      shopMusicBox: 'The rosewood music box is pretty but silent. Its lock is old, tiny, and exactly the shape of the key tagged E. V.',
+      shopMusicBox: 'The rosewood music box is shut and silent. A tiny brass tune plate has a blank space where a receipt number should tell Bonnie which pins to press.',
+      lockedDrawer: 'The counter drawer is locked, but the Evelyn photograph gives Bonnie leverage: the drawer label E. V. matches Evelyn Vale, the name on Mabel’s oldest consignments.',
       shopPhotos: 'Faded shop photos show Mabel younger, the counter older, and the same front window Evelyn stood beside in the torn photograph.',
-      shopLamp: 'The amber lamp buzzes warmly. A moth taps the shade like it knows Morse code, but Bonnie suspects it only knows moth.',
+      shopLamp: 'The antique lamp casts a honey-colored pool across the counter. Scratches in the brass base show the same careful hand that labeled the Evelyn photograph.',
       counterDrawers: 'The counter drawers contain twine, price tags, and one caramel wrapped in wax paper. Useful? Emotionally, perhaps.',
       galleryPhotos: 'Most framed photos are shop openings and estate sales. In one corner, a woman with Evelyn\'s locket has been carefully cropped out.',
-      redHerringPainting: 'The seascape practically screams secret map, but the fresh varnish and tourist-shop signature make it a theatrical red herring.',
+      redHerringPainting: 'The framed painting is a moody landscape of Hollow Oak at dusk. Its varnish is old enough to matter, but Bonnie finds no seam—only a painted oak whose roots curl like a warning.',
+      framedPainting: 'The framed painting is a moody landscape of Hollow Oak at dusk. The brushwork is thick and realistic enough to feel wet; hidden in the roots, Bonnie notices the same circular geometry that frames Evelyn’s case.',
       hiddenCounterMark: 'Bonnie crouches and finds a tiny crossed-circle scratched under the counter lip. Someone marked this shop long before tonight.',
       storageCrates: 'The crates are stamped with estate initials. B.W. repeats often, but H.O. appears only on the crates moved most recently.',
       storageBoxes: 'Bonnie reads box labels: cabinet knobs, broken watches, haunted doilies. The doilies are not haunted, just judgmental.',
@@ -3296,7 +3377,7 @@
       pictureBin: 'Frames lean together in the picture bin. A landscape of Hollow Oak has been turned backward, hiding a penciled route to the cellar garden wall.',
       hatBoxes: 'The hat boxes smell of lavender and rain. One lid is labeled Blackwood winter things, but the box is empty except for a strand of gray silk ribbon.',
       oldCamera: 'The folding camera still holds a cracked glass plate. In the ghosted image, Evelyn stands in this very shop with the rosewood music box under one arm.',
-      frontCounter: 'The front counter is polished where Mabel folds her hands. Beneath the glass, Bonnie sees drawer labels for music boxes, Blackwood consignments, and one missing tray marked E. V.',
+      frontCounter: 'Mabel’s counter is polished to a mirror-dark shine. Under the glass, a drawer label reads E. V.; beside it sits an empty slot exactly the size of an old receipt.',
       gramophone: 'The brass gramophone is beautiful, loud, and wrong for this case: its crank is decorative and the record is a modern pressing. A convincing red herring for anyone chasing music instead of mechanisms.',
       shopWindow: 'Rain slides down the front window. The reflection lines up Mabel\'s sign, the road outside, and a faint crossed-circle scratched into the lower pane.',
       evelynPhotograph: 'A framed photograph shows Evelyn Blackwood standing beside this same window with the rosewood music box under her arm. Her bell-shaped locket matches the empty velvet impression in the cabinet.',
@@ -3332,12 +3413,14 @@
       storage: 'Footsteps lead through the curtain into the back room.',
       office: 'The narrow stairs climb toward the upstairs office.',
       shopShelves: 'Crowded shelves invite a careful look.',
-      shopMusicBox: 'A rosewood music box waits without a tune.',
+      shopMusicBox: 'A rosewood music box waits for the receipt clue.',
+      lockedDrawer: 'A drawer labeled E. V. sits beneath Mabel’s counter.',
       shopPhotos: 'Faded photographs lean in a dusty stack.',
-      shopLamp: 'Amber light pools under the shop lamp.',
+      shopLamp: 'Amber light pools under the antique lamp.',
       counterDrawers: 'Counter drawers sit below Mabel\'s watchful hands.',
       galleryPhotos: 'Old wall frames hold cropped memories.',
-      redHerringPainting: 'A dramatic painting tries very hard to look important.',
+      redHerringPainting: 'The large framed painting anchors the shadowed wall.',
+      framedPainting: 'The large framed painting anchors the shadowed wall.',
       hiddenCounterMark: 'A tiny scratch hides under the counter lip.',
       storageCrates: 'Leaning crates carry estate stamps.',
       storageBoxes: 'Labeled boxes line the rack.',
@@ -3481,8 +3564,11 @@
     const objectVisits = {};
 
     const itemObjectUses = {
+      oldReceipt: {
+        shopMusicBox: () => revealShopMusicBoxSymbol()
+      },
       brassKey: {
-        shopMusicBox: () => collectItem('tunedMusicBox', 'The old key fits the rosewood music box. Its lid opens with a music-box sigh, revealing a paper strip: "The missing heirloom was hidden after the old town fire."', document.querySelector('[data-object="shopMusicBox"]'))
+        shopMusicBox: () => revealShopMusicBoxSymbol()
       },
       lantern: {
         darkStorageCorner: () => collectItem('litMessage', 'Bonnie raises the lantern into the dark storage corner. Lamp light reveals invisible ink on a shipping tag: "Return the heirloom, read the ledger, trust no pier."', document.querySelector('[data-object="darkStorageCorner"]'))
@@ -3770,7 +3856,9 @@
       const duration = clamp(distance * 64, 360, 2200);
       const requestId = ++walkRequest;
 
-      playerBonnie.classList.toggle('facing-left', destination.x < bonniePosition.x - 0.4);
+      const movingLeft = destination.x < bonniePosition.x - 0.4;
+      playerBonnie.classList.toggle('facing-left', movingLeft);
+      playerBonnie.classList.toggle('facing-right', !movingLeft);
       playerBonnie.style.transitionDuration = `${duration}ms`;
       showWalkTarget(destination);
       playerBonnie.classList.add('walking');
@@ -3903,6 +3991,23 @@
       return true;
     }
 
+    function revealShopMusicBoxSymbol() {
+      if (collected.has('hiddenSymbol')) {
+        setNarration('The music box rests open, its crossed-circle symbol already copied onto Bonnie’s evidence board. The Main Antique Shop clue chain is complete.');
+        return false;
+      }
+
+      if (!collected.has('oldReceipt')) {
+        setNarration('Bonnie studies the rosewood music box, but the pin order is missing. The old receipt should explain which tune plate to press.');
+        return false;
+      }
+
+      shopSymbolArt.classList.add('visible');
+      collectItem('hiddenSymbol', 'Bonnie compares the old receipt number with the music box tune plate. Three pins depress with a soft chime, the lid lifts, and a crossed-circle symbol appears beneath the comb. She pins the symbol to the evidence board.', document.querySelector('[data-object="shopMusicBox"]'));
+      playEffect('safe');
+      return true;
+    }
+
     function inspectObject(objectId, button) {
       ensureAudio();
       if (tryUseSelectedItemOnObject(objectId)) return;
@@ -3928,13 +4033,25 @@
           saveGame();
           break;
         case 'evelynPhotograph':
-          collectItem('evelynPhoto', 'Bonnie lifts the small framed photograph from its hook. Evelyn Blackwood is unmistakable: the same locket, the same window, and the rosewood music box tucked under her arm.', button);
+          collectItem('evelynPhoto', 'Bonnie lifts the small framed photograph from its hook. Evelyn Blackwood is unmistakable: the same locket, the same window, and the rosewood music box tucked under her arm. The initials E. V. match the locked counter drawer.', button);
+          break;
+        case 'lockedDrawer':
+          if (!collected.has('evelynPhoto')) {
+            setNarration('The drawer below Mabel’s counter is locked and labeled E. V. Bonnie needs proof of what those initials mean before Mabel will allow a search.');
+          } else {
+            collectItem('oldReceipt', 'With Evelyn’s photograph in hand, Bonnie notices the drawer label matches E. V. Inside, she finds a brittle receipt for the rosewood music box. Three circled numbers mark the tune plate order.', button);
+          }
+          break;
+        case 'framedPainting':
+          setNarration(objectText.framedPainting);
           break;
         case 'shopMusicBox':
-          if (collected.has('tunedMusicBox')) {
-            setNarration('The opened music box shows its hidden strip about the missing Blackwood heirloom and the old town fire.');
+          if (collected.has('hiddenSymbol')) {
+            setNarration('The music box rests open. The hidden crossed-circle symbol is copied on the evidence board, linking Evelyn, Hollow Oak, and the antique shop.');
+          } else if (collected.has('oldReceipt')) {
+            setNarration(objectText.shopMusicBox + ' Select the old receipt in inventory, then click the music box to press the tune plate in the receipt order.');
           } else {
-            setNarration(objectText.shopMusicBox + ' Select the old key in inventory, then click the music box to try it.');
+            setNarration(objectText.shopMusicBox + ' Bonnie needs the old receipt before she can play the correct mechanism.');
           }
           break;
         case 'storageLamp':
@@ -4134,6 +4251,12 @@
         currentObjectiveText.textContent = 'Solved: Evelyn hid the ledger to prove the heirloom survived the old town fire and belongs at Hollow Oak Estate.';
       } else if (collected.has('safeDeed')) {
         currentObjectiveText.textContent = 'Use the matched photograph, lamp message, and deed to open the final wall compartment.';
+      } else if (collected.has('hiddenSymbol')) {
+        currentObjectiveText.textContent = 'The music box symbol is pinned to the evidence board; the Main Antique Shop vertical slice is solved.';
+      } else if (collected.has('oldReceipt')) {
+        currentObjectiveText.textContent = 'Use the old receipt clue on the rosewood music box.';
+      } else if (collected.has('evelynPhoto')) {
+        currentObjectiveText.textContent = 'Search the locked drawer below Mabel’s counter for the old receipt.';
       } else if (collected.has('hiddenLetter') || noted.has('hiddenDeskUnderside')) {
         currentObjectiveText.textContent = 'Use the receipt, floorboard, and Blackwood clue to open the hidden safe.';
       } else if (collected.has('brassKey')) {
@@ -4147,7 +4270,7 @@
       const discovered = {
         evelynBlackwood: collected.has('evelynDossier') || collected.has('tornPhotograph') || collected.has('evelynPhoto'),
         hollowOak: collected.has('hiddenLetter') || collected.has('floorboardScrap') || collected.has('safeDeed') || collected.has('secretLedger'),
-        musicBox: collected.has('brassKey') || collected.has('oldReceipt') || collected.has('tunedMusicBox'),
+        musicBox: collected.has('brassKey') || collected.has('oldReceipt') || collected.has('tunedMusicBox') || collected.has('hiddenSymbol'),
         tornPhotograph: collected.has('tornPhotograph') || collected.has('evelynPhoto'),
         hiddenSymbol: collected.has('hiddenLetter') || collected.has('hiddenSymbol') || collected.has('matchedPhotograph') || collected.has('safeDeed') || collected.has('secretLedger')
       };
@@ -4220,6 +4343,7 @@
       drawerArt.classList.toggle('unlocked', drawerUnlocked);
       hiddenNoteArt.classList.toggle('visible', drawerUnlocked);
       strangeSymbolArt.classList.toggle('visible', drawerUnlocked);
+      shopSymbolArt.classList.toggle('visible', collected.has('hiddenSymbol'));
       wallSafeArt.classList.toggle('revealed', safeRevealed || safeOpened);
       wallSafeArt.classList.toggle('open', safeOpened);
       document.querySelectorAll('[data-object]').forEach((button) => {
@@ -4238,6 +4362,8 @@
       return {
         brassKey: 'brassKey',
         oldReceipt: 'oldReceipt',
+        lockedDrawer: 'oldReceipt',
+        evelynPhotograph: 'evelynPhoto',
         tornPhotograph: 'tornPhotograph',
         looseFloorboard: 'floorboardScrap',
         officeDrawer: 'hiddenLetter',
