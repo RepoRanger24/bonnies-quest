@@ -36,15 +36,16 @@
         linear-gradient(135deg, #1b100d 0%, #44251c 46%, #8a5834 100%);
       display: grid;
       place-items: center;
-      padding: 1rem;
+      padding: clamp(0.35rem, 1.2vw, 0.8rem);
+      overflow: hidden;
     }
 
     .game-shell {
-      width: min(100%, 1120px);
-      min-height: min(92vh, 780px);
+      width: min(100%, 1380px);
+      height: min(96vh, 820px);
       background: #17100d;
-      border: 10px solid #24140e;
-      border-radius: 18px;
+      border: 6px solid #24140e;
+      border-radius: 16px;
       box-shadow: 0 28px 70px rgba(0, 0, 0, 0.55), inset 0 0 0 2px rgba(191, 138, 71, 0.28);
       overflow: hidden;
       display: grid;
@@ -57,7 +58,7 @@
         linear-gradient(90deg, rgba(35, 18, 12, 0.96), rgba(82, 43, 29, 0.96)),
         repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 14px);
       color: var(--ivory);
-      padding: 1rem 1.25rem;
+      padding: 0.55rem 0.9rem;
     }
 
     header {
@@ -76,7 +77,7 @@
 
     h1 {
       margin-bottom: 0;
-      font-size: clamp(1.6rem, 5vw, 3rem);
+      font-size: clamp(1.35rem, 3vw, 2.35rem);
       letter-spacing: 0.04em;
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.62);
     }
@@ -89,7 +90,9 @@
     }
 
     main {
-      padding: clamp(1rem, 3vw, 2rem);
+      padding: clamp(0.45rem, 1.2vw, 0.75rem);
+      min-height: 0;
+      overflow: hidden;
       background:
         radial-gradient(circle at 50% 4%, rgba(255, 220, 145, 0.26), transparent 20rem),
         linear-gradient(rgba(44, 27, 19, 0.76), rgba(27, 16, 12, 0.84)),
@@ -155,8 +158,9 @@
     }
 
     .quest-layout {
-      grid-template-columns: minmax(0, 1fr) 300px;
-      gap: 1rem;
+      grid-template-columns: minmax(680px, 1fr) minmax(330px, 380px);
+      gap: 0.65rem;
+      min-height: 0;
       align-items: stretch;
     }
 
@@ -164,14 +168,17 @@
     .side-panel {
       background: rgba(218, 190, 143, 0.94);
       border: 1px solid rgba(229, 190, 119, 0.74);
-      border-radius: 16px;
-      box-shadow: inset 0 0 28px rgba(61, 34, 19, 0.28), 0 16px 38px rgba(0, 0, 0, 0.28);
+      border-radius: 12px;
+      box-shadow: inset 0 0 18px rgba(61, 34, 19, 0.2), 0 12px 28px rgba(0, 0, 0, 0.24);
     }
 
     /* The scenes are painted with layered CSS gradients and simple shapes so the adventure remains a single file. */
     .scene-panel {
       position: relative;
-      min-height: 540px;
+      min-height: 0;
+      height: 100%;
+      max-height: calc(96vh - 8.3rem);
+      aspect-ratio: 16 / 10;
       overflow: hidden;
       isolation: isolate;
       background:
@@ -322,7 +329,7 @@
       display: flex;
       align-items: end;
       justify-content: center;
-      gap: 0.45rem;
+      gap: 0.32rem;
       padding: 0 0.6rem 1rem;
     }
 
@@ -513,102 +520,109 @@
 
     .bonnie {
       position: absolute;
-      left: 6%;
-      bottom: 1.5rem;
-      width: 170px;
-      height: 290px;
-      filter: drop-shadow(16px 18px 13px rgba(0, 0, 0, 0.42));
+      left: 5%;
+      bottom: 1.1rem;
+      width: 150px;
+      height: 265px;
+      filter: drop-shadow(14px 18px 12px rgba(0, 0, 0, 0.44));
       pointer-events: none;
     }
 
     .bonnie-portrait {
       position: absolute;
-      left: 47px;
-      top: 9px;
-      width: 76px;
-      height: 92px;
-      border-radius: 43% 43% 46% 46%;
+      left: 45px;
+      top: 10px;
+      width: 60px;
+      height: 76px;
+      border-radius: 45% 45% 48% 48%;
       background:
-        radial-gradient(ellipse at 36% 43%, #2c1c16 0 3px, transparent 4px),
-        radial-gradient(ellipse at 64% 43%, #2c1c16 0 3px, transparent 4px),
-        radial-gradient(ellipse at 50% 62%, rgba(124, 61, 54, 0.58) 0 6px, transparent 7px),
-        linear-gradient(90deg, #c98563, #e5b08b 48%, #a66a4e);
-      box-shadow: inset -9px -5px 12px rgba(74, 42, 31, 0.24), inset 8px 5px 12px rgba(255, 232, 197, 0.2);
+        linear-gradient(88deg, transparent 0 46%, rgba(127, 70, 48, 0.26) 47% 51%, transparent 52%),
+        radial-gradient(ellipse at 34% 42%, #281812 0 2px, transparent 3px),
+        radial-gradient(ellipse at 65% 42%, #281812 0 2px, transparent 3px),
+        radial-gradient(ellipse at 50% 63%, rgba(121, 51, 45, 0.72) 0 4px, transparent 5px),
+        radial-gradient(ellipse at 32% 52%, rgba(230, 150, 118, 0.34) 0 6px, transparent 7px),
+        radial-gradient(ellipse at 68% 52%, rgba(128, 70, 49, 0.26) 0 6px, transparent 7px),
+        linear-gradient(92deg, #b97858, #e7b790 47%, #9d6048);
+      box-shadow: inset -8px -5px 12px rgba(67, 38, 29, 0.32), inset 7px 5px 10px rgba(255, 233, 203, 0.26);
     }
 
     .bonnie-portrait::before {
       content: "";
       position: absolute;
-      inset: -13px -11px 28px;
+      inset: -12px -10px 22px;
       z-index: -1;
-      border-radius: 48% 48% 42% 42%;
-      background: linear-gradient(90deg, #1b1311, #4d342b 52%, #1a1110);
-      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+      border-radius: 50% 50% 42% 42%;
+      background:
+        radial-gradient(ellipse at 50% 14%, #6b4a3e 0 12px, transparent 13px),
+        linear-gradient(90deg, #1a1110, #4c342d 50%, #1a1110);
+      box-shadow: 0 8px 13px rgba(0, 0, 0, 0.34);
     }
 
     .bonnie-portrait::after {
       content: "";
       position: absolute;
-      left: 23px;
-      bottom: 13px;
-      width: 30px;
+      left: 19px;
+      bottom: 11px;
+      width: 22px;
       height: 2px;
       border-radius: 50%;
-      background: rgba(70, 38, 33, 0.72);
-      box-shadow: 1px -18px 0 -1px rgba(106, 59, 44, 0.38);
+      background: rgba(72, 36, 32, 0.78);
+      box-shadow: -10px -27px 0 -1px rgba(42, 27, 22, 0.42), 10px -27px 0 -1px rgba(42, 27, 22, 0.42);
     }
 
     .bonnie-body {
       position: absolute;
-      left: 32px;
+      left: 31px;
       bottom: 0;
-      width: 106px;
-      height: 205px;
-      border-radius: 46px 46px 14px 14px;
+      width: 88px;
+      height: 185px;
+      border-radius: 38px 38px 12px 12px;
       background:
-        linear-gradient(100deg, rgba(255, 255, 255, 0.1), transparent 30%),
-        linear-gradient(90deg, #182318, var(--forest) 52%, #121a12);
-      box-shadow: inset -12px 0 20px rgba(0, 0, 0, 0.25), inset 10px 0 16px rgba(255, 255, 255, 0.06);
+        linear-gradient(90deg, transparent 0 44%, rgba(238, 219, 177, 0.8) 45% 55%, transparent 56%),
+        linear-gradient(100deg, rgba(255, 255, 255, 0.13), transparent 30%),
+        linear-gradient(90deg, #172116, var(--forest) 52%, #11180f);
+      box-shadow: inset -14px 0 21px rgba(0, 0, 0, 0.3), inset 10px 0 15px rgba(255, 255, 255, 0.08);
     }
 
     .bonnie-body::before,
     .bonnie-body::after {
       content: "";
       position: absolute;
-      top: 35px;
-      width: 30px;
-      height: 136px;
-      border-radius: 18px;
-      background: linear-gradient(90deg, #151f15, #3e573b);
+      top: 28px;
+      width: 24px;
+      height: 128px;
+      border-radius: 15px;
+      background: linear-gradient(90deg, #111911, #405a3c 60%, #182216);
       transform-origin: top center;
+      box-shadow: inset -5px 0 9px rgba(0, 0, 0, 0.22);
     }
 
     .bonnie-body::before {
-      left: -18px;
-      transform: rotate(8deg);
+      left: -14px;
+      transform: rotate(7deg);
     }
 
     .bonnie-body::after {
-      right: -18px;
-      transform: rotate(-8deg);
+      right: -14px;
+      transform: rotate(-7deg);
     }
 
-    /* Invisible but focusable hotspots sit over props, giving the scene classic point-and-click behavior. */
+    /* Focusable hotspots now hug props closely, preserving point-and-click clarity without oversized invisible regions. */
     .hotspot {
       position: absolute;
       z-index: 4;
-      border: 2px solid rgba(255, 230, 160, 0.2);
+      border: 1px solid rgba(255, 230, 160, 0);
       color: transparent;
-      background: rgba(255, 219, 136, 0.01);
+      background: rgba(255, 219, 136, 0);
       box-shadow: none;
     }
 
     .hotspot:hover,
     .hotspot:focus-visible {
       color: transparent;
-      background: rgba(255, 225, 151, 0.18);
-      outline: 3px solid rgba(255, 223, 145, 0.74);
-      box-shadow: 0 0 22px rgba(255, 214, 121, 0.48), inset 0 0 18px rgba(255, 236, 184, 0.32);
+      background: rgba(255, 225, 151, 0.12);
+      outline: 2px solid rgba(255, 223, 145, 0.8);
+      box-shadow: 0 0 15px rgba(255, 214, 121, 0.42), inset 0 0 10px rgba(255, 236, 184, 0.25);
       transform: none;
       filter: drop-shadow(0 0 9px rgba(255, 223, 145, 0.58));
     }
@@ -659,10 +673,10 @@
       box-shadow: 34px 8px 0 -2px #8c651f, 42px 8px 0 -2px #8c651f, 0 0 18px rgba(255, 216, 105, 0.36);
     }
 
-    .hotspot.shelf-vase { left: 15%; top: 31%; width: 88px; height: 92px; }
-    .hotspot.shop-clock { left: 44%; top: 8%; width: 100px; height: 122px; border-radius: 46%; }
-    .hotspot.ledger-book { left: 55%; top: 36%; width: 118px; height: 82px; border-radius: 12px; }
-    .hotspot.shop-door { right: 0.8rem; bottom: 8rem; width: 86px; height: 185px; border-radius: 42px 42px 8px 8px; }
+    .hotspot.shelf-vase { left: 15.5%; top: 34%; width: 46px; height: 70px; border-radius: 18px; }
+    .hotspot.shop-clock { left: 46%; top: 10%; width: 72px; height: 92px; border-radius: 46%; }
+    .hotspot.ledger-book { left: 58%; top: 38%; width: 76px; height: 54px; border-radius: 10px; }
+    .hotspot.shop-door { right: 1.2rem; bottom: 8.4rem; width: 58px; height: 150px; border-radius: 30px 30px 8px 8px; }
 
     .storage-rack {
       position: absolute;
@@ -734,11 +748,11 @@
       background: linear-gradient(135deg, #4f3b2c 45%, #9e8059 46% 58%, #2e2119 59%);
     }
 
-    .hotspot.receipt { left: 20%; top: 42%; width: 82px; height: 82px; border-radius: 12px; }
-    .hotspot.torn-photo { left: 38%; top: 56%; width: 92px; height: 72px; border-radius: 12px; }
-    .hotspot.trunk-lock { right: 13%; bottom: 6.5rem; width: 166px; height: 90px; border-radius: 24px 24px 8px 8px; }
-    .hotspot.back-stairs { right: 1rem; top: 6.8rem; width: 94px; height: 250px; border-radius: 8px; }
-    .hotspot.storage-lamp { left: 5%; top: 6%; width: 84px; height: 92px; border-radius: 40px; }
+    .hotspot.receipt { left: 20.5%; top: 43%; width: 48px; height: 62px; border-radius: 10px; }
+    .hotspot.torn-photo { left: 39%; top: 57%; width: 62px; height: 46px; border-radius: 10px; }
+    .hotspot.trunk-lock { right: 15%; bottom: 6.9rem; width: 108px; height: 62px; border-radius: 20px 20px 8px 8px; }
+    .hotspot.back-stairs { right: 1.45rem; top: 7.5rem; width: 58px; height: 210px; border-radius: 8px; }
+    .hotspot.storage-lamp { left: 6%; top: 7%; width: 56px; height: 58px; border-radius: 50%; }
 
     .staircase {
       position: absolute;
@@ -875,10 +889,10 @@
       opacity: 1;
     }
 
-    .hotspot.office-drawer-hotspot { right: 14%; bottom: 8.6rem; width: 152px; height: 78px; border-radius: 10px; }
-    .hotspot.typewriter-hotspot { left: 30%; bottom: 15.2rem; width: 132px; height: 88px; border-radius: 12px; }
-    .hotspot.portrait-hotspot { right: 12%; top: 4rem; width: 152px; height: 182px; border-radius: 10px; }
-    .hotspot.office-window-hotspot { left: 6%; top: 3.8rem; width: 190px; height: 146px; border-radius: 8px; }
+    .hotspot.office-drawer-hotspot { right: 16%; bottom: 9.1rem; width: 104px; height: 50px; border-radius: 8px; }
+    .hotspot.typewriter-hotspot { left: 32%; bottom: 16rem; width: 108px; height: 62px; border-radius: 10px; }
+    .hotspot.portrait-hotspot { right: 13%; top: 4.5rem; width: 130px; height: 160px; border-radius: 8px; }
+    .hotspot.office-window-hotspot { left: 7%; top: 4rem; width: 170px; height: 126px; border-radius: 8px; }
 
     .nav-controls {
       position: absolute;
@@ -895,7 +909,9 @@
     .nav-button {
       pointer-events: auto;
       display: none;
-      min-width: 148px;
+      min-width: 116px;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.82rem;
       background: linear-gradient(180deg, #7b5830, #3a2115);
       box-shadow: 0 5px 0 #1e100b, 0 12px 20px rgba(0,0,0,0.36);
     }
@@ -905,10 +921,15 @@
     }
 
     .side-panel {
-      padding: 1rem;
+      padding: 0.55rem;
       display: grid;
-      grid-template-rows: auto auto auto 1fr;
-      gap: 1rem;
+      grid-template-columns: 1fr 1fr;
+      grid-auto-rows: min-content;
+      align-content: start;
+      gap: 0.5rem;
+      max-height: calc(96vh - 8.3rem);
+      min-height: 0;
+      overflow: hidden;
     }
 
     .info-box {
@@ -916,15 +937,15 @@
         linear-gradient(rgba(242, 228, 204, 0.84), rgba(206, 177, 128, 0.86)),
         repeating-linear-gradient(102deg, rgba(78, 47, 27, 0.08) 0 2px, transparent 2px 15px);
       border: 1px solid rgba(85, 48, 26, 0.34);
-      border-radius: 12px;
-      padding: 0.9rem;
-      line-height: 1.45;
+      border-radius: 10px;
+      padding: 0.55rem;
+      line-height: 1.32;
       box-shadow: inset 0 0 20px rgba(76, 45, 26, 0.16);
     }
 
     .info-box h3 {
-      margin: 0 0 0.5rem;
-      font-size: 1.05rem;
+      margin: 0 0 0.35rem;
+      font-size: 0.95rem;
     }
 
     .room-map {
@@ -935,8 +956,8 @@
     .room-map button {
       width: 100%;
       border-radius: 10px;
-      padding: 0.55rem;
-      font-size: 0.82rem;
+      padding: 0.42rem 0.5rem;
+      font-size: 0.76rem;
       text-align: left;
       background: linear-gradient(180deg, #8d6840, #4a2d1f);
       box-shadow: 0 3px 0 #26150e, 0 7px 13px rgba(0,0,0,0.25);
@@ -948,25 +969,25 @@
     }
 
     .inventory-list {
-      min-height: 130px;
+      min-height: 0;
       margin: 0;
       padding: 0;
       list-style: none;
       display: grid;
-      gap: 0.55rem;
+      gap: 0.32rem;
     }
 
     .inventory-list li {
       display: grid;
-      grid-template-columns: 42px 1fr;
-      gap: 0.65rem;
+      grid-template-columns: 30px 1fr;
+      gap: 0.42rem;
       align-items: center;
       background: rgba(255, 244, 220, 0.78);
       border: 1px solid rgba(93, 56, 30, 0.38);
-      border-radius: 10px;
-      padding: 0.58rem;
+      border-radius: 8px;
+      padding: 0.38rem;
       font-family: Arial, sans-serif;
-      font-size: 0.9rem;
+      font-size: 0.78rem;
       box-shadow: 0 4px 10px rgba(50, 28, 18, 0.14);
     }
 
@@ -976,8 +997,8 @@
     }
 
     .item-icon {
-      width: 38px;
-      height: 38px;
+      width: 28px;
+      height: 28px;
       border-radius: 8px;
       background: rgba(91, 52, 27, 0.15);
       position: relative;
@@ -987,30 +1008,30 @@
     .item-icon.key::before {
       content: "";
       position: absolute;
-      left: 6px;
-      top: 8px;
-      width: 15px;
-      height: 15px;
-      border: 5px solid #b98935;
+      left: 4px;
+      top: 6px;
+      width: 10px;
+      height: 10px;
+      border: 4px solid #b98935;
       border-radius: 50%;
     }
 
     .item-icon.key::after {
       content: "";
       position: absolute;
-      left: 21px;
-      top: 18px;
-      width: 15px;
-      height: 5px;
+      left: 16px;
+      top: 15px;
+      width: 10px;
+      height: 4px;
       background: #b98935;
-      box-shadow: 8px 5px 0 -1px #8a6326, 13px 5px 0 -1px #8a6326;
+      box-shadow: 6px 4px 0 -1px #8a6326, 10px 4px 0 -1px #8a6326;
     }
 
     .item-icon.receipt::before,
     .item-icon.note::before {
       content: "";
       position: absolute;
-      inset: 6px 9px;
+      inset: 5px 7px;
       background: repeating-linear-gradient(0deg, rgba(93, 56, 30, 0.24) 0 1px, transparent 1px 7px), #ead5a9;
       border: 1px solid #8c6133;
       transform: rotate(-4deg);
@@ -1019,10 +1040,10 @@
     .item-icon.photo::before {
       content: "";
       position: absolute;
-      inset: 8px 6px;
+      inset: 6px 5px;
       clip-path: polygon(0 0, 100% 10%, 86% 100%, 10% 85%);
       background: linear-gradient(135deg, #4f3b2c 45%, #9e8059 46% 58%, #2e2119 59%);
-      border: 3px solid #d7c193;
+      border: 2px solid #d7c193;
     }
 
     .empty-slot {
@@ -1031,9 +1052,29 @@
       font-style: italic;
     }
 
+    .side-panel .info-box:first-child,
+    .dialogue-box,
+    .side-panel .info-box:has(#evidence-board) {
+      grid-column: 1 / -1;
+    }
+
+    .side-panel .info-box:nth-child(2) {
+      display: none;
+    }
+
+    .side-panel h2 {
+      margin: 0 0 0.25rem;
+      font-size: 1.12rem;
+    }
+
+    .side-panel p {
+      margin-bottom: 0;
+      font-size: 0.78rem;
+    }
+
     footer {
       font-family: Arial, sans-serif;
-      font-size: 0.9rem;
+      font-size: 0.76rem;
       text-align: center;
       border-top: 1px solid rgba(255, 215, 153, 0.22);
     }
@@ -1067,14 +1108,14 @@
     .audio-control-row {
       display: flex;
       justify-content: flex-end;
-      margin-top: 1rem;
+      margin-top: 0.25rem;
     }
 
     .mute-button {
-      min-width: 132px;
-      border-radius: 12px;
-      padding: 0.6rem 0.85rem;
-      font-size: 0.85rem;
+      min-width: 108px;
+      border-radius: 10px;
+      padding: 0.42rem 0.65rem;
+      font-size: 0.78rem;
       background: linear-gradient(180deg, #6d4a2a, #2b1810);
       box-shadow: 0 4px 0 #1b0e09, 0 9px 15px rgba(0, 0, 0, 0.32);
     }
@@ -1182,17 +1223,17 @@
       transform: rotate(22deg) scale(1);
     }
 
-    .hotspot.false-compass { left: 55%; top: 64%; width: 74px; height: 54px; border-radius: 50%; }
-    .hotspot.loose-floorboard { left: 16%; bottom: 4.1rem; width: 120px; height: 32px; border-radius: 999px; opacity: 0.16; }
+    .hotspot.false-compass { left: 56%; top: 65%; width: 46px; height: 34px; border-radius: 50%; }
+    .hotspot.loose-floorboard { left: 17%; bottom: 4.35rem; width: 88px; height: 20px; border-radius: 999px; opacity: 0.16; }
 
     .journal-list {
-      min-height: 118px;
+      min-height: 0;
       margin: 0;
-      padding-left: 1.1rem;
+      padding-left: 0.95rem;
       display: grid;
-      gap: 0.45rem;
+      gap: 0.28rem;
       font-family: Arial, sans-serif;
-      font-size: 0.9rem;
+      font-size: 0.76rem;
     }
 
     .journal-list li {
@@ -1280,50 +1321,71 @@
 
     .mabel {
       position: absolute;
-      right: 18%;
-      bottom: 7.2rem;
+      right: 19%;
+      bottom: 6.7rem;
       z-index: 3;
-      width: 92px;
-      height: 176px;
-      filter: drop-shadow(12px 16px 12px rgba(0, 0, 0, 0.38));
+      width: 84px;
+      height: 168px;
+      filter: drop-shadow(11px 15px 11px rgba(0, 0, 0, 0.4));
       pointer-events: none;
     }
 
     .mabel-face {
       position: absolute;
-      left: 24px;
+      left: 23px;
       top: 0;
-      width: 46px;
-      height: 56px;
-      border-radius: 46% 46% 42% 42%;
+      width: 42px;
+      height: 54px;
+      border-radius: 47% 47% 43% 43%;
       background:
-        radial-gradient(circle at 35% 43%, #2c1c16 0 2px, transparent 3px),
-        radial-gradient(circle at 65% 43%, #2c1c16 0 2px, transparent 3px),
-        radial-gradient(ellipse at 50% 66%, rgba(101, 45, 39, 0.55) 0 4px, transparent 5px),
-        linear-gradient(90deg, #b9785b, #e1ad86 52%, #9e6048);
+        linear-gradient(90deg, transparent 0 48%, rgba(117, 67, 46, 0.24) 49% 52%, transparent 53%),
+        radial-gradient(circle at 34% 42%, #2c1c16 0 1.8px, transparent 3px),
+        radial-gradient(circle at 65% 42%, #2c1c16 0 1.8px, transparent 3px),
+        radial-gradient(ellipse at 50% 67%, rgba(101, 45, 39, 0.62) 0 3px, transparent 4px),
+        radial-gradient(ellipse at 30% 52%, rgba(235, 170, 134, 0.28) 0 5px, transparent 6px),
+        linear-gradient(90deg, #a96b51, #e1ad86 52%, #925841);
+      box-shadow: inset -6px -4px 10px rgba(68, 38, 28, 0.3), inset 5px 4px 8px rgba(255, 232, 196, 0.2);
     }
 
     .mabel-face::before {
       content: "";
       position: absolute;
-      inset: -8px -10px 22px;
+      inset: -9px -10px 22px;
       z-index: -1;
-      border-radius: 50%;
-      background: linear-gradient(90deg, #8a8173, #d2c8b8 52%, #756d63);
+      border-radius: 50% 50% 45% 45%;
+      background:
+        radial-gradient(ellipse at 52% 16%, #efe8da 0 11px, transparent 12px),
+        linear-gradient(90deg, #777064, #d4cab9 52%, #6f675e);
     }
 
     .mabel-body {
       position: absolute;
       left: 13px;
       bottom: 0;
-      width: 68px;
-      height: 128px;
-      border-radius: 34px 34px 10px 10px;
-      background: linear-gradient(90deg, #3b1f1b, #82503f 52%, #2c1714);
-      box-shadow: inset -10px 0 18px rgba(0,0,0,0.22);
+      width: 60px;
+      height: 122px;
+      border-radius: 30px 30px 9px 9px;
+      background:
+        linear-gradient(90deg, transparent 0 45%, rgba(230, 188, 137, 0.68) 46% 55%, transparent 56%),
+        linear-gradient(90deg, #331a17, #814c3d 52%, #271411);
+      box-shadow: inset -10px 0 17px rgba(0,0,0,0.25), inset 7px 0 12px rgba(255,255,255,0.07);
     }
 
-    .hotspot.mabel-hotspot { right: 17%; bottom: 7rem; width: 108px; height: 184px; border-radius: 42px; }
+    .mabel-body::before,
+    .mabel-body::after {
+      content: "";
+      position: absolute;
+      top: 30px;
+      width: 18px;
+      height: 82px;
+      border-radius: 14px;
+      background: linear-gradient(90deg, #2a1512, #744438);
+    }
+
+    .mabel-body::before { left: -8px; transform: rotate(-4deg); }
+    .mabel-body::after { right: -8px; transform: rotate(5deg); }
+
+    .hotspot.mabel-hotspot { right: 18.8%; bottom: 6.8rem; width: 86px; height: 166px; border-radius: 34px; }
 
     .dialogue-box {
       border-color: rgba(126, 55, 36, 0.45);
@@ -1341,9 +1403,9 @@
     .dialogue-choices button,
     .save-controls button,
     .evidence-node {
-      border-radius: 10px;
-      padding: 0.55rem 0.65rem;
-      font-size: 0.82rem;
+      border-radius: 9px;
+      padding: 0.42rem 0.5rem;
+      font-size: 0.74rem;
       text-align: left;
       box-shadow: 0 3px 0 #26150e, 0 7px 13px rgba(0,0,0,0.22);
     }
@@ -1355,15 +1417,15 @@
     }
 
     #save-status {
-      margin: 0.55rem 0 0;
-      font-size: 0.82rem;
+      margin: 0.35rem 0 0;
+      font-size: 0.72rem;
       font-family: Arial, sans-serif;
     }
 
     .evidence-board {
       position: relative;
-      min-height: 220px;
-      border: 8px solid #6f4729;
+      min-height: 106px;
+      border: 3px solid #6f4729;
       border-radius: 10px;
       background:
         radial-gradient(circle at 40% 38%, rgba(126, 46, 35, 0.14), transparent 7rem),
@@ -1376,7 +1438,8 @@
     .evidence-node {
       position: absolute;
       z-index: 2;
-      min-width: 88px;
+      min-width: 58px;
+      max-width: 96px;
       color: #4c3324;
       background: #efe0bd;
       border: 1px solid rgba(78, 45, 24, 0.34);
@@ -1391,7 +1454,7 @@
 
     .evidence-node[data-evidence="evelynBlackwood"] { left: 7%; top: 8%; }
     .evidence-node[data-evidence="hollowOak"] { right: 7%; top: 12%; }
-    .evidence-node[data-evidence="musicBox"] { left: 31%; top: 42%; }
+    .evidence-node[data-evidence="musicBox"] { left: 34%; top: 41%; }
     .evidence-node[data-evidence="tornPhotograph"] { left: 8%; bottom: 9%; }
     .evidence-node[data-evidence="hiddenSymbol"] { right: 9%; bottom: 11%; }
 
@@ -1440,7 +1503,7 @@
       box-shadow: 34px 0 0 rgba(25, 19, 17, 0.72);
     }
 
-    .hotspot.wall-safe-hotspot { right: 14%; top: 10.7rem; width: 126px; height: 126px; border-radius: 12px; }
+    .hotspot.wall-safe-hotspot { right: 15.5%; top: 11.5rem; width: 96px; height: 96px; border-radius: 10px; }
 
     .safe-modal {
       position: fixed;
@@ -1521,6 +1584,15 @@
     }
 
     @media (max-width: 860px) {
+      body {
+        overflow: auto;
+      }
+
+      .game-shell {
+        height: auto;
+        min-height: 100vh;
+      }
+
       header {
         align-items: flex-start;
         flex-direction: column;
@@ -1536,7 +1608,13 @@
       }
 
       .scene-panel {
-        min-height: 520px;
+        min-height: 500px;
+        max-height: none;
+      }
+
+      .side-panel {
+        max-height: none;
+        overflow: visible;
       }
 
       .wall-gallery,
@@ -1779,7 +1857,7 @@
     </div>
 
     <footer>
-      Version 4: Cinematic Hollow Oak mystery, Mabel dialogue, evidence board, wall safe, and browser saves.
+      Version 5: Compact desktop mystery layout, refined hotspots, realistic character styling, and browser saves.
     </footer>
   </div>
 
