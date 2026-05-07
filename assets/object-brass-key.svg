@@ -1,7 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 100">
-  <defs><linearGradient id="brass" x1="0" x2="1"><stop stop-color="#6d4616"/><stop offset=".4" stop-color="#f1c66b"/><stop offset=".65" stop-color="#a67627"/><stop offset="1" stop-color="#f6dea1"/></linearGradient></defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 100" role="img" aria-label="aged brass key with realistic tarnish and lamplight">
+  <defs><linearGradient id="brass" x1="0" x2="1"><stop stop-color="#4b2f12"/><stop offset=".18" stop-color="#a7732b"/><stop offset=".42" stop-color="#f1ce77"/><stop offset=".68" stop-color="#8d5a1e"/><stop offset="1" stop-color="#f6dfa5"/></linearGradient><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="3" seed="8"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 .12"/></feComponentTransfer></filter></defs>
+  <ellipse cx="110" cy="80" rx="88" ry="9" fill="#050303" opacity=".36"/>
   <ellipse cx="58" cy="50" rx="35" ry="31" fill="none" stroke="url(#brass)" stroke-width="15"/>
-  <circle cx="58" cy="50" r="12" fill="#3a2116" opacity=".55"/>
+  <circle cx="58" cy="50" r="12" fill="#2a170e" opacity=".55"/>
   <path d="M91 50h92l12 13 12-13-12-13 12-13" fill="none" stroke="url(#brass)" stroke-width="15" stroke-linejoin="round" stroke-linecap="round"/>
-  <path d="M26 35c28-19 58 0 70 17" fill="none" stroke="#fff4bb" stroke-width="5" opacity=".55" stroke-linecap="round"/>
+  <path d="M26 35c28-19 58 0 70 17M104 43h58" fill="none" stroke="#fff4bb" stroke-width="4" opacity=".48" stroke-linecap="round"/>
+  <path d="M43 69c28 7 54-4 66-18" fill="none" stroke="#2f1a0d" stroke-width="4" opacity=".34"/>
+  <rect width="220" height="100" filter="url(#grain)" opacity=".8"/>
 </svg>
