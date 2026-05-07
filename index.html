@@ -349,6 +349,8 @@
     }
 
     .asset-prop.brass-key-art { right: 24%; bottom: 9.05rem; width: 126px; height: 64px; }
+    .asset-prop.gramophone-art { right: 8.2%; top: 31%; width: 136px; height: 112px; }
+    .asset-prop.evelyn-photo-art { right: 13.2%; top: 8.2%; width: 82px; height: 110px; }
     .asset-prop.storage-photo-art { left: 38%; top: 55%; width: 84px; height: 60px; transform: rotate(-7deg); }
     .asset-prop.office-note-art { left: 56%; bottom: 10.2rem; width: 88px; height: 58px; transform: rotate(2deg); }
 
@@ -2471,6 +2473,10 @@
     .hotspot.picture-bin-hotspot { left: 43%; bottom: 6.1rem; width: 108px; height: 72px; border-radius: 12px; }
     .hotspot.hat-box-hotspot { left: 24%; bottom: 8.3rem; width: 84px; height: 64px; border-radius: 18px; }
     .hotspot.old-camera-hotspot { left: 82%; top: 27%; width: 74px; height: 54px; border-radius: 12px; }
+    .hotspot.front-counter-hotspot { right: 9%; bottom: 8.1rem; width: 260px; height: 108px; border-radius: 18px; }
+    .hotspot.gramophone-hotspot { right: 7%; top: 31%; width: 128px; height: 112px; border-radius: 18px; }
+    .hotspot.shop-window-hotspot { left: 6.5%; top: 29%; width: 114px; height: 122px; border-radius: 12px; }
+    .hotspot.evelyn-photo-hotspot { right: 13.4%; top: 10%; width: 82px; height: 106px; border-radius: 12px; }
     .hotspot.estate-map-hotspot { left: 49%; top: 49%; width: 96px; height: 62px; border-radius: 12px; }
     .hotspot.blackwood-crate-hotspot { left: 46%; top: 31%; width: 104px; height: 70px; border-radius: 12px; }
     .hotspot.photo-envelope-hotspot { left: 42%; top: 50%; width: 92px; height: 58px; border-radius: 12px; }
@@ -2632,6 +2638,8 @@
             </div>
             </div>
             <div class="asset-prop brass-key-art" aria-hidden="true"><img class="asset-img" src="assets/object-brass-key.svg" alt="" /></div>
+            <div class="asset-prop gramophone-art" aria-hidden="true"><img class="asset-img" src="assets/object-gramophone.svg" alt="" /></div>
+            <div class="asset-prop evelyn-photo-art" aria-hidden="true"><img class="asset-img" src="assets/object-evelyn-photo.svg" alt="" /></div>
             <span class="asset-marker mabel-marker" aria-hidden="true"><img src="assets/hotspot-marker.svg" alt="" /></span>
             <span class="asset-marker key-marker" aria-hidden="true"><img src="assets/hotspot-marker.svg" alt="" /></span>
             <span class="asset-marker storage-marker" aria-hidden="true"><img src="assets/hotspot-marker.svg" alt="" /></span>
@@ -2662,6 +2670,10 @@
             <button class="hotspot picture-bin-hotspot" type="button" data-object="pictureBin" data-label="Picture bin" aria-label="Inspect the leaning bin of framed photographs">Inspect picture bin</button>
             <button class="hotspot hat-box-hotspot" type="button" data-object="hatBoxes" data-label="Hat boxes" aria-label="Inspect the stacked antique hat boxes">Inspect hat boxes</button>
             <button class="hotspot old-camera-hotspot" type="button" data-object="oldCamera" data-label="Camera" aria-label="Inspect the old folding camera on the shelf">Inspect camera</button>
+            <button class="hotspot front-counter-hotspot" type="button" data-object="frontCounter" data-label="Front counter" aria-label="Inspect Mabel's polished front counter and display case">Inspect front counter</button>
+            <button class="hotspot gramophone-hotspot" type="button" data-object="gramophone" data-label="Gramophone" aria-label="Inspect the brass gramophone on the right shelf">Inspect gramophone</button>
+            <button class="hotspot shop-window-hotspot" type="button" data-object="shopWindow" data-label="Window" aria-label="Inspect the rain-streaked front shop window">Inspect window</button>
+            <button class="hotspot evelyn-photo-hotspot" type="button" data-object="evelynPhotograph" data-label="Evelyn photo" aria-label="Inspect the framed photograph of Evelyn Blackwood">Inspect Evelyn photograph</button>
           </div>
 
           <div id="room-storage" class="room" aria-label="Back Storage Room">
@@ -2949,7 +2961,7 @@
         walkArea: { minX: 8, maxX: 92, minY: 73, maxY: 91 },
         blockers: [{ minX: 56, maxX: 93, minY: 70, maxY: 85 }],
         targets: {
-          brassKey: { x: 59, y: 85 }, greenVase: { x: 22, y: 76 }, wallClock: { x: 48, y: 75 }, ledgerBook: { x: 55, y: 78 }, mabel: { x: 66, y: 85 }, storage: { x: 91, y: 84 }, grandfatherClock: { x: 48, y: 76 }, velvetCabinet: { x: 16, y: 86 }, shopRug: { x: 35, y: 88 }, pictureBin: { x: 48, y: 86 }, hatBoxes: { x: 28, y: 86 }, oldCamera: { x: 76, y: 78 }
+          brassKey: { x: 59, y: 85 }, greenVase: { x: 22, y: 76 }, wallClock: { x: 48, y: 75 }, ledgerBook: { x: 55, y: 78 }, mabel: { x: 66, y: 85 }, storage: { x: 91, y: 84 }, grandfatherClock: { x: 48, y: 76 }, velvetCabinet: { x: 16, y: 86 }, shopRug: { x: 35, y: 88 }, pictureBin: { x: 48, y: 86 }, hatBoxes: { x: 28, y: 86 }, oldCamera: { x: 76, y: 78 }, frontCounter: { x: 67, y: 85 }, gramophone: { x: 80, y: 79 }, shopWindow: { x: 18, y: 80 }, evelynPhotograph: { x: 78, y: 78 }
         }
       },
       storage: {
@@ -2997,6 +3009,11 @@
         icon: 'photo',
         description: 'Half a sepia portrait showing a woman beside Mabel\'s front window.'
       },
+      evelynPhoto: {
+        name: 'Evelyn Photograph',
+        icon: 'photo',
+        description: 'A framed shop photograph of Evelyn with the rosewood music box and bell-shaped locket.'
+      },
       evelynDossier: {
         name: 'Evelyn Blackwood Dossier',
         icon: 'note',
@@ -3028,6 +3045,7 @@
       brassKey: 'The brass key is tagged for drawer three and marked E. V.; it likely belongs upstairs.',
       oldReceipt: 'The rosewood music box was sold to E. Vale exactly forty years ago; the first safe clue may be 40.',
       tornPhotograph: 'The torn photograph shows a woman with a bell-shaped locket at Mabel\'s front window.',
+      evelynPhoto: 'The framed Evelyn photograph confirms she stood in this shop with the rosewood music box before vanishing.',
       evelynDossier: 'Mabel confirms E. V. was Evelyn Blackwood, a missing antique collector investigating Hollow Oak Estate.',
       familySecret: 'Mabel\'s Antiques is tied to a hidden Blackwood family trust, which explains why Evelyn came here first.',
       hiddenLetter: 'The locked drawer contained a handwritten letter, a strange crossed-circle symbol, and a direct clue: The Hollow Oak Estate.',
@@ -3037,6 +3055,7 @@
       falseCompass: 'Red herring: the tarnished compass points toward North Pier, but its needle is glued in place.',
       misleadingMabel: 'Possible misdirection: Mabel mentioned North Pier too quickly, matching the glued compass red herring.',
       redHerringPainting: 'Red herring: the dramatic ship painting hides a fake map signature, but it was painted decades after Evelyn vanished.',
+      redHerringGramophone: 'Red herring: the gramophone looks musical and important, but its modern record points away from the true music-box mechanism.',
       hiddenCounterMark: 'A tiny counter scratch matches the crossed-circle symbol, proving the mark appeared in the shop before Evelyn disappeared.',
       hiddenCrateMark: 'A hidden chalk mark behind the crate repeats the crossed-circle sign and points away from North Pier.',
       hiddenDeskUnderside: 'Under the desk lip Bonnie finds five scratched words: Evelyn went below Hollow Oak.'
@@ -3082,6 +3101,10 @@
       pictureBin: 'Frames lean together in the picture bin. A landscape of Hollow Oak has been turned backward, hiding a penciled route to the cellar garden wall.',
       hatBoxes: 'The hat boxes smell of lavender and rain. One lid is labeled Blackwood winter things, but the box is empty except for a strand of gray silk ribbon.',
       oldCamera: 'The folding camera still holds a cracked glass plate. In the ghosted image, Evelyn stands in this very shop with the rosewood music box under one arm.',
+      frontCounter: 'The front counter is polished where Mabel folds her hands. Beneath the glass, Bonnie sees drawer labels for music boxes, Blackwood consignments, and one missing tray marked E. V.',
+      gramophone: 'The brass gramophone is beautiful, loud, and wrong for this case: its crank is decorative and the record is a modern pressing. A convincing red herring for anyone chasing music instead of mechanisms.',
+      shopWindow: 'Rain slides down the front window. The reflection lines up Mabel\'s sign, the road outside, and a faint crossed-circle scratched into the lower pane.',
+      evelynPhotograph: 'A framed photograph shows Evelyn Blackwood standing beside this same window with the rosewood music box under her arm. Her bell-shaped locket matches the empty velvet impression in the cabinet.',
       estateMap: 'A rolled estate map shows Hollow Oak from above: no bell tower, three cellar doors, and a small X drawn beneath the oldest oak tree.',
       blackwoodCrate: 'The Blackwood crate is newer than the dust around it. Fresh pry marks suggest someone recently searched it, then tried to make the room look untouched.',
       photoEnvelope: 'The brittle envelope contains duplicates of Evelyn\'s shop photograph. Someone circled Mabel\'s counter in red pencil on every copy.',
@@ -3141,6 +3164,10 @@
       pictureBin: 'A bin of old framed pictures leans by the counter.',
       hatBoxes: 'Stacked hat boxes carry old estate labels.',
       oldCamera: 'A folding camera waits on the high shelf.',
+      frontCounter: 'Mabel\'s front counter gleams with handled secrets.',
+      gramophone: 'A brass gramophone shines a little too dramatically.',
+      shopWindow: 'Rain streaks the front window into a dark mirror.',
+      evelynPhotograph: 'Evelyn Blackwood\'s framed photograph watches the shop.',
       estateMap: 'A rolled map shows the Hollow Oak grounds.',
       blackwoodCrate: 'A crate stamped B.W. has fresh pry marks.',
       photoEnvelope: 'A brittle envelope peeks from the shelf.',
@@ -3561,6 +3588,14 @@
           addJournalEntry('falseCompass');
           saveGame();
           break;
+        case 'gramophone':
+          setNarration(objectText.gramophone);
+          addJournalEntry('redHerringGramophone');
+          saveGame();
+          break;
+        case 'evelynPhotograph':
+          collectItem('evelynPhoto', 'Bonnie lifts the small framed photograph from its hook. Evelyn Blackwood is unmistakable: the same locket, the same window, and the rosewood music box tucked under her arm.', button);
+          break;
         case 'looseFloorboard':
           collectItem('floorboardScrap', 'Bonnie presses the nearly invisible raised floorboard. A scrap of paper slides free: "Hollow Oak has no bell tower. Listen underground." Zero towers—the third safe digit.', button);
           break;
@@ -3725,10 +3760,10 @@
 
     function updateEvidenceBoard() {
       const discovered = {
-        evelynBlackwood: collected.has('evelynDossier') || collected.has('tornPhotograph'),
+        evelynBlackwood: collected.has('evelynDossier') || collected.has('tornPhotograph') || collected.has('evelynPhoto'),
         hollowOak: collected.has('hiddenLetter') || collected.has('floorboardScrap') || collected.has('safeDeed'),
         musicBox: collected.has('brassKey') || collected.has('oldReceipt'),
-        tornPhotograph: collected.has('tornPhotograph'),
+        tornPhotograph: collected.has('tornPhotograph') || collected.has('evelynPhoto'),
         hiddenSymbol: collected.has('hiddenLetter') || collected.has('safeDeed')
       };
 

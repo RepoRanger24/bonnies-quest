@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 180" role="img" aria-label="antique brass gramophone">
+  <defs>
+    <linearGradient id="brass" x1="0" x2="1"><stop stop-color="#5f3914"/><stop offset=".42" stop-color="#f1c36a"/><stop offset=".72" stop-color="#9d6420"/><stop offset="1" stop-color="#ffe4a1"/></linearGradient>
+    <radialGradient id="horn" cx="38%" cy="38%" r="70%"><stop stop-color="#fff0b8"/><stop offset=".38" stop-color="#d79d40"/><stop offset=".78" stop-color="#744116"/><stop offset="1" stop-color="#2b1609"/></radialGradient>
+    <linearGradient id="wood" x1="0" x2="1"><stop stop-color="#21100a"/><stop offset=".5" stop-color="#8b532e"/><stop offset="1" stop-color="#170b07"/></linearGradient>
+  </defs>
+  <ellipse cx="108" cy="160" rx="82" ry="13" fill="#050303" opacity=".36"/>
+  <path d="M101 77c27-15 57-23 87-52 11-10 23-3 21 12-5 45-29 84-73 100-16 6-33 3-45-7z" fill="url(#horn)" stroke="#1a0d07" stroke-width="7"/>
+  <path d="M187 30c-23 31-48 52-79 63" fill="none" stroke="#fff0b6" stroke-width="5" opacity=".46" stroke-linecap="round"/>
+  <path d="M92 107c10-11 24-15 37-10 7 3 8 12 2 18l-27 27" fill="none" stroke="url(#brass)" stroke-width="14" stroke-linecap="round"/>
+  <rect x="34" y="122" width="112" height="43" rx="9" fill="url(#wood)" stroke="#160b07" stroke-width="6"/>
+  <ellipse cx="87" cy="122" rx="44" ry="18" fill="#17100d" stroke="url(#brass)" stroke-width="6"/>
+  <ellipse cx="87" cy="122" rx="18" ry="8" fill="#d7a44b" opacity=".9"/>
+  <path d="M48 144h84" stroke="#d7a44b" stroke-width="4" opacity=".45"/>
+</svg>
