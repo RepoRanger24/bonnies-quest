@@ -2483,6 +2483,145 @@
     .hotspot.stair-banister-hotspot { right: 8%; top: 24%; width: 70px; height: 160px; border-radius: 18px; }
     .hotspot.rain-streaks-hotspot { left: 10%; top: 14%; width: 122px; height: 110px; border-radius: 12px; }
     .hotspot.blackwood-portrait-plaque { right: 14%; top: 30%; width: 120px; height: 34px; border-radius: 10px; }
+
+
+    /* Version 10 room architecture: the antique shop is now a classic point-and-click scene.
+       The rendered background image supplies the room art; only interaction layers sit above it. */
+    #room-shop .scene-fallback,
+    #room-shop .asset-prop,
+    #room-shop .asset-marker,
+    #room-shop .mabel {
+      display: none;
+    }
+
+    #room-shop .background-art {
+      inset: 0;
+      background: #1b100b;
+    }
+
+    #room-shop .background-art::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 52% 18%, rgba(255, 222, 151, .18), transparent 26rem),
+        radial-gradient(circle at 50% 100%, rgba(0, 0, 0, .22), transparent 28rem),
+        linear-gradient(90deg, rgba(0, 0, 0, .26), transparent 18%, transparent 78%, rgba(0, 0, 0, .42));
+      mix-blend-mode: multiply;
+    }
+
+    #room-shop .background-art img {
+      object-fit: cover;
+      object-position: center center;
+      image-rendering: auto;
+      filter: saturate(1.12) contrast(1.08) brightness(.98);
+    }
+
+    /* Hotspots are invisible until hover/focus, then reveal a subtle adventure-game glow and label. */
+    #room-shop .hotspot {
+      z-index: 5;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+      opacity: 1;
+    }
+
+    #room-shop .hotspot::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 2px solid rgba(255, 220, 132, 0);
+      border-radius: inherit;
+      background: radial-gradient(circle, rgba(255, 222, 135, 0), transparent 68%);
+      box-shadow: none;
+      opacity: 0;
+      transform: scale(.92);
+      transition: opacity 160ms ease, transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+      animation: none;
+    }
+
+    #room-shop .hotspot:hover::before,
+    #room-shop .hotspot:focus-visible::before {
+      border-color: rgba(255, 224, 148, .76);
+      background: radial-gradient(circle, rgba(255, 225, 143, .16), rgba(255, 207, 104, .05) 58%, transparent 72%);
+      box-shadow: 0 0 24px rgba(255, 215, 118, .58), inset 0 0 18px rgba(255, 238, 187, .18);
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    #room-shop .hotspot:hover,
+    #room-shop .hotspot:focus-visible {
+      background: transparent;
+      outline: 0;
+      filter: none;
+    }
+
+    #room-shop .hotspot::after {
+      z-index: 6;
+      top: -1.55rem;
+      color: #ffe9b2;
+      background: linear-gradient(180deg, rgba(58, 31, 17, .96), rgba(19, 10, 7, .96));
+      border-color: rgba(238, 188, 93, .8);
+      text-shadow: 0 1px 2px rgba(0,0,0,.8);
+    }
+
+    /* Clickable regions mapped to the rendered antique-shop background. */
+    .hotspot.shop-clock { left: 43.8%; top: 25.8%; width: 8.8%; height: 28.5%; border-radius: 48% 48% 18% 18%; }
+    .hotspot.gramophone-hotspot { left: 75.4%; top: 37.2%; width: 16.2%; height: 22%; border-radius: 42% 50% 24% 24%; }
+    .hotspot.front-counter-hotspot { left: 62.2%; top: 62.8%; width: 31.5%; height: 18.5%; border-radius: 16px; }
+    .hotspot.counter-drawers-hotspot { left: 74%; top: 70.4%; width: 13.6%; height: 8.6%; border-radius: 10px; }
+    .hotspot.music-box-hotspot { left: 50.8%; top: 52.2%; width: 10.4%; height: 9.4%; border-radius: 12px; }
+    .hotspot.photo-stack-hotspot,
+    .hotspot.picture-bin-hotspot { left: 38.2%; top: 64.8%; width: 14%; height: 12.8%; border-radius: 12px; }
+    .hotspot.gallery-photos-hotspot,
+    .hotspot.evelyn-photo-hotspot { left: 76.8%; top: 14.2%; width: 9.6%; height: 17.8%; border-radius: 12px; }
+    .hotspot.shop-painting-hotspot { left: 6.8%; top: 9.2%; width: 28.2%; height: 15.8%; border-radius: 10px; }
+    .hotspot.shop-lamp-hotspot { left: 34.6%; top: 46.2%; width: 8.4%; height: 15.2%; border-radius: 40% 40% 18% 18%; }
+    .hotspot.shop-shelves { left: 4.2%; top: 16.2%; width: 67.8%; height: 43.8%; border-radius: 12px; }
+    .hotspot.shop-window-hotspot { left: 6.2%; top: 31.2%; width: 13.4%; height: 22.4%; border-radius: 12px; }
+    .hotspot.shop-rug { left: 14.8%; top: 76.8%; width: 42%; height: 13.2%; border-radius: 50%; }
+    .hotspot.hidden-counter-mark { left: 70.8%; top: 63.8%; width: 5%; height: 4.8%; border-radius: 50%; opacity: 1; }
+
+    /* Secondary shop hotspots remain available, but they also map onto the single background image. */
+    .hotspot.clue-button { left: 58%; top: 62%; width: 9%; height: 7%; border-radius: 50%; }
+    .hotspot.mabel-hotspot { left: 62.2%; top: 39.5%; width: 13%; height: 27%; border-radius: 38% 38% 18% 18%; }
+    .hotspot.shelf-vase { left: 8.5%; top: 27.5%; width: 9%; height: 13%; border-radius: 18px; }
+    .hotspot.ledger-book { left: 22%; top: 35.8%; width: 11%; height: 8%; border-radius: 10px; }
+    .hotspot.shop-door { left: 88.6%; top: 30%; width: 7.6%; height: 49%; border-radius: 16px; }
+    .hotspot.grandfather-clock { left: 43.8%; top: 25.8%; width: 8.8%; height: 28.5%; border-radius: 48% 48% 18% 18%; }
+    .hotspot.velvet-cabinet { left: 7.2%; top: 61.2%; width: 15.4%; height: 21.8%; border-radius: 14px; }
+    .hotspot.hat-box-hotspot { left: 24%; top: 58.4%; width: 9.4%; height: 11%; border-radius: 18px; }
+    .hotspot.old-camera-hotspot { left: 80.5%; top: 25.2%; width: 12%; height: 9%; border-radius: 12px; }
+
+    .player-bonnie {
+      z-index: 7;
+      width: 150px;
+      height: 258px;
+      transition-property: left, top;
+      transition-timing-function: cubic-bezier(.22, .61, .36, 1);
+      filter: drop-shadow(16px 22px 16px rgba(0, 0, 0, .5));
+    }
+
+    .bonnie.asset-loaded .sprite-art {
+      transform-origin: 50% 100%;
+      will-change: transform, filter;
+    }
+
+    .bonnie.asset-loaded.walking .sprite-art {
+      animation: bonnieSpriteWalk 520ms cubic-bezier(.45, 0, .55, 1) infinite;
+    }
+
+    .player-bonnie.walking::before {
+      animation: bonnieShadowPulse 520ms ease-in-out infinite;
+    }
+
+    @keyframes bonnieSpriteWalk {
+      0%, 100% { transform: translateY(0) rotate(-.6deg) scaleX(1); filter: brightness(1); }
+      25% { transform: translateY(-4px) rotate(.9deg) scaleX(.985); filter: brightness(1.04); }
+      50% { transform: translateY(1px) rotate(.4deg) scaleX(1.018); filter: brightness(.99); }
+      75% { transform: translateY(-3px) rotate(-.9deg) scaleX(.99); filter: brightness(1.03); }
+    }
     .hotspot.inkwell-hotspot { left: 53%; bottom: 11rem; width: 54px; height: 42px; border-radius: 50%; }
     .hotspot.safe-shadow-hotspot { right: 25%; top: 29%; width: 64px; height: 92px; border-radius: 12px; opacity: .26; }
 
@@ -2607,49 +2746,7 @@
           <div id="hallway-shadow" class="hallway-shadow" aria-hidden="true"></div>
           <div id="room-shop" class="room active" aria-label="Main Antique Shop">
             <div class="background-art" aria-hidden="true"><img class="asset-img" src="assets/background-antique-shop.svg" alt="" /></div>
-            <div class="scene-fallback" aria-hidden="true">
-            <div class="shop-name">Mabel's Antiques</div>
-
-            <div class="wall-gallery" aria-hidden="true">
-              <span class="frame small"></span>
-              <span class="wall-clock"></span>
-              <span class="frame"></span>
-            </div>
-
-            <div class="shelves" aria-hidden="true">
-              <div class="shelf"><span class="vase"></span><span class="book tall"></span><span class="clock"></span><span class="bottle"></span></div>
-              <div class="shelf"><span class="lamp"></span><span class="book"></span><span class="box"></span><span class="photo-stack"></span></div>
-              <div class="shelf"><span class="music-box"></span><span class="vase"></span><span class="book tall"></span><span class="clock"></span></div>
-            </div>
-
-            <div class="shop-prop-layer" aria-hidden="true">
-              <span class="floor-rug"></span>
-              <span class="cabinet-left"></span>
-              <span class="doll"></span>
-              <span class="hat-boxes"></span>
-              <span class="standing-lamp"></span>
-              <span class="picture-bin"></span>
-              <span class="drawer-stack"></span>
-            </div>
-
-            <div class="counter" aria-hidden="true">
-              <span class="drawer"></span>
-              <span class="drawer"></span>
-            </div>
-            </div>
-            <div class="asset-prop brass-key-art" aria-hidden="true"><img class="asset-img" src="assets/object-brass-key.svg" alt="" /></div>
-            <div class="asset-prop gramophone-art" aria-hidden="true"><img class="asset-img" src="assets/object-gramophone.svg" alt="" /></div>
-            <div class="asset-prop evelyn-photo-art" aria-hidden="true"><img class="asset-img" src="assets/object-evelyn-photo.svg" alt="" /></div>
-            <span class="asset-marker mabel-marker" aria-hidden="true"><img src="assets/hotspot-marker.svg" alt="" /></span>
-            <span class="asset-marker key-marker" aria-hidden="true"><img src="assets/hotspot-marker.svg" alt="" /></span>
-            <span class="asset-marker storage-marker" aria-hidden="true"><img src="assets/hotspot-marker.svg" alt="" /></span>
-
-            <div class="mabel" aria-label="Mabel, the antique shop owner watching from behind the counter">
-              <div class="sprite-art" aria-hidden="true"><img class="asset-img" src="assets/mabel-sprite.svg" alt="" /></div>
-              <div class="mabel-face"></div>
-              <div class="mabel-body"></div>
-            </div>
-
+            <div class="scene-fallback" aria-hidden="true"></div>
             <button class="hotspot mabel-hotspot" type="button" data-label="Mabel" data-dialogue="mabel" aria-label="Talk with Mabel about the Hollow Oak mystery">Talk with Mabel</button>
             <button class="hotspot clue-button" type="button" data-label="Key" data-object="brassKey" aria-label="Inspect the old brass key on the wooden counter">Inspect clue</button>
             <button class="hotspot shelf-vase" type="button" data-label="Vase" data-object="greenVase" aria-label="Inspect the green vase and shelf clutter">Inspect vase</button>
@@ -2859,8 +2956,8 @@
       <div class="directions-panel">
         <h2 id="directions-title">How to Play Bonnie's Quest</h2>
         <ul>
-          <li>Click around each room to examine antiques, furniture, marks, photos, books, windows, and suspicious corners.</li>
-          <li>Bonnie may walk to an object before inspecting it, so give her a moment to cross the floorboards.</li>
+          <li>Click the illustrated room like a classic point-and-click scene: invisible hotspots cover clocks, shelves, windows, furniture, photographs, rugs, and suspicious corners.</li>
+          <li>Bonnie walks to the clicked location before interacting, so give her a moment to cross the floorboards.</li>
           <li>Some clues go into your inventory; funny, mysterious, or false leads may only update the story or Quest Notes.</li>
           <li>Some puzzles require using one clue with another object, such as pairing an inventory clue with a locked drawer or safe.</li>
           <li>Quest Notes update when important clues are found, including red herrings worth remembering.</li>
@@ -2889,7 +2986,7 @@
     </div>
 
     <footer>
-      Version 9: asset-based art system with drop-in background layers, illustrated character sprites, visible hotspot markers, and fallback scene styling.
+      Version 10: image-based point-and-click room scenes with invisible hotspots, layered Bonnie sprite animation, and polished dark-gold UI.
     </footer>
   </div>
 
@@ -2961,7 +3058,7 @@
         walkArea: { minX: 8, maxX: 92, minY: 73, maxY: 91 },
         blockers: [{ minX: 56, maxX: 93, minY: 70, maxY: 85 }],
         targets: {
-          brassKey: { x: 59, y: 85 }, greenVase: { x: 22, y: 76 }, wallClock: { x: 48, y: 75 }, ledgerBook: { x: 55, y: 78 }, mabel: { x: 66, y: 85 }, storage: { x: 91, y: 84 }, grandfatherClock: { x: 48, y: 76 }, velvetCabinet: { x: 16, y: 86 }, shopRug: { x: 35, y: 88 }, pictureBin: { x: 48, y: 86 }, hatBoxes: { x: 28, y: 86 }, oldCamera: { x: 76, y: 78 }, frontCounter: { x: 67, y: 85 }, gramophone: { x: 80, y: 79 }, shopWindow: { x: 18, y: 80 }, evelynPhotograph: { x: 78, y: 78 }
+          brassKey: { x: 59, y: 85 }, greenVase: { x: 18, y: 82 }, wallClock: { x: 48, y: 76 }, ledgerBook: { x: 28, y: 80 }, mabel: { x: 66, y: 85 }, storage: { x: 91, y: 84 }, grandfatherClock: { x: 48, y: 76 }, velvetCabinet: { x: 16, y: 86 }, shopRug: { x: 35, y: 88 }, pictureBin: { x: 48, y: 86 }, hatBoxes: { x: 28, y: 86 }, oldCamera: { x: 76, y: 78 }, frontCounter: { x: 67, y: 85 }, counterDrawers: { x: 73, y: 86 }, gramophone: { x: 80, y: 79 }, shopWindow: { x: 18, y: 80 }, evelynPhotograph: { x: 78, y: 78 }, shopMusicBox: { x: 55, y: 80 }, shopPhotos: { x: 48, y: 86 }, galleryPhotos: { x: 78, y: 78 }, redHerringPainting: { x: 22, y: 77 }, shopLamp: { x: 39, y: 80 }, shopShelves: { x: 35, y: 78 }, hiddenCounterMark: { x: 69, y: 86 }
         }
       },
       storage: {
@@ -3441,7 +3538,7 @@
       ensureAudio();
       const destination = nearestWalkablePoint(currentRoom, point);
       const distance = Math.hypot(destination.x - bonniePosition.x, destination.y - bonniePosition.y);
-      const duration = clamp(distance * 58, 280, 1800);
+      const duration = clamp(distance * 64, 360, 2200);
       const requestId = ++walkRequest;
 
       playerBonnie.classList.toggle('facing-left', destination.x < bonniePosition.x - 0.4);
