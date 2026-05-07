@@ -220,7 +220,7 @@
       box-shadow: inset 0 0 18px rgba(61, 34, 19, 0.2), 0 12px 28px rgba(0, 0, 0, 0.24);
     }
 
-    /* The scenes are painted with layered CSS gradients and simple shapes so the adventure remains a single file. */
+    /* Fallback room colors remain behind asset-based backgrounds for missing-image resilience. */
     .scene-panel {
       position: relative;
       min-height: 0;
@@ -282,6 +282,107 @@
       display: block;
       transform: scale(0.94);
       transform-origin: center 56%;
+    }
+
+
+    /* Asset-first art system: real painted backgrounds and sprites can replace these SVG placeholders.
+       If an asset fails to load, the original CSS scenery remains visible as a fallback. */
+    .background-art {
+      position: absolute;
+      inset: -1px;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 45% 16%, rgba(255, 224, 156, 0.38), transparent 20rem),
+        linear-gradient(180deg, #573726, #21130e 58%, #513121);
+    }
+
+    .background-art img,
+    .sprite-art img,
+    .portrait-art img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .room.asset-loaded .background-art {
+      box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.34);
+    }
+
+    .room.asset-loaded .scene-fallback {
+      opacity: 0.2;
+      filter: blur(0.2px) saturate(0.7);
+    }
+
+    .scene-fallback,
+    .asset-prop,
+    .asset-marker {
+      transition: opacity 180ms ease;
+    }
+
+    .scene-fallback {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .room > .hotspot,
+    .room > .asset-marker {
+      z-index: 5;
+    }
+
+    .asset-prop {
+      position: absolute;
+      z-index: 3;
+      pointer-events: none;
+      filter: drop-shadow(0 12px 10px rgba(0, 0, 0, 0.34));
+    }
+
+    .asset-prop img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .asset-prop.brass-key-art { right: 24%; bottom: 9.05rem; width: 126px; height: 64px; }
+    .asset-prop.storage-photo-art { left: 38%; top: 55%; width: 84px; height: 60px; transform: rotate(-7deg); }
+    .asset-prop.office-note-art { left: 56%; bottom: 10.2rem; width: 88px; height: 58px; transform: rotate(2deg); }
+
+    .asset-marker {
+      position: absolute;
+      width: 34px;
+      height: 34px;
+      margin: -17px 0 0 -17px;
+      z-index: 5;
+      pointer-events: none;
+      opacity: 0.88;
+      filter: drop-shadow(0 0 10px rgba(255, 224, 137, 0.66));
+      animation: markerFloat 2.4s ease-in-out infinite;
+    }
+
+    .asset-marker img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .asset-marker.mabel-marker { right: 27%; bottom: 13.5rem; }
+    .asset-marker.key-marker { right: 29%; bottom: 12.3rem; }
+    .asset-marker.storage-marker { right: 2.8rem; bottom: 16.6rem; }
+    .asset-marker.receipt-marker { left: 23%; top: 41%; }
+    .asset-marker.photo-marker { left: 43%; top: 56%; }
+    .asset-marker.trunk-marker { right: 22%; bottom: 10rem; }
+    .asset-marker.stairs-marker { right: 4.8rem; top: 9.4rem; }
+    .asset-marker.safe-marker { right: 21%; top: 12.4rem; }
+    .asset-marker.drawer-marker { right: 25%; bottom: 10.5rem; }
+
+    @keyframes markerFloat {
+      0%, 100% { transform: translateY(0) scale(0.96); opacity: 0.72; }
+      50% { transform: translateY(-5px) scale(1.08); opacity: 1; }
     }
 
     .shop-name {
@@ -717,6 +818,31 @@
 
     .player-bonnie.walking::before {
       animation: bonnieShadowPulse 360ms ease-in-out infinite;
+    }
+
+
+    .sprite-art,
+    .portrait-art {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    .bonnie .sprite-art img {
+      object-fit: contain;
+      object-position: center bottom;
+    }
+
+    .bonnie.asset-loaded .bonnie-portrait,
+    .bonnie.asset-loaded .bonnie-body,
+    .bonnie.asset-loaded .bonnie-satchel,
+    .bonnie.asset-loaded .bonnie-boot {
+      display: none;
+    }
+
+    .bonnie.asset-loaded.walking .sprite-art {
+      animation: bonnieBodyStride 360ms ease-in-out infinite;
     }
 
     .bonnie::before,
@@ -1493,6 +1619,25 @@
       transform-origin: bottom center;
     }
 
+
+    .dialogue-portrait-asset {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .dialogue-portrait-asset img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    .bonnie-cameo.asset-loaded .bonnie {
+      display: none;
+    }
+
     .dialogue-content {
       min-width: 0;
       display: grid;
@@ -1913,6 +2058,22 @@
     .mabel-body::before { left: -8px; transform: rotate(-4deg); }
     .mabel-body::after { right: -8px; transform: rotate(5deg); }
 
+    .mabel .sprite-art {
+      inset: auto 0 0 0;
+      height: 100%;
+      z-index: 4;
+    }
+
+    .mabel .sprite-art img {
+      object-fit: contain;
+      object-position: center bottom;
+    }
+
+    .mabel.asset-loaded .mabel-face,
+    .mabel.asset-loaded .mabel-body {
+      display: none;
+    }
+
     .hotspot.mabel-hotspot { right: 20.8%; bottom: 6.35rem; width: 84px; height: 158px; border-radius: 34px; }
 
     .dialogue-box {
@@ -2246,6 +2407,8 @@
           <div id="lightning-flash" class="lightning-flash" aria-hidden="true"></div>
           <div id="hallway-shadow" class="hallway-shadow" aria-hidden="true"></div>
           <div id="room-shop" class="room active" aria-label="Main Antique Shop">
+            <div class="background-art" aria-hidden="true"><img class="asset-img" src="assets/background-antique-shop.svg" alt="" /></div>
+            <div class="scene-fallback" aria-hidden="true">
             <div class="shop-name">Mabel's Antiques</div>
 
             <div class="wall-gallery" aria-hidden="true">
@@ -2274,8 +2437,14 @@
               <span class="drawer"></span>
               <span class="drawer"></span>
             </div>
+            </div>
+            <div class="asset-prop brass-key-art" aria-hidden="true"><img class="asset-img" src="assets/object-brass-key.svg" alt="" /></div>
+            <span class="asset-marker mabel-marker" aria-hidden="true"><img src="assets/hotspot-marker.svg" alt="" /></span>
+            <span class="asset-marker key-marker" aria-hidden="true"><img src="assets/hotspot-marker.svg" alt="" /></span>
+            <span class="asset-marker storage-marker" aria-hidden="true"><img src="assets/hotspot-marker.svg" alt="" /></span>
 
             <div class="mabel" aria-label="Mabel, the antique shop owner watching from behind the counter">
+              <div class="sprite-art" aria-hidden="true"><img class="asset-img" src="assets/mabel-sprite.svg" alt="" /></div>
               <div class="mabel-face"></div>
               <div class="mabel-body"></div>
             </div>
@@ -2297,6 +2466,8 @@
           </div>
 
           <div id="room-storage" class="room" aria-label="Back Storage Room">
+            <div class="background-art" aria-hidden="true"><img class="asset-img" src="assets/background-storage-room.svg" alt="" /></div>
+            <div class="scene-fallback" aria-hidden="true">
             <div class="flicker-bulb" aria-hidden="true"></div>
             <div class="staircase" aria-hidden="true"></div>
             <div class="storage-rack" aria-hidden="true">
@@ -2305,6 +2476,12 @@
               <div class="storage-shelf"><span class="crate"></span><span class="music-box"></span><span class="vase"></span></div>
             </div>
             <div class="trunk" aria-hidden="true"></div>
+            </div>
+            <div class="asset-prop storage-photo-art" aria-hidden="true"><img class="asset-img" src="assets/object-torn-photo.svg" alt="" /></div>
+            <span class="asset-marker receipt-marker" aria-hidden="true"><img src="assets/hotspot-marker.svg" alt="" /></span>
+            <span class="asset-marker photo-marker" aria-hidden="true"><img src="assets/hotspot-marker.svg" alt="" /></span>
+            <span class="asset-marker trunk-marker" aria-hidden="true"><img src="assets/hotspot-marker.svg" alt="" /></span>
+            <span class="asset-marker stairs-marker" aria-hidden="true"><img src="assets/hotspot-marker.svg" alt="" /></span>
 
             <button class="hotspot receipt" type="button" data-label="Receipt" data-object="oldReceipt" aria-label="Inspect the curled old receipt on the storage shelf">Inspect receipt</button>
             <button class="hotspot torn-photo" type="button" data-label="Photo" data-object="tornPhotograph" aria-label="Inspect the torn photograph wedged between boxes">Inspect photograph</button>
@@ -2323,6 +2500,8 @@
           </div>
 
           <div id="room-office" class="room" aria-label="Upstairs Office">
+            <div class="background-art" aria-hidden="true"><img class="asset-img" src="assets/background-upstairs-office.svg" alt="" /></div>
+            <div class="scene-fallback" aria-hidden="true">
             <div class="window" aria-hidden="true"></div>
             <div class="portrait" aria-hidden="true"></div>
             <div class="office-lamp" aria-hidden="true"></div>
@@ -2333,6 +2512,10 @@
             <div id="hidden-note-art" class="hidden-note" aria-hidden="true"></div>
             <div id="strange-symbol-art" class="strange-symbol" aria-hidden="true"></div>
             <div id="wall-safe-art" class="wall-safe" aria-hidden="true"><span></span></div>
+            </div>
+            <div class="asset-prop office-note-art" aria-hidden="true"><img class="asset-img" src="assets/object-note.svg" alt="" /></div>
+            <span class="asset-marker safe-marker" aria-hidden="true"><img src="assets/hotspot-marker.svg" alt="" /></span>
+            <span class="asset-marker drawer-marker" aria-hidden="true"><img src="assets/hotspot-marker.svg" alt="" /></span>
 
             <button class="hotspot wall-safe-hotspot" type="button" data-label="Safe" data-object="wallSafe" aria-label="Inspect the hidden wall safe behind the portrait">Inspect safe</button>
             <button class="hotspot office-drawer-hotspot" type="button" data-label="Drawer" data-object="officeDrawer" aria-label="Try the locked upstairs office drawer">Inspect drawer</button>
@@ -2351,6 +2534,7 @@
 
           <div id="walk-target" class="walk-target" aria-hidden="true"></div>
           <div id="player-bonnie" class="bonnie player-bonnie" aria-label="Bonnie, a curious antique hunter ready to walk the room">
+            <div class="sprite-art" aria-hidden="true"><img class="asset-img" src="assets/bonnie-sprite.svg" alt="" /></div>
             <div class="bonnie-portrait"></div>
             <div class="bonnie-body"></div>
             <span class="bonnie-satchel" aria-hidden="true"></span>
@@ -2414,6 +2598,7 @@
 
           <div class="info-box bonnie-dialogue-panel">
             <div class="bonnie-cameo" aria-hidden="true">
+              <div class="dialogue-portrait-asset"><img class="asset-img" src="assets/bonnie-portrait.svg" alt="" /></div>
               <div class="bonnie">
                 <div class="bonnie-portrait"></div>
                 <div class="bonnie-body"></div>
@@ -2485,7 +2670,7 @@
     </div>
 
     <footer>
-      Version 8: one-screen cozy mystery layout with polished scene art, compact sidebar, bottom panels, and richly illustrated characters.
+      Version 9: asset-based art system with drop-in background layers, illustrated character sprites, visible hotspot markers, and fallback scene styling.
     </footer>
   </div>
 
@@ -2526,6 +2711,21 @@
     const gameDirectionsButton = document.querySelector('#game-directions-button');
     const directionsModal = document.querySelector('#directions-modal');
     const directionsClose = document.querySelector('#directions-close');
+
+    document.querySelectorAll('.asset-img').forEach((image) => {
+      const assetContainer = image.closest('.room, .bonnie, .mabel, .bonnie-cameo, .asset-prop');
+      const markLoaded = () => assetContainer?.classList.add('asset-loaded');
+      const markMissing = () => assetContainer?.classList.add('asset-missing');
+
+      if (image.complete && image.naturalWidth > 0) {
+        markLoaded();
+      } else if (image.complete) {
+        markMissing();
+      }
+
+      image.addEventListener('load', markLoaded);
+      image.addEventListener('error', markMissing);
+    });
 
     const SAVE_KEY = 'bonniesQuestHollowOakSave';
     const SAFE_CODE = '4009';
