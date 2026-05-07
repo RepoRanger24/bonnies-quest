@@ -137,6 +137,14 @@
       line-height: 1.65;
     }
 
+    .title-actions,
+    .directions-actions {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
     button {
       border: 0;
       border-radius: 999px;
@@ -156,6 +164,44 @@
       outline: 3px solid var(--amber-glow);
       outline-offset: 3px;
       filter: saturate(1.08);
+    }
+
+    .directions-button.secondary {
+      background: linear-gradient(180deg, #8d6840, #4a2d1f);
+    }
+
+    .directions-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+      background: rgba(9, 6, 5, 0.72);
+    }
+
+    .directions-modal[hidden] {
+      display: none;
+    }
+
+    .directions-panel {
+      width: min(100%, 640px);
+      max-height: min(86vh, 650px);
+      overflow: auto;
+      border: 2px solid rgba(238, 203, 126, 0.72);
+      border-radius: 18px;
+      padding: 1.25rem;
+      color: #311c12;
+      background:
+        linear-gradient(rgba(242, 228, 204, 0.97), rgba(198, 163, 103, 0.97)),
+        repeating-linear-gradient(102deg, rgba(78, 47, 27, 0.08) 0 2px, transparent 2px 15px);
+      box-shadow: 0 24px 70px rgba(0,0,0,0.54);
+      line-height: 1.45;
+    }
+
+    .directions-panel ul {
+      margin: 0 0 1rem;
+      padding-left: 1.2rem;
     }
 
     .quest-layout {
@@ -593,8 +639,11 @@
       height: 80px;
       border-radius: 46% 46% 45% 45% / 42% 42% 54% 54%;
       background:
+        radial-gradient(ellipse at 35% 35%, rgba(49, 29, 23, 0.9) 0 5px, transparent 6px),
+        radial-gradient(ellipse at 65% 35%, rgba(49, 29, 23, 0.9) 0 5px, transparent 6px),
         radial-gradient(ellipse at 35% 40%, #231713 0 2px, #8a5f43 2.8px 4.2px, transparent 4.8px),
         radial-gradient(ellipse at 65% 40%, #231713 0 2px, #8a5f43 2.8px 4.2px, transparent 4.8px),
+        linear-gradient(96deg, transparent 47%, rgba(95, 49, 37, 0.42) 48% 51%, transparent 52%),
         radial-gradient(ellipse at 50% 52%, rgba(132, 73, 52, 0.7) 0 2.2px, transparent 3px),
         radial-gradient(ellipse at 50% 68%, #7a3436 0 4px, transparent 5px),
         radial-gradient(ellipse at 31% 55%, rgba(231, 145, 118, 0.32) 0 6px, transparent 7px),
@@ -746,11 +795,37 @@
     .hotspot:hover,
     .hotspot:focus-visible {
       color: transparent;
-      background: rgba(255, 225, 151, 0.12);
-      outline: 2px solid rgba(255, 223, 145, 0.8);
+      background: rgba(255, 225, 151, 0.14);
+      outline: 2px solid rgba(255, 223, 145, 0.88);
       box-shadow: 0 0 15px rgba(255, 214, 121, 0.42), inset 0 0 10px rgba(255, 236, 184, 0.25);
       transform: none;
       filter: drop-shadow(0 0 9px rgba(255, 223, 145, 0.58));
+    }
+
+    .hotspot::after {
+      content: attr(data-label);
+      position: absolute;
+      left: 50%;
+      top: -1.7rem;
+      min-width: max-content;
+      max-width: 180px;
+      transform: translateX(-50%) translateY(4px);
+      padding: 0.22rem 0.45rem;
+      border: 1px solid rgba(255, 229, 169, 0.82);
+      border-radius: 999px;
+      color: #2c1a11;
+      background: rgba(239, 214, 170, 0.96);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.34);
+      font: 700 0.62rem Arial, sans-serif;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 140ms ease, transform 140ms ease;
+    }
+
+    .hotspot:hover::after,
+    .hotspot:focus-visible::after {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
 
     .hotspot.collected,
@@ -827,6 +902,14 @@
     .hotspot.shop-clock { left: 46%; top: 10%; width: 72px; height: 92px; border-radius: 46%; }
     .hotspot.ledger-book { left: 58%; top: 38%; width: 76px; height: 54px; border-radius: 10px; }
     .hotspot.shop-door { right: 1.2rem; bottom: 8.4rem; width: 58px; height: 150px; border-radius: 30px 30px 8px 8px; }
+    .hotspot.shop-shelves { left: 7%; top: 24%; width: 72%; height: 54px; border-radius: 10px; }
+    .hotspot.music-box-hotspot { left: 69%; top: 37%; width: 84px; height: 56px; border-radius: 12px; }
+    .hotspot.photo-stack-hotspot { left: 52%; top: 39%; width: 68px; height: 56px; border-radius: 10px; }
+    .hotspot.shop-lamp-hotspot { left: 36%; top: 31%; width: 70px; height: 78px; border-radius: 28px; }
+    .hotspot.counter-drawers-hotspot { right: 15%; bottom: 5.25rem; width: 210px; height: 52px; border-radius: 8px; }
+    .hotspot.gallery-photos-hotspot { left: 8%; top: 9%; width: 88px; height: 74px; border-radius: 8px; }
+    .hotspot.shop-painting-hotspot { right: 9%; top: 9%; width: 96px; height: 80px; border-radius: 8px; }
+    .hotspot.hidden-counter-mark { right: 34%; bottom: 8.65rem; width: 34px; height: 22px; border-radius: 50%; opacity: 0.08; }
 
     .storage-rack {
       position: absolute;
@@ -903,6 +986,14 @@
     .hotspot.trunk-lock { right: 15%; bottom: 6.9rem; width: 108px; height: 62px; border-radius: 20px 20px 8px 8px; }
     .hotspot.back-stairs { right: 1.45rem; top: 7.5rem; width: 58px; height: 210px; border-radius: 8px; }
     .hotspot.storage-lamp { left: 6%; top: 7%; width: 56px; height: 58px; border-radius: 50%; }
+    .hotspot.storage-crates { left: 8%; top: 21%; width: 110px; height: 70px; border-radius: 10px; }
+    .hotspot.storage-boxes { left: 25%; top: 43%; width: 120px; height: 70px; border-radius: 10px; }
+    .hotspot.storage-books { left: 39%; top: 46%; width: 48px; height: 88px; border-radius: 8px; }
+    .hotspot.storage-bottles { left: 35%; top: 24%; width: 42px; height: 76px; border-radius: 12px; }
+    .hotspot.storage-music-box { left: 27%; top: 61%; width: 88px; height: 56px; border-radius: 12px; }
+    .hotspot.stair-dust { right: 6%; top: 33%; width: 78px; height: 80px; border-radius: 10px; opacity: 0.2; }
+    .hotspot.odd-antique { left: 8%; top: 62%; width: 74px; height: 52px; border-radius: 16px; }
+    .hotspot.hidden-crate-mark { left: 48%; top: 67%; width: 36px; height: 28px; border-radius: 50%; opacity: 0.08; }
 
     .staircase {
       position: absolute;
@@ -1043,6 +1134,13 @@
     .hotspot.typewriter-hotspot { left: 32%; bottom: 16rem; width: 108px; height: 62px; border-radius: 10px; }
     .hotspot.portrait-hotspot { right: 13%; top: 4.5rem; width: 130px; height: 160px; border-radius: 8px; }
     .hotspot.office-window-hotspot { left: 7%; top: 4rem; width: 170px; height: 126px; border-radius: 8px; }
+    .hotspot.office-lamp-hotspot { left: 49%; bottom: 13.2rem; width: 68px; height: 82px; border-radius: 28px; }
+    .hotspot.desk-blotter-hotspot { left: 42%; bottom: 10.1rem; width: 124px; height: 54px; border-radius: 10px; }
+    .hotspot.bookcase-ledgers-hotspot { left: 27%; bottom: 14rem; width: 86px; height: 86px; border-radius: 8px; }
+    .hotspot.safe-plaque-hotspot { right: 10%; top: 16.5rem; width: 72px; height: 32px; border-radius: 8px; }
+    .hotspot.office-floor-marks { left: 36%; bottom: 3.6rem; width: 148px; height: 34px; border-radius: 999px; opacity: 0.18; }
+    .hotspot.cabinet-doors-hotspot { left: 28%; bottom: 5.9rem; width: 120px; height: 80px; border-radius: 8px; }
+    .hotspot.hidden-desk-underside { left: 59%; bottom: 8.5rem; width: 52px; height: 24px; border-radius: 50%; opacity: 0.08; }
 
     .nav-controls {
       position: absolute;
@@ -1208,9 +1306,6 @@
       grid-column: 1 / -1;
     }
 
-    .side-panel .info-box:nth-child(2) {
-      display: none;
-    }
 
     .side-panel h2 {
       margin: 0 0 0.2rem;
@@ -1535,8 +1630,11 @@
       height: 56px;
       border-radius: 48% 48% 43% 43% / 44% 44% 55% 55%;
       background:
+        radial-gradient(ellipse at 34% 36%, rgba(54, 33, 27, 0.86) 0 4.5px, transparent 5.5px),
+        radial-gradient(ellipse at 66% 36%, rgba(54, 33, 27, 0.86) 0 4.5px, transparent 5.5px),
         radial-gradient(ellipse at 34% 41%, #201611 0 1.8px, #8e6047 2.5px 3.8px, transparent 4.4px),
         radial-gradient(ellipse at 66% 41%, #201611 0 1.8px, #8e6047 2.5px 3.8px, transparent 4.4px),
+        linear-gradient(96deg, transparent 47%, rgba(104, 55, 40, 0.4) 48% 51%, transparent 52%),
         radial-gradient(ellipse at 50% 55%, rgba(127, 70, 49, 0.64) 0 2px, transparent 3px),
         radial-gradient(ellipse at 50% 69%, rgba(101, 45, 39, 0.78) 0 3.4px, transparent 4.5px),
         radial-gradient(ellipse at 30% 52%, rgba(235, 170, 134, 0.3) 0 5px, transparent 6px),
@@ -1632,6 +1730,21 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 0.3rem;
+    }
+
+    .objective-text {
+      font-weight: 700;
+      color: #5b2119;
+    }
+
+    .directions-inline {
+      width: 100%;
+      margin-top: 0.38rem;
+      border-radius: 8px;
+      padding: 0.34rem 0.45rem;
+      font-size: 0.68rem;
+      background: linear-gradient(180deg, #7b5830, #3a2115);
+      box-shadow: 0 3px 0 #26150e, 0 7px 13px rgba(0,0,0,0.22);
     }
 
     #save-status {
@@ -1906,7 +2019,10 @@
             Tonight, one small clue may reveal why missing antique collector Evelyn
             Blackwood vanished while chasing a family secret hidden in plain sight.
           </p>
-          <button id="start-button" type="button">Start Quest</button>
+          <div class="title-actions">
+            <button id="start-button" type="button">Start Quest</button>
+            <button id="title-directions-button" class="directions-button secondary" type="button">How to Play</button>
+          </div>
         </div>
       </section>
 
@@ -1942,12 +2058,20 @@
               <div class="mabel-body"></div>
             </div>
 
-            <button class="hotspot mabel-hotspot" type="button" data-dialogue="mabel" aria-label="Talk with Mabel about the Hollow Oak mystery">Talk with Mabel</button>
-            <button class="hotspot clue-button" type="button" data-object="brassKey" aria-label="Inspect the old brass key on the wooden counter">Inspect clue</button>
-            <button class="hotspot shelf-vase" type="button" data-object="greenVase" aria-label="Inspect the green vase and shelf clutter">Inspect vase</button>
-            <button class="hotspot shop-clock" type="button" data-object="wallClock" aria-label="Listen to the ticking wall clock">Inspect clock</button>
-            <button class="hotspot ledger-book" type="button" data-object="ledgerBook" aria-label="Inspect the ledger book near the lamp">Inspect ledger</button>
-            <button class="hotspot shop-door" type="button" data-nav="storage" aria-label="Go through the curtain to the back storage room">Go to storage</button>
+            <button class="hotspot mabel-hotspot" type="button" data-label="Mabel" data-dialogue="mabel" aria-label="Talk with Mabel about the Hollow Oak mystery">Talk with Mabel</button>
+            <button class="hotspot clue-button" type="button" data-label="Key" data-object="brassKey" aria-label="Inspect the old brass key on the wooden counter">Inspect clue</button>
+            <button class="hotspot shelf-vase" type="button" data-label="Vase" data-object="greenVase" aria-label="Inspect the green vase and shelf clutter">Inspect vase</button>
+            <button class="hotspot shop-clock" type="button" data-label="Clock" data-object="wallClock" aria-label="Listen to the ticking wall clock">Inspect clock</button>
+            <button class="hotspot ledger-book" type="button" data-label="Ledger" data-object="ledgerBook" aria-label="Inspect the ledger book near the lamp">Inspect ledger</button>
+            <button class="hotspot shop-door" type="button" data-nav="storage" data-label="Storage" aria-label="Go through the curtain to the back storage room">Go to storage</button>
+            <button class="hotspot shop-shelves" type="button" data-object="shopShelves" data-label="Shelves" aria-label="Inspect the crowded antique shelves">Inspect shelves</button>
+            <button class="hotspot music-box-hotspot" type="button" data-object="shopMusicBox" data-label="Music box" aria-label="Inspect the rosewood music box on the high shelf">Inspect music box</button>
+            <button class="hotspot photo-stack-hotspot" type="button" data-object="shopPhotos" data-label="Photos" aria-label="Inspect the stack of faded shop photographs">Inspect photos</button>
+            <button class="hotspot shop-lamp-hotspot" type="button" data-object="shopLamp" data-label="Lamp" aria-label="Inspect the amber table lamp">Inspect lamp</button>
+            <button class="hotspot counter-drawers-hotspot" type="button" data-object="counterDrawers" data-label="Drawers" aria-label="Inspect the counter drawers">Inspect drawers</button>
+            <button class="hotspot gallery-photos-hotspot" type="button" data-object="galleryPhotos" data-label="Old frames" aria-label="Inspect the old framed photographs">Inspect frames</button>
+            <button class="hotspot shop-painting-hotspot" type="button" data-object="redHerringPainting" data-label="Painting" aria-label="Inspect the dramatic seascape painting">Inspect painting</button>
+            <button class="hotspot hidden-counter-mark" type="button" data-object="hiddenCounterMark" data-label="Tiny mark" aria-label="Inspect a tiny scratched mark under the counter lip">Inspect tiny mark</button>
           </div>
 
           <div id="room-storage" class="room" aria-label="Back Storage Room">
@@ -1960,12 +2084,20 @@
             </div>
             <div class="trunk" aria-hidden="true"></div>
 
-            <button class="hotspot receipt" type="button" data-object="oldReceipt" aria-label="Inspect the curled old receipt on the storage shelf">Inspect receipt</button>
-            <button class="hotspot torn-photo" type="button" data-object="tornPhotograph" aria-label="Inspect the torn photograph wedged between boxes">Inspect photograph</button>
-            <button class="hotspot false-compass" type="button" data-object="falseCompass" aria-label="Inspect a tarnished compass near the floor">Inspect compass</button>
-            <button class="hotspot trunk-lock" type="button" data-object="lockedTrunk" aria-label="Inspect the brass-bound storage trunk">Inspect trunk</button>
-            <button class="hotspot storage-lamp" type="button" data-object="storageLamp" aria-label="Inspect the flickering storage room light">Inspect light</button>
-            <button class="hotspot back-stairs" type="button" data-nav="office" aria-label="Climb the narrow stairs to the upstairs office">Go upstairs</button>
+            <button class="hotspot receipt" type="button" data-label="Receipt" data-object="oldReceipt" aria-label="Inspect the curled old receipt on the storage shelf">Inspect receipt</button>
+            <button class="hotspot torn-photo" type="button" data-label="Photo" data-object="tornPhotograph" aria-label="Inspect the torn photograph wedged between boxes">Inspect photograph</button>
+            <button class="hotspot false-compass" type="button" data-label="Compass" data-object="falseCompass" aria-label="Inspect a tarnished compass near the floor">Inspect compass</button>
+            <button class="hotspot trunk-lock" type="button" data-label="Trunk" data-object="lockedTrunk" aria-label="Inspect the brass-bound storage trunk">Inspect trunk</button>
+            <button class="hotspot storage-lamp" type="button" data-label="Light" data-object="storageLamp" aria-label="Inspect the flickering storage room light">Inspect light</button>
+            <button class="hotspot back-stairs" type="button" data-nav="office" data-label="Upstairs" aria-label="Climb the narrow stairs to the upstairs office">Go upstairs</button>
+            <button class="hotspot storage-crates" type="button" data-object="storageCrates" data-label="Crates" aria-label="Inspect the leaning storage crates">Inspect crates</button>
+            <button class="hotspot storage-boxes" type="button" data-object="storageBoxes" data-label="Boxes" aria-label="Inspect the labeled storage boxes">Inspect boxes</button>
+            <button class="hotspot storage-books" type="button" data-object="storageBooks" data-label="Books" aria-label="Inspect the old account books">Inspect books</button>
+            <button class="hotspot storage-bottles" type="button" data-object="storageBottles" data-label="Bottles" aria-label="Inspect the dusty apothecary bottles">Inspect bottles</button>
+            <button class="hotspot storage-music-box" type="button" data-object="storageMusicBox" data-label="Music box" aria-label="Inspect a chipped practice music box">Inspect music box</button>
+            <button class="hotspot stair-dust" type="button" data-object="stairDust" data-label="Dust" aria-label="Inspect dusty marks on the stairs">Inspect stair dust</button>
+            <button class="hotspot odd-antique" type="button" data-object="oddAntique" data-label="Odd antique" aria-label="Inspect a strange brass automaton">Inspect odd antique</button>
+            <button class="hotspot hidden-crate-mark" type="button" data-object="hiddenCrateMark" data-label="Chalk mark" aria-label="Inspect a hidden chalk mark behind a crate">Inspect chalk mark</button>
           </div>
 
           <div id="room-office" class="room" aria-label="Upstairs Office">
@@ -1980,12 +2112,19 @@
             <div id="strange-symbol-art" class="strange-symbol" aria-hidden="true"></div>
             <div id="wall-safe-art" class="wall-safe" aria-hidden="true"><span></span></div>
 
-            <button class="hotspot wall-safe-hotspot" type="button" data-object="wallSafe" aria-label="Inspect the hidden wall safe behind the portrait">Inspect safe</button>
-            <button class="hotspot office-drawer-hotspot" type="button" data-object="officeDrawer" aria-label="Try the locked upstairs office drawer">Inspect drawer</button>
-            <button class="hotspot typewriter-hotspot" type="button" data-object="typewriter" aria-label="Inspect the old office typewriter">Inspect typewriter</button>
-            <button class="hotspot portrait-hotspot" type="button" data-object="officePortrait" aria-label="Inspect the stern portrait above the desk">Inspect portrait</button>
-            <button class="hotspot office-window-hotspot" type="button" data-object="officeWindow" aria-label="Look out the upstairs office window">Inspect window</button>
-            <button class="hotspot loose-floorboard" type="button" data-object="looseFloorboard" aria-label="Feel along an almost invisible loose floorboard">Search floorboard</button>
+            <button class="hotspot wall-safe-hotspot" type="button" data-label="Safe" data-object="wallSafe" aria-label="Inspect the hidden wall safe behind the portrait">Inspect safe</button>
+            <button class="hotspot office-drawer-hotspot" type="button" data-label="Drawer" data-object="officeDrawer" aria-label="Try the locked upstairs office drawer">Inspect drawer</button>
+            <button class="hotspot typewriter-hotspot" type="button" data-label="Typewriter" data-object="typewriter" aria-label="Inspect the old office typewriter">Inspect typewriter</button>
+            <button class="hotspot portrait-hotspot" type="button" data-label="Portrait" data-object="officePortrait" aria-label="Inspect the stern portrait above the desk">Inspect portrait</button>
+            <button class="hotspot office-window-hotspot" type="button" data-label="Window" data-object="officeWindow" aria-label="Look out the upstairs office window">Inspect window</button>
+            <button class="hotspot loose-floorboard" type="button" data-object="looseFloorboard" data-label="Raised board" aria-label="Feel along an almost invisible loose floorboard">Search floorboard</button>
+            <button class="hotspot office-lamp-hotspot" type="button" data-object="officeLamp" data-label="Lamp" aria-label="Inspect the green-shaded office lamp">Inspect lamp</button>
+            <button class="hotspot desk-blotter-hotspot" type="button" data-object="deskBlotter" data-label="Blotter" aria-label="Inspect the ink-stained desk blotter">Inspect blotter</button>
+            <button class="hotspot bookcase-ledgers-hotspot" type="button" data-object="officeLedgers" data-label="Ledgers" aria-label="Inspect the old ledgers on the desk shelf">Inspect ledgers</button>
+            <button class="hotspot safe-plaque-hotspot" type="button" data-object="safePlaque" data-label="Plaque" aria-label="Inspect a small brass plaque near the safe">Inspect plaque</button>
+            <button class="hotspot office-floor-marks" type="button" data-object="officeFloorMarks" data-label="Floor marks" aria-label="Inspect scuff marks on the office floor">Inspect floor marks</button>
+            <button class="hotspot cabinet-doors-hotspot" type="button" data-object="cabinetDoors" data-label="Cabinet" aria-label="Inspect the lower cabinet doors">Inspect cabinet</button>
+            <button class="hotspot hidden-desk-underside" type="button" data-object="hiddenDeskUnderside" data-label="Underside" aria-label="Inspect hidden writing under the desk lip">Inspect underside</button>
           </div>
 
           <div id="walk-target" class="walk-target" aria-hidden="true"></div>
@@ -2013,10 +2152,9 @@
           </div>
 
           <div class="info-box">
-            <h3>Bonnie</h3>
-            <p>
-              Antique hunter, note taker, and careful observer of dusty corners.
-            </p>
+            <h3>Current Objective</h3>
+            <p id="current-objective" class="objective-text">Find the clue that reveals why Evelyn Blackwood disappeared.</p>
+            <button id="game-directions-button" class="directions-inline" type="button">How to Play</button>
           </div>
 
           <div class="info-box dialogue-box" id="dialogue-box" hidden>
@@ -2072,6 +2210,25 @@
       </section>
     </main>
 
+    <div id="directions-modal" class="directions-modal" hidden role="dialog" aria-modal="true" aria-labelledby="directions-title">
+      <div class="directions-panel">
+        <h2 id="directions-title">How to Play Bonnie's Quest</h2>
+        <ul>
+          <li>Click around each room to examine antiques, furniture, marks, photos, books, windows, and suspicious corners.</li>
+          <li>Bonnie may walk to an object before inspecting it, so give her a moment to cross the floorboards.</li>
+          <li>Some clues go into your inventory; funny, mysterious, or false leads may only update the story or Quest Notes.</li>
+          <li>Some puzzles require using one clue with another object, such as pairing an inventory clue with a locked drawer or safe.</li>
+          <li>Quest Notes update when important clues are found, including red herrings worth remembering.</li>
+          <li>The Evidence Board shows how Evelyn, Hollow Oak, the music box, photographs, and symbols connect.</li>
+          <li>Some clues are red herrings. They sound dramatic, but Bonnie can spot when they lead away from the truth.</li>
+          <li>Explore every room carefully: shelves, clocks, boxes, lamps, cabinet doors, floor marks, paintings, and odd antiques can all talk back.</li>
+        </ul>
+        <div class="directions-actions">
+          <button id="directions-close" type="button">Back to the Mystery</button>
+        </div>
+      </div>
+    </div>
+
     <div id="safe-modal" class="safe-modal" hidden role="dialog" aria-modal="true" aria-labelledby="safe-title">
       <form id="safe-form" class="safe-panel">
         <h2 id="safe-title">Hidden Wall Safe</h2>
@@ -2087,7 +2244,7 @@
     </div>
 
     <footer>
-      Version 6: Fixed-width centered desktop layout, zoomed-out scene staging, compact panels, and semi-realistic painted character art.
+      Version 7: richer examine hotspots, built-in directions, objective tracking, and more expressive illustrated character faces.
     </footer>
   </div>
 
@@ -2101,6 +2258,7 @@
     const locationHeading = document.querySelector('#location-heading');
     const inventory = document.querySelector('#inventory');
     const questNotes = document.querySelector('#quest-notes');
+    const currentObjectiveText = document.querySelector('#current-objective');
     const hoverDescription = document.querySelector('#hover-description');
     const navBack = document.querySelector('#nav-back');
     const navForward = document.querySelector('#nav-forward');
@@ -2123,6 +2281,10 @@
     const safeFeedback = document.querySelector('#safe-feedback');
     const playerBonnie = document.querySelector('#player-bonnie');
     const walkTarget = document.querySelector('#walk-target');
+    const titleDirectionsButton = document.querySelector('#title-directions-button');
+    const gameDirectionsButton = document.querySelector('#game-directions-button');
+    const directionsModal = document.querySelector('#directions-modal');
+    const directionsClose = document.querySelector('#directions-close');
 
     const SAVE_KEY = 'bonniesQuestHollowOakSave';
     const SAFE_CODE = '4009';
@@ -2225,7 +2387,11 @@
       typewriterCode: 'The typewriter points to BLACKWOOD; its nine letters form the final safe digit.',
       safeDeed: 'The hidden wall safe opened with 4009: forty years, zero bell towers, and the nine letters in Blackwood.',
       falseCompass: 'Red herring: the tarnished compass points toward North Pier, but its needle is glued in place.',
-      misleadingMabel: 'Possible misdirection: Mabel mentioned North Pier too quickly, matching the glued compass red herring.'
+      misleadingMabel: 'Possible misdirection: Mabel mentioned North Pier too quickly, matching the glued compass red herring.',
+      redHerringPainting: 'Red herring: the dramatic ship painting hides a fake map signature, but it was painted decades after Evelyn vanished.',
+      hiddenCounterMark: 'A tiny counter scratch matches the crossed-circle symbol, proving the mark appeared in the shop before Evelyn disappeared.',
+      hiddenCrateMark: 'A hidden chalk mark behind the crate repeats the crossed-circle sign and points away from North Pier.',
+      hiddenDeskUnderside: 'Under the desk lip Bonnie finds five scratched words: Evelyn went below Hollow Oak.'
     };
 
     const objectText = {
@@ -2237,7 +2403,30 @@
       falseCompass: 'A tarnished compass lies under a crate. It points toward North Pier, but Bonnie notices the needle has been glued in place. A deliberate red herring.',
       typewriter: 'The typewriter ribbon is dry, but the B key is polished. Bonnie counts BLACKWOOD: nine letters for the last tumbler.',
       officePortrait: 'The portrait\'s stern eyes resemble the woman in the torn photograph. A scratched plaque reads: "Evelyn Blackwood, collector and heir."',
-      officeWindow: 'Rain runs down the upstairs window. In the reflection, Bonnie sees the shop sign and a crossed-circle symbol briefly align.'
+      officeWindow: 'Rain runs down the upstairs window. In the reflection, Bonnie sees the shop sign and a crossed-circle symbol briefly align.',
+      shopShelves: 'The shelves sag with candlesticks, chipped figurines, and books that smell like pepper and dust. Bonnie finds labeled aisles: clocks, letters, Blackwood consignments.',
+      shopMusicBox: 'The rosewood music box is pretty but silent. Its brass feet match the marks in the ledger, making it important without giving up a song yet.',
+      shopPhotos: 'Faded shop photos show Mabel younger, the counter older, and the same front window Evelyn stood beside in the torn photograph.',
+      shopLamp: 'The amber lamp buzzes warmly. A moth taps the shade like it knows Morse code, but Bonnie suspects it only knows moth.',
+      counterDrawers: 'The counter drawers contain twine, price tags, and one caramel wrapped in wax paper. Useful? Emotionally, perhaps.',
+      galleryPhotos: 'Most framed photos are shop openings and estate sales. In one corner, a woman with Evelyn\'s locket has been carefully cropped out.',
+      redHerringPainting: 'The seascape practically screams secret map, but the fresh varnish and tourist-shop signature make it a theatrical red herring.',
+      hiddenCounterMark: 'Bonnie crouches and finds a tiny crossed-circle scratched under the counter lip. Someone marked this shop long before tonight.',
+      storageCrates: 'The crates are stamped with estate initials. B.W. repeats often, but H.O. appears only on the crates moved most recently.',
+      storageBoxes: 'Bonnie reads box labels: cabinet knobs, broken watches, haunted doilies. The doilies are not haunted, just judgmental.',
+      storageBooks: 'Account books list repairs for music boxes, locks, and a cellar bell mechanism—odd, since Hollow Oak has no bell tower.',
+      storageBottles: 'Dusty bottles hold old polish and camphor. One cork is shaped like a little owl, which feels meaningful until it squeaks.',
+      storageMusicBox: 'A chipped practice music box plays two sour notes. Its underside is carved with trial marks for the same crossed-circle symbol.',
+      stairDust: 'Dust on the stairs shows one recent set of careful steps going up, then stopping before the office door.',
+      oddAntique: 'The brass automaton is a monkey holding a magnifying glass. Bonnie salutes a fellow investigator and finds nothing else.',
+      hiddenCrateMark: 'Behind a crate, a chalk crossed-circle points up the stairs. The mark rewards Bonnie for checking where the light barely reaches.',
+      officeLamp: 'The green-shaded lamp pools light over the desk. Its switch is warm, so someone worked here not long before Bonnie arrived.',
+      deskBlotter: 'Ink stains on the blotter form backward impressions: deed, cellar, return the box. Bonnie writes them into the case in her head.',
+      officeLedgers: 'The ledgers hide more family accounting than shop business. Hollow Oak payments continued after Evelyn disappeared.',
+      safePlaque: 'A brass plaque reads: Blackwood Trust, private property. It is too official to be decorative and too polished to be forgotten.',
+      officeFloorMarks: 'Scuff marks curve from the portrait to the desk, exactly where someone would drag a chair to reach a hidden safe.',
+      cabinetDoors: 'The lower cabinet doors creak open on jars of nibs, ribbon spools, and enough dust to knit a small ghost.',
+      hiddenDeskUnderside: 'Bonnie feels beneath the desk lip and finds scratched words: Evelyn went below Hollow Oak. That is the clearest direction yet.'
     };
 
     const hoverText = {
@@ -2258,7 +2447,30 @@
       officeWindow: 'Rain beads on the upstairs window glass.',
       looseFloorboard: 'One floorboard sits a hair higher than the rest.',
       storage: 'Footsteps lead through the curtain into the back room.',
-      office: 'The narrow stairs climb toward the upstairs office.'
+      office: 'The narrow stairs climb toward the upstairs office.',
+      shopShelves: 'Crowded shelves invite a careful look.',
+      shopMusicBox: 'A rosewood music box waits without a tune.',
+      shopPhotos: 'Faded photographs lean in a dusty stack.',
+      shopLamp: 'Amber light pools under the shop lamp.',
+      counterDrawers: 'Counter drawers sit below Mabel\'s watchful hands.',
+      galleryPhotos: 'Old wall frames hold cropped memories.',
+      redHerringPainting: 'A dramatic painting tries very hard to look important.',
+      hiddenCounterMark: 'A tiny scratch hides under the counter lip.',
+      storageCrates: 'Leaning crates carry estate stamps.',
+      storageBoxes: 'Labeled boxes line the rack.',
+      storageBooks: 'Tall books slump together on the shelf.',
+      storageBottles: 'Bottles glint in the bare bulb light.',
+      storageMusicBox: 'A chipped music box sits among crates.',
+      stairDust: 'Dust gathers on the stair treads.',
+      oddAntique: 'An odd brass automaton stares back.',
+      hiddenCrateMark: 'A faint chalk mark hides behind a crate.',
+      officeLamp: 'The green office lamp is still warm.',
+      deskBlotter: 'An ink-stained blotter covers the desk.',
+      officeLedgers: 'Old ledgers lean near the typewriter.',
+      safePlaque: 'A small brass plaque catches the light.',
+      officeFloorMarks: 'Scuffs curve across the office floor.',
+      cabinetDoors: 'Lower cabinet doors have tiny brass pulls.',
+      hiddenDeskUnderside: 'Something rough scratches the desk underside.'
     };
 
     const dialogueTree = {
@@ -2447,6 +2659,7 @@
       noted.add(entryId);
       updateJournal();
       updateEvidenceBoard();
+      updateObjective();
     }
 
     function updateJournal() {
@@ -2648,6 +2861,7 @@
       updateInventory();
       addJournalEntry(itemId);
       updateEvidenceBoard();
+      updateObjective();
       saveGame();
       return true;
     }
@@ -2675,6 +2889,26 @@
         case 'wallClock':
           playEffect('tick');
           setNarration(objectText.wallClock);
+          break;
+        case 'redHerringPainting':
+          setNarration(objectText.redHerringPainting);
+          addJournalEntry('redHerringPainting');
+          saveGame();
+          break;
+        case 'hiddenCounterMark':
+          setNarration(objectText.hiddenCounterMark);
+          addJournalEntry('hiddenCounterMark');
+          saveGame();
+          break;
+        case 'hiddenCrateMark':
+          setNarration(objectText.hiddenCrateMark);
+          addJournalEntry('hiddenCrateMark');
+          saveGame();
+          break;
+        case 'hiddenDeskUnderside':
+          setNarration(objectText.hiddenDeskUnderside);
+          addJournalEntry('hiddenDeskUnderside');
+          saveGame();
           break;
         case 'officePortrait':
           safeRevealed = true;
@@ -2799,6 +3033,18 @@
       renderDialogue(choice.next);
     }
 
+    function updateObjective() {
+      if (collected.has('safeDeed')) {
+        currentObjectiveText.textContent = 'Solved: Evelyn disappeared while following the music box trail to Hollow Oak\'s hidden cellar.';
+      } else if (collected.has('hiddenLetter') || noted.has('hiddenDeskUnderside')) {
+        currentObjectiveText.textContent = 'Use the receipt, floorboard, and Blackwood clue to open the hidden safe.';
+      } else if (collected.has('brassKey')) {
+        currentObjectiveText.textContent = 'Find what the brass key unlocks upstairs.';
+      } else {
+        currentObjectiveText.textContent = 'Find the clue that reveals why Evelyn Blackwood disappeared.';
+      }
+    }
+
     function updateEvidenceBoard() {
       const discovered = {
         evelynBlackwood: collected.has('evelynDossier') || collected.has('tornPhotograph'),
@@ -2881,6 +3127,7 @@
       updateInventory();
       updateJournal();
       updateEvidenceBoard();
+      updateObjective();
       setNarration(`Bonnie returns to the ${rooms[currentRoom].title}. The saved threads of the Hollow Oak case are back on the board.`);
     }
 
@@ -2895,6 +3142,20 @@
       }[objectId];
     }
 
+    function openDirections() {
+      directionsModal.hidden = false;
+      directionsClose.focus();
+    }
+
+    function closeDirections() {
+      directionsModal.hidden = true;
+      if (questScreen.classList.contains('active')) {
+        gameDirectionsButton.focus();
+      } else {
+        titleDirectionsButton.focus();
+      }
+    }
+
     startButton.addEventListener('click', () => {
       ensureAudio();
       titleScreen.classList.remove('active');
@@ -2904,6 +3165,13 @@
       placeBonnie(rooms[currentRoom].start, true);
       updateNavigation();
       updateRoomMusic();
+    });
+
+    titleDirectionsButton.addEventListener('click', openDirections);
+    gameDirectionsButton.addEventListener('click', openDirections);
+    directionsClose.addEventListener('click', closeDirections);
+    directionsModal.addEventListener('click', (event) => {
+      if (event.target === directionsModal) closeDirections();
     });
 
     muteButton.addEventListener('click', () => {
@@ -2962,8 +3230,10 @@
     });
 
     scenePanel.addEventListener('click', (event) => {
-      if (!questScreen.classList.contains('active') || event.target.closest('button, .modal')) return;
-      walkBonnieTo(pointFromSceneEvent(event));
+      if (!questScreen.classList.contains('active') || event.target.closest('button, .safe-modal, .directions-modal')) return;
+      walkBonnieTo(pointFromSceneEvent(event), () => {
+        setNarration('Bonnie studies that spot, then shakes her head. "Nothing useful there."');
+      });
     });
 
     saveButton.addEventListener('click', () => saveGame('Game saved in this browser.'));
@@ -2974,6 +3244,7 @@
       setNarration('Bonnie steps back from the safe. The code must connect clues from several rooms.');
     });
 
+    updateObjective();
     updateEvidenceBoard();
   </script>
 </body>
