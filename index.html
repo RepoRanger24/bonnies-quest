@@ -2648,6 +2648,108 @@
       50% { transform: translateY(-1.5px) rotate(.25deg); }
     }
 
+
+
+    /* Immersion pass: keep hotspot affordances invisible until Bonnie is close, hovering, or keyboard focusing. */
+    .room .asset-marker {
+      opacity: 0;
+      transform: translateY(4px) scale(.74);
+      transition: opacity 180ms ease, transform 180ms ease, filter 180ms ease;
+      animation: none;
+    }
+
+    .hotspot,
+    #room-shop .hotspot {
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+      opacity: 1;
+      transition: filter 160ms ease, opacity 160ms ease;
+    }
+
+    .hotspot:not(.clue-button)::before,
+    #room-shop .hotspot::before {
+      content: "";
+      position: absolute;
+      inset: 7%;
+      border: 1px solid rgba(255, 222, 145, 0);
+      border-radius: inherit;
+      background: radial-gradient(ellipse, rgba(255, 226, 152, 0), rgba(255, 210, 118, 0) 62%, transparent 74%);
+      box-shadow: none;
+      opacity: 0;
+      transform: scale(.94);
+      animation: none;
+      transition: opacity 180ms ease, transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+
+    .hotspot.nearby:not(.collected)::before {
+      border-color: rgba(255, 218, 135, .18);
+      background: radial-gradient(ellipse, rgba(255, 226, 152, .08), rgba(255, 210, 118, .025) 64%, transparent 76%);
+      box-shadow: 0 0 12px rgba(255, 207, 105, .18);
+      opacity: .55;
+    }
+
+    .hotspot:hover:not(.collected)::before,
+    .hotspot:focus-visible:not(.collected)::before,
+    #room-shop .hotspot:hover::before,
+    #room-shop .hotspot:focus-visible::before {
+      border-color: rgba(255, 225, 153, .42);
+      background: radial-gradient(ellipse, rgba(255, 234, 173, .13), rgba(255, 210, 118, .04) 63%, transparent 76%);
+      box-shadow: 0 0 20px rgba(255, 216, 121, .36), inset 0 0 14px rgba(255, 240, 194, .1);
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .hotspot:hover,
+    .hotspot:focus-visible,
+    #room-shop .hotspot:hover,
+    #room-shop .hotspot:focus-visible {
+      outline: 0;
+      background: transparent;
+      filter: none;
+    }
+
+    .room.active {
+      transform: translate3d(var(--camera-x, 0), var(--camera-y, 0), 0) scale(var(--camera-scale, .965));
+      transition: transform 700ms cubic-bezier(.22, .61, .36, 1), filter 700ms ease, opacity 360ms ease;
+    }
+
+    .scene-panel::after {
+      background:
+        linear-gradient(120deg, transparent 0 24%, rgba(255, 232, 168, .08) 28%, transparent 35% 100%),
+        radial-gradient(circle at 70% 18%, rgba(255, 220, 137, 0.14), transparent 19rem);
+    }
+
+    .background-art::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(255,255,255,.03), transparent 44%), radial-gradient(circle at 50% 88%, rgba(0,0,0,.3), transparent 28rem);
+      mix-blend-mode: soft-light;
+    }
+
+    .player-bonnie {
+      width: 142px;
+      height: 252px;
+      filter: drop-shadow(18px 24px 18px rgba(0, 0, 0, .56)) saturate(1.03) contrast(1.04);
+    }
+
+    .sprite-art img {
+      filter: contrast(1.08) saturate(1.02) brightness(.94) drop-shadow(10px 18px 14px rgba(0,0,0,.42));
+    }
+
+    .bonnie.asset-loaded.walking .sprite-art {
+      animation: bonnieSpriteWalk 620ms cubic-bezier(.45, 0, .55, 1) infinite;
+    }
+
+    @keyframes bonnieSpriteWalk {
+      0%, 100% { transform: translateY(0) rotate(-.35deg) skewX(0deg); filter: brightness(.97); }
+      20% { transform: translateY(-3px) rotate(.55deg) skewX(-.7deg); filter: brightness(1.02); }
+      42% { transform: translateY(1px) rotate(.28deg) skewX(.55deg); filter: brightness(.95); }
+      68% { transform: translateY(-2px) rotate(-.55deg) skewX(.7deg); filter: brightness(1.01); }
+    }
+
     @media (max-width: 860px) {
       body {
         overflow: auto;
@@ -2923,7 +3025,7 @@
             <h3>How to Play</h3>
             <ul class="how-to-list">
               <li>Click the floor to walk Bonnie around the room.</li>
-              <li>Hover glowing rings to find antiques and clues.</li>
+              <li>Move near objects or hover the scene to reveal subtle clue glints.</li>
               <li>Examine everything; some clues unlock puzzles.</li>
               <li>Select inventory items to inspect, combine, or use them on hotspots.</li>
               <li>Some antiques need repeated examinations before they reveal a clue.</li>
@@ -3441,6 +3543,10 @@
     let masterGain;
     let ambientGain;
     let suspenseGain;
+    let rainGain;
+    let roomToneGain;
+    let rainSource;
+    let creakTimer;
     let tickTimer;
     let typeTimer;
     let isMuted = false;
@@ -3458,7 +3564,8 @@
         shopMusicBox: () => revealShopMusicBoxSymbol()
       },
       brassKey: {
-        shopMusicBox: () => revealShopMusicBoxSymbol()
+        shopMusicBox: () => revealShopMusicBoxSymbol(),
+        officeDrawer: () => inspectOfficeDrawer(document.querySelector('[data-object="officeDrawer"]'))
       },
       lantern: {
         darkStorageCorner: () => collectItem('litMessage', 'Bonnie raises the lantern into the dark storage corner. Lamp light reveals invisible ink on a shipping tag: "Return the heirloom, read the ledger, trust no pier."', document.querySelector('[data-object="darkStorageCorner"]'))
@@ -3466,7 +3573,12 @@
     };
 
     const itemCombinations = {
-      'hiddenSymbol+tornPhotograph': () => collectItem('matchedPhotograph', 'Bonnie overlays the hidden symbol on the torn photograph. The crossed circle completes a map of the upstairs office wall seam.', null)
+      'hiddenSymbol+tornPhotograph': () => collectItem('matchedPhotograph', 'Bonnie overlays the hidden symbol on the torn photograph. The crossed circle completes a map of the upstairs office wall seam.', null),
+      'brassKey+oldReceipt': () => {
+        collectItem('tunedMusicBox', 'Bonnie matches the old key tag to the receipt number. In her hands the music box mechanism finally makes sense: key, receipt, three pins, then the hidden symbol.', null);
+        revealShopMusicBoxSymbol();
+      },
+      'lantern+tornPhotograph': () => collectItem('matchedPhotograph', 'Held behind the lantern glass, the torn photograph shows a faint crossed-circle burn mark that points Bonnie toward the office wall seam.', null)
     };
 
     function setNarration(message) {
@@ -3498,7 +3610,84 @@
       masterGain.connect(audioContext.destination);
       startAmbientMusic();
       startSuspenseMusic();
+      startRoomAmbience();
       tickTimer = window.setInterval(() => playEffect('tick'), 2400);
+      creakTimer = window.setInterval(() => playEffect('creak'), 9000);
+    }
+
+    function createNoiseBuffer(duration = 2) {
+      const sampleRate = audioContext.sampleRate;
+      const buffer = audioContext.createBuffer(1, sampleRate * duration, sampleRate);
+      const data = buffer.getChannelData(0);
+      let last = 0;
+      for (let i = 0; i < data.length; i += 1) {
+        const white = Math.random() * 2 - 1;
+        last = (last + (0.02 * white)) / 1.02;
+        data[i] = last * 3.5;
+      }
+      return buffer;
+    }
+
+    function startRoomAmbience() {
+      rainGain = audioContext.createGain();
+      roomToneGain = audioContext.createGain();
+      rainGain.gain.value = 0.045;
+      roomToneGain.gain.value = 0.028;
+      rainGain.connect(masterGain);
+      roomToneGain.connect(masterGain);
+
+      rainSource = audioContext.createBufferSource();
+      rainSource.buffer = createNoiseBuffer(3);
+      rainSource.loop = true;
+      const rainFilter = audioContext.createBiquadFilter();
+      rainFilter.type = 'bandpass';
+      rainFilter.frequency.value = 950;
+      rainFilter.Q.value = 0.8;
+      rainSource.connect(rainFilter);
+      rainFilter.connect(rainGain);
+      rainSource.start();
+
+      [55, 110, 220].forEach((frequency, index) => {
+        const oscillator = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        oscillator.type = index === 0 ? 'sine' : 'triangle';
+        oscillator.frequency.value = frequency;
+        gain.gain.value = index === 0 ? 0.34 : 0.11;
+        oscillator.connect(gain);
+        gain.connect(roomToneGain);
+        oscillator.start();
+      });
+      updateRoomAmbience();
+    }
+
+    function updateRoomAmbience() {
+      if (!audioContext || !rainGain || !roomToneGain) return;
+      const rainTarget = currentRoom === 'office' ? 0.06 : currentRoom === 'storage' ? 0.038 : 0.05;
+      const roomTarget = rooms[currentRoom].important ? 0.035 : 0.025;
+      rainGain.gain.cancelScheduledValues(audioContext.currentTime);
+      roomToneGain.gain.cancelScheduledValues(audioContext.currentTime);
+      rainGain.gain.linearRampToValueAtTime(rainTarget, audioContext.currentTime + 0.75);
+      roomToneGain.gain.linearRampToValueAtTime(roomTarget, audioContext.currentTime + 0.75);
+    }
+
+    function playNoiseBurst(duration = 0.22, volume = 0.08, frequency = 520, when = 0) {
+      if (!audioContext || isMuted) return;
+      const startTime = audioContext.currentTime + when;
+      const source = audioContext.createBufferSource();
+      const gain = audioContext.createGain();
+      const filter = audioContext.createBiquadFilter();
+      source.buffer = createNoiseBuffer(Math.max(duration, 0.12));
+      filter.type = 'bandpass';
+      filter.frequency.value = frequency;
+      filter.Q.value = 1.2;
+      gain.gain.setValueAtTime(0.0001, startTime);
+      gain.gain.exponentialRampToValueAtTime(volume, startTime + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+      source.connect(filter);
+      filter.connect(gain);
+      gain.connect(masterGain);
+      source.start(startTime);
+      source.stop(startTime + duration + 0.04);
     }
 
     // Gentle generated audio keeps the single-file structure: no external sound assets are required.
@@ -3534,6 +3723,7 @@
       const target = rooms[currentRoom].important ? 0.05 : 0;
       suspenseGain.gain.cancelScheduledValues(audioContext.currentTime);
       suspenseGain.gain.linearRampToValueAtTime(target, audioContext.currentTime + 0.5);
+      updateRoomAmbience();
     }
 
     function playTone(frequency, duration, type = 'sine', volume = 0.16, when = 0) {
@@ -3572,6 +3762,15 @@
         playTone(220, 0.08, 'square', 0.1);
         playTone(330, 0.1, 'triangle', 0.1, 0.12);
         playTone(146.83, 0.24, 'sine', 0.14, 0.28);
+      } else if (effectName === 'creak') {
+        playNoiseBurst(0.34, 0.045, 260);
+        playTone(74, 0.28, 'sawtooth', 0.045, 0.04);
+      } else if (effectName === 'unlock') {
+        playTone(260, 0.04, 'square', 0.09);
+        playTone(520, 0.08, 'triangle', 0.08, 0.07);
+      } else if (effectName === 'reveal') {
+        playNoiseBurst(0.38, 0.055, 820);
+        playTone(392, 0.18, 'sine', 0.075, 0.08);
       }
     }
 
@@ -3721,6 +3920,37 @@
       playerBonnie.style.setProperty('--bonnie-scale', (0.48 + progress * 0.2).toFixed(3));
     }
 
+    function updateCameraDrift() {
+      const xDrift = ((50 - bonniePosition.x) * 0.025).toFixed(2);
+      const yDrift = ((82 - bonniePosition.y) * 0.018).toFixed(2);
+      const scale = (0.965 + Math.max(0, bonniePosition.y - 78) * 0.0012).toFixed(3);
+      document.querySelectorAll('.room.active').forEach((room) => {
+        room.style.setProperty('--camera-x', `${xDrift}%`);
+        room.style.setProperty('--camera-y', `${yDrift}%`);
+        room.style.setProperty('--camera-scale', scale);
+      });
+    }
+
+    function hotspotCenter(button) {
+      const targetKey = button.dataset.object || button.dataset.nav || button.dataset.dialogue;
+      if (targetKey && rooms[currentRoom].targets[targetKey]) return rooms[currentRoom].targets[targetKey];
+      const roomElement = document.querySelector(`#room-${currentRoom}`);
+      const sceneRect = roomElement.getBoundingClientRect();
+      const buttonRect = button.getBoundingClientRect();
+      return {
+        x: ((buttonRect.left + buttonRect.width / 2 - sceneRect.left) / sceneRect.width) * 100,
+        y: ((buttonRect.top + buttonRect.height / 2 - sceneRect.top) / sceneRect.height) * 100
+      };
+    }
+
+    function updateHotspotProximity() {
+      document.querySelectorAll('.room.active .hotspot').forEach((button) => {
+        const center = hotspotCenter(button);
+        const distance = Math.hypot(center.x - bonniePosition.x, center.y - bonniePosition.y);
+        button.classList.toggle('nearby', distance < 15);
+      });
+    }
+
     function placeBonnie(point, instant = false) {
       const nextPoint = nearestWalkablePoint(currentRoom, point);
       bonniePosition.x = nextPoint.x;
@@ -3728,6 +3958,8 @@
       playerBonnie.style.setProperty('--bonnie-x', bonniePosition.x.toFixed(2));
       playerBonnie.style.setProperty('--bonnie-y', bonniePosition.y.toFixed(2));
       updateBonnieScale();
+      updateCameraDrift();
+      updateHotspotProximity();
       if (instant) playerBonnie.classList.remove('walking');
     }
 
@@ -3794,17 +4026,22 @@
       placeBonnie(rooms[roomName].start, true);
       updateNavigation();
       updateRoomMusic();
+      updateCameraDrift();
+      updateHotspotProximity();
     }
 
     function changeRoom(roomName, customMessage) {
       ensureAudio();
       playEffect('footsteps');
+      playEffect('creak');
       scenePanel.classList.add('transitioning');
-      window.setTimeout(() => scenePanel.classList.remove('transitioning'), 650);
-      enterRoom(roomName);
+      window.setTimeout(() => scenePanel.classList.remove('transitioning'), 820);
+      window.setTimeout(() => {
+        enterRoom(roomName);
+        saveGame();
+      }, 120);
       setNarration(customMessage || rooms[roomName].entry);
       if (roomName === 'storage' && !stormTriggered) triggerStormEvent();
-      saveGame();
     }
 
     function triggerStormEvent() {
@@ -3870,6 +4107,7 @@
         button.setAttribute('aria-label', `${items[itemId].name} has already been collected`);
       }
       playEffect('paper');
+      playEffect('reveal');
       setNarration(message);
       scenePanel.classList.add('clue-discovered');
       window.setTimeout(() => scenePanel.classList.remove('clue-discovered'), 760);
@@ -4034,6 +4272,7 @@
       button.classList.add('used');
       button.setAttribute('aria-label', 'The upstairs office drawer is unlocked and open');
       playEffect('drawer');
+      playEffect('unlock');
       collectItem('hiddenLetter', 'The old key turns with a reluctant click. Inside the drawer, Bonnie finds a handwritten letter and one chilling line: "Begin at The Hollow Oak Estate, where the bell rings without a tower."', button);
       collectItem('hiddenSymbol', 'Bonnie carefully copies the crossed-circle symbol from the letter. It looks like a mark made for matching, not decorating.', null);
       saveGame();
@@ -4086,6 +4325,7 @@
       safeModal.hidden = true;
       wallSafeArt.classList.add('open');
       playEffect('safe');
+      playEffect('unlock');
       collectItem('safeDeed', 'The safe unlocks on 4009. Inside lies a Blackwood deed naming Mabel\'s mother as trustee, Evelyn as heir, and the Hollow Oak cellar as the place where the music box must be returned.', document.querySelector('[data-object="wallSafe"]'));
       addJournalEntry('familySecret');
       saveGame('Safe opened and game saved.');
