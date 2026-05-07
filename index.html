@@ -1492,6 +1492,46 @@
       color: #3c2316;
     }
 
+    .inventory-list button {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 0.32rem;
+      align-items: center;
+      padding: 0;
+      border: 0;
+      color: inherit;
+      background: transparent;
+      box-shadow: none;
+      text-align: left;
+      font: inherit;
+    }
+
+    .inventory-list li.selected {
+      border-color: rgba(255, 223, 145, 0.95);
+      box-shadow: 0 0 0 2px rgba(255, 211, 116, 0.28), 0 4px 10px rgba(50, 28, 18, 0.14);
+    }
+
+    .inventory-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.25rem;
+      margin-top: 0.32rem;
+    }
+
+    .inventory-actions button {
+      border-radius: 8px;
+      padding: 0.28rem 0.32rem;
+      font-size: 0.62rem;
+    }
+
+    .inventory-hint {
+      margin-top: 0.24rem !important;
+      font-family: Arial, sans-serif;
+      font-size: 0.62rem !important;
+      color: #80684d;
+    }
+
     .item-icon {
       width: 22px;
       height: 22px;
@@ -2624,6 +2664,8 @@
     }
     .hotspot.inkwell-hotspot { left: 53%; bottom: 11rem; width: 54px; height: 42px; border-radius: 50%; }
     .hotspot.safe-shadow-hotspot { right: 25%; top: 29%; width: 64px; height: 92px; border-radius: 12px; opacity: .26; }
+    .hotspot.final-compartment-hotspot { right: 33%; top: 39%; width: 74px; height: 54px; border-radius: 12px; opacity: .18; }
+    .hotspot.dark-storage-corner { right: 33%; bottom: 11.2rem; width: 96px; height: 92px; border-radius: 16px; opacity: .18; }
 
     @media (max-width: 860px) {
       body {
@@ -2809,6 +2851,7 @@
             <button class="hotspot blackwood-crate-hotspot" type="button" data-object="blackwoodCrate" data-label="B.W. crate" aria-label="Inspect a Blackwood-stamped crate">Inspect Blackwood crate</button>
             <button class="hotspot photo-envelope-hotspot" type="button" data-object="photoEnvelope" data-label="Envelope" aria-label="Inspect a brittle envelope of old photographs">Inspect photo envelope</button>
             <button class="hotspot stair-banister-hotspot" type="button" data-object="stairBanister" data-label="Banister" aria-label="Inspect the carved stair banister">Inspect banister</button>
+            <button class="hotspot dark-storage-corner" type="button" data-object="darkStorageCorner" data-label="Dark corner" aria-label="Inspect a dark storage corner behind the trunk">Inspect dark corner</button>
           </div>
 
           <div id="room-office" class="room" aria-label="Upstairs Office">
@@ -2846,6 +2889,7 @@
             <button class="hotspot blackwood-portrait-plaque" type="button" data-object="portraitPlaque" data-label="Nameplate" aria-label="Inspect the Blackwood portrait nameplate">Inspect nameplate</button>
             <button class="hotspot inkwell-hotspot" type="button" data-object="inkwell" data-label="Inkwell" aria-label="Inspect the antique inkwell on the desk">Inspect inkwell</button>
             <button class="hotspot safe-shadow-hotspot" type="button" data-object="safeShadow" data-label="Safe outline" aria-label="Inspect the faint safe outline behind the portrait">Inspect safe outline</button>
+            <button class="hotspot final-compartment-hotspot" type="button" data-object="finalCompartment" data-label="Wall seam" aria-label="Inspect a hidden wall compartment seam">Inspect wall seam</button>
           </div>
 
           <div id="walk-target" class="walk-target" aria-hidden="true"></div>
@@ -2890,6 +2934,11 @@
             <ul id="inventory" class="inventory-list" aria-live="polite">
               <li class="empty-slot">No clues yet.</li>
             </ul>
+            <div class="inventory-actions" aria-label="Inventory actions">
+              <button id="inspect-item-button" type="button">Inspect Item</button>
+              <button id="combine-items-button" type="button">Combine</button>
+            </div>
+            <p id="inventory-hint" class="inventory-hint" aria-live="polite">Select an item to inspect it, combine it, or use it on a hotspot.</p>
           </div>
 
           <div class="info-box compact-list">
@@ -2907,6 +2956,8 @@
               <li>Click the floor to walk Bonnie around the room.</li>
               <li>Hover glowing rings to find antiques and clues.</li>
               <li>Examine everything; some clues unlock puzzles.</li>
+              <li>Select inventory items to inspect, combine, or use them on hotspots.</li>
+              <li>Some antiques need repeated examinations before they reveal a clue.</li>
               <li>Use Rooms, Inventory, Notes, Save/Load, and Sound as you investigate.</li>
             </ul>
             <button id="game-directions-button" class="directions-inline" type="button">Full Guide</button>
@@ -2959,7 +3010,9 @@
           <li>Click the illustrated room like a classic point-and-click scene: invisible hotspots cover clocks, shelves, windows, furniture, photographs, rugs, and suspicious corners.</li>
           <li>Bonnie walks to the clicked location before interacting, so give her a moment to cross the floorboards.</li>
           <li>Some clues go into your inventory; funny, mysterious, or false leads may only update the story or Quest Notes.</li>
-          <li>Some puzzles require using one clue with another object, such as pairing an inventory clue with a locked drawer or safe.</li>
+          <li>Select an inventory item, then click a hotspot to try using it there.</li>
+          <li>Use the Combine button after selecting two inventory items in order, such as matching a torn photograph with a hidden symbol.</li>
+          <li>Some puzzles require using one clue with another object, such as pairing an inventory clue with a locked drawer, music box, lamp, safe, or hidden compartment.</li>
           <li>Quest Notes update when important clues are found, including red herrings worth remembering.</li>
           <li>The Evidence Board shows how Evelyn, Hollow Oak, the music box, photographs, and symbols connect.</li>
           <li>Some clues are red herrings. They sound dramatic, but Bonnie can spot when they lead away from the truth.</li>
@@ -2986,7 +3039,7 @@
     </div>
 
     <footer>
-      Version 10: image-based point-and-click room scenes with invisible hotspots, layered Bonnie sprite animation, and polished dark-gold UI.
+      Version 11: image-based point-and-click room scenes with invisible hotspots, layered Bonnie sprite animation, and polished dark-gold UI.
     </footer>
   </div>
 
@@ -2999,6 +3052,9 @@
     const storyText = document.querySelector('#story-text');
     const locationHeading = document.querySelector('#location-heading');
     const inventory = document.querySelector('#inventory');
+    const inspectItemButton = document.querySelector('#inspect-item-button');
+    const combineItemsButton = document.querySelector('#combine-items-button');
+    const inventoryHint = document.querySelector('#inventory-hint');
     const questNotes = document.querySelector('#quest-notes');
     const currentObjectiveText = document.querySelector('#current-objective');
     const hoverDescription = document.querySelector('#hover-description');
@@ -3071,7 +3127,7 @@
         walkArea: { minX: 7, maxX: 92, minY: 72, maxY: 91 },
         blockers: [{ minX: 7, maxX: 66, minY: 58, maxY: 75 }, { minX: 73, maxX: 93, minY: 76, maxY: 90 }],
         targets: {
-          oldReceipt: { x: 23, y: 76 }, tornPhotograph: { x: 41, y: 78 }, falseCompass: { x: 58, y: 82 }, lockedTrunk: { x: 72, y: 85 }, storageLamp: { x: 12, y: 73 }, office: { x: 88, y: 76 }, shop: { x: 9, y: 86 }, estateMap: { x: 52, y: 80 }, blackwoodCrate: { x: 48, y: 76 }, photoEnvelope: { x: 44, y: 78 }, stairBanister: { x: 84, y: 77 }
+          oldReceipt: { x: 23, y: 76 }, tornPhotograph: { x: 41, y: 78 }, falseCompass: { x: 58, y: 82 }, lockedTrunk: { x: 72, y: 85 }, storageLamp: { x: 12, y: 73 }, office: { x: 88, y: 76 }, shop: { x: 9, y: 86 }, estateMap: { x: 52, y: 80 }, blackwoodCrate: { x: 48, y: 76 }, photoEnvelope: { x: 44, y: 78 }, stairBanister: { x: 84, y: 77 }, darkStorageCorner: { x: 69, y: 84 }
         }
       },
       office: {
@@ -3084,7 +3140,7 @@
         walkArea: { minX: 8, maxX: 91, minY: 73, maxY: 91 },
         blockers: [{ minX: 26, maxX: 78, minY: 66, maxY: 84 }],
         targets: {
-          wallSafe: { x: 76, y: 77 }, officeDrawer: { x: 73, y: 85 }, typewriter: { x: 33, y: 78 }, officePortrait: { x: 77, y: 76 }, officeWindow: { x: 18, y: 75 }, looseFloorboard: { x: 20, y: 87 }, storage: { x: 9, y: 86 }, rainStreaks: { x: 18, y: 75 }, portraitPlaque: { x: 77, y: 76 }, inkwell: { x: 55, y: 83 }, safeShadow: { x: 73, y: 76 }
+          wallSafe: { x: 76, y: 77 }, officeDrawer: { x: 73, y: 85 }, typewriter: { x: 33, y: 78 }, officePortrait: { x: 77, y: 76 }, officeWindow: { x: 18, y: 75 }, looseFloorboard: { x: 20, y: 87 }, storage: { x: 9, y: 86 }, rainStreaks: { x: 18, y: 75 }, portraitPlaque: { x: 77, y: 76 }, inkwell: { x: 55, y: 83 }, safeShadow: { x: 73, y: 76 }, finalCompartment: { x: 70, y: 80 }
         }
       }
     };
@@ -3092,9 +3148,14 @@
     // Inventory records the collectible clues and their small CSS-drawn icons.
     const items = {
       brassKey: {
-        name: 'Brass Key',
+        name: 'Old Key',
         icon: 'key',
         description: 'Tagged "Rosewood music box, drawer three, E. V."'
+      },
+      tunedMusicBox: {
+        name: 'Opened Music Box',
+        icon: 'key',
+        description: 'The old key opened the rosewood box and revealed the first words of Evelyn\'s warning.'
       },
       oldReceipt: {
         name: 'Old Receipt',
@@ -3131,6 +3192,36 @@
         icon: 'note',
         description: 'A hidden scrap: "Hollow Oak has no bell tower. Listen underground."'
       },
+      hiddenSymbol: {
+        name: 'Hidden Symbol',
+        icon: 'note',
+        description: 'A crossed-circle symbol copied from the locked drawer letter.'
+      },
+      matchedPhotograph: {
+        name: 'Matched Photograph',
+        icon: 'photo',
+        description: 'The torn photograph aligns with the hidden symbol and points to a wall seam.'
+      },
+      lantern: {
+        name: 'Lantern',
+        icon: 'key',
+        description: 'A small hooded lantern from storage, useful in spaces the shop lamps cannot reach.'
+      },
+      litMessage: {
+        name: 'Lamp-Revealed Message',
+        icon: 'note',
+        description: 'Under angled lamp light: "Return the heirloom, read the ledger, trust no pier."'
+      },
+      clockCipher: {
+        name: 'Clock Cipher',
+        icon: 'note',
+        description: 'The antique clock hides a four-tick pattern: 4, 0, 0, 9.'
+      },
+      secretLedger: {
+        name: 'Secret Ledger',
+        icon: 'note',
+        description: 'Evelyn\'s ledger names the missing heirloom and Hollow Oak cellar compartment.'
+      },
       safeDeed: {
         name: 'Blackwood Deed',
         icon: 'note',
@@ -3139,7 +3230,8 @@
     };
 
     const journalEntries = {
-      brassKey: 'The brass key is tagged for drawer three and marked E. V.; it likely belongs upstairs.',
+      brassKey: 'The old key is tagged for drawer three and marked E. V.; it likely belongs upstairs or in the rosewood music box.',
+      tunedMusicBox: 'The old key opens the rosewood music box; inside is the first part of Evelyn\'s warning about the missing heirloom.',
       oldReceipt: 'The rosewood music box was sold to E. Vale exactly forty years ago; the first safe clue may be 40.',
       tornPhotograph: 'The torn photograph shows a woman with a bell-shaped locket at Mabel\'s front window.',
       evelynPhoto: 'The framed Evelyn photograph confirms she stood in this shop with the rosewood music box before vanishing.',
@@ -3148,7 +3240,13 @@
       hiddenLetter: 'The locked drawer contained a handwritten letter, a strange crossed-circle symbol, and a direct clue: The Hollow Oak Estate.',
       floorboardScrap: 'A nearly invisible floorboard revealed that Hollow Oak has zero bell towers; the safe code may include 0.',
       typewriterCode: 'The typewriter points to BLACKWOOD; its nine letters form the final safe digit.',
+      hiddenSymbol: 'The drawer symbol is a crossed circle used as the Hollow Oak crest and as a hidden-compartment marker.',
+      matchedPhotograph: 'The torn photograph and hidden symbol align into a map of the office wall seam.',
+      lantern: 'A hooded lantern can reveal clues in the storage room\'s darkest corner.',
+      litMessage: 'Lamp light reveals Evelyn\'s message: return the missing heirloom and read the secret ledger.',
+      clockCipher: 'The antique clock hides the safe code pattern: 4, 0, 0, 9.',
       safeDeed: 'The hidden wall safe opened with 4009: forty years, zero bell towers, and the nine letters in Blackwood.',
+      secretLedger: 'The final wall compartment hides Evelyn\'s secret ledger about Hollow Oak, the old town fire, and the missing heirloom.',
       falseCompass: 'Red herring: the tarnished compass points toward North Pier, but its needle is glued in place.',
       misleadingMabel: 'Possible misdirection: Mabel mentioned North Pier too quickly, matching the glued compass red herring.',
       redHerringPainting: 'Red herring: the dramatic ship painting hides a fake map signature, but it was painted decades after Evelyn vanished.',
@@ -3160,16 +3258,16 @@
 
     const objectText = {
       greenVase: 'Bonnie turns the green vase gently. Dust outlines a missing twin, but there is nothing hidden inside.',
-      wallClock: 'Tick. Tick. Tick. The wall clock is three minutes slow, and its pendulum taps like a quiet coded message.',
+      wallClock: 'Tick. Tick. Tick. The antique clock is three minutes slow. On a second careful listen, Bonnie hears four odd beats hiding beneath the chime.',
       ledgerBook: 'The ledger lists estate purchases in Mabel\'s careful hand. One line is underlined twice: Evelyn Blackwood, rosewood music box, Hollow Oak inquiry.',
       lockedTrunk: 'The trunk is strapped tight with cracked leather. Bonnie decides forcing it would destroy whatever memory it is guarding.',
-      storageLamp: 'The storage bulb flutters. For one heartbeat, Bonnie sees chalk arrows leading upstairs and the silhouette of someone who should not be in the hall.',
+      storageLamp: 'The storage bulb flutters. A small hooded lantern hangs beneath it, waiting for someone brave enough to carry light into the corner shadows.',
       falseCompass: 'A tarnished compass lies under a crate. It points toward North Pier, but Bonnie notices the needle has been glued in place. A deliberate red herring.',
       typewriter: 'The typewriter ribbon is dry, but the B key is polished. Bonnie counts BLACKWOOD: nine letters for the last tumbler.',
       officePortrait: 'The portrait\'s stern eyes resemble the woman in the torn photograph. A scratched plaque reads: "Evelyn Blackwood, collector and heir."',
       officeWindow: 'Rain runs down the upstairs window. In the reflection, Bonnie sees the shop sign and a crossed-circle symbol briefly align.',
       shopShelves: 'The shelves sag with candlesticks, chipped figurines, and books that smell like pepper and dust. Bonnie finds labeled aisles: clocks, letters, Blackwood consignments.',
-      shopMusicBox: 'The rosewood music box is pretty but silent. Its brass feet match the marks in the ledger, making it important without giving up a song yet.',
+      shopMusicBox: 'The rosewood music box is pretty but silent. Its lock is old, tiny, and exactly the shape of the key tagged E. V.',
       shopPhotos: 'Faded shop photos show Mabel younger, the counter older, and the same front window Evelyn stood beside in the torn photograph.',
       shopLamp: 'The amber lamp buzzes warmly. A moth taps the shade like it knows Morse code, but Bonnie suspects it only knows moth.',
       counterDrawers: 'The counter drawers contain twine, price tags, and one caramel wrapped in wax paper. Useful? Emotionally, perhaps.',
@@ -3210,6 +3308,8 @@
       portraitPlaque: 'The nameplate reads Evelyn Blackwood, Collector, Trustee, Heir. It has been cleaned recently, unlike the dusty frame around it.',
       inkwell: 'The inkwell is almost dry, but a fresh crescent of black ink stains the rim. Someone wrote here tonight and left in a hurry.',
       safeShadow: 'Bonnie sees a rectangular shadow behind the portrait: the wall safe has been opened often enough to leave a clean outline in the dust.',
+      darkStorageCorner: 'The corner behind the trunk is too dark for guessing. Bonnie needs a handheld light before reaching into those cobwebs.',
+      finalCompartment: 'A hairline seam hides in the wall panel. It does not move yet; Bonnie needs proof of the symbol, the lamp message, and the safe deed before risking the panel.',
     };
 
     const hoverText = {
@@ -3273,6 +3373,8 @@
       portraitPlaque: 'A brass nameplate gleams beneath the portrait.',
       inkwell: 'A dry inkwell sits open on the desk.',
       safeShadow: 'A rectangular shadow marks the wall behind the portrait.',
+      darkStorageCorner: 'A dark storage corner swallows the lamplight.',
+      finalCompartment: 'A hairline seam marks the final hidden wall compartment.',
     };
 
     const dialogueTree = {
@@ -3280,6 +3382,7 @@
         text: 'Mabel folds her hands over the counter. "If you came about Evelyn Blackwood, speak softly. Some names wake the old house."',
         choices: [
           { label: 'Ask about Evelyn Blackwood', next: 'evelyn', clue: 'evelynDossier' },
+          { label: 'Ask about the missing heirloom', next: 'heirloom' },
           { label: 'Ask about Mabel\'s family', next: 'family', clue: 'familySecret' },
           { label: 'Follow the North Pier rumor', next: 'pier', note: 'misleadingMabel' }
         ]
@@ -3288,6 +3391,21 @@
         text: '"Evelyn collected impossible things," Mabel says. "The rosewood music box was her last purchase before she disappeared on the road to Hollow Oak Estate."',
         choices: [
           { label: 'Ask why the music box matters', next: 'music' },
+          { label: 'Ask about the old town fire', next: 'fire' },
+          { label: 'End conversation', next: 'end' }
+        ]
+      },
+      heirloom: {
+        text: 'Mabel touches her collar where a locket might rest. "The Blackwood heirloom was not jewelry alone. It opened a ledger compartment after the old town fire."',
+        choices: [
+          { label: 'Ask where the ledger went', next: 'ledger' },
+          { label: 'Ask about Hollow Oak', next: 'estate' }
+        ]
+      },
+      ledger: {
+        text: '"Evelyn believed the secret ledger survived upstairs," Mabel says. "If it did, someone hid it behind a wall seam, not in a drawer."',
+        choices: [
+          { label: 'Ask about the wall symbol', next: 'music' },
           { label: 'End conversation', next: 'end' }
         ]
       },
@@ -3295,6 +3413,7 @@
         text: 'Mabel looks toward the rain-dark windows. "My mother hid the Blackwood name by putting this shop in hers. Evelyn was not only a customer. She was blood."',
         choices: [
           { label: 'Ask about Hollow Oak', next: 'estate' },
+          { label: 'Ask about the old town fire', next: 'fire' },
           { label: 'End conversation', next: 'end' }
         ]
       },
@@ -3302,18 +3421,35 @@
         text: '"North Pier has plenty of ghosts," Mabel says too quickly. Bonnie notices her eyes drift to the false compass instead of the door.',
         choices: [
           { label: 'Challenge the misdirection', next: 'estate' },
+          { label: 'Believe it for now', next: 'falseTrail', note: 'misleadingMabel' },
+          { label: 'End conversation', next: 'end' }
+        ]
+      },
+      falseTrail: {
+        text: 'Bonnie pictures rain, docks, and empty gull cries. It is dramatic, but too clean. Mabel relaxes a fraction—proof that North Pier was meant to waste time.',
+        choices: [
+          { label: 'Return to Hollow Oak questions', next: 'estate' },
           { label: 'End conversation', next: 'end' }
         ]
       },
       music: {
         text: '"The music box plays only when near the Hollow Oak crest," Mabel whispers. "A crossed-circle mark. Find that symbol and you find Evelyn\'s path."',
         choices: [
+          { label: 'Ask about the missing heirloom', next: 'heirloom' },
+          { label: 'End conversation', next: 'end' }
+        ]
+      },
+      fire: {
+        text: '"The old town fire started in Hollow Oak\'s west wing," Mabel says. "Afterward, a ledger vanished, an heirloom vanished, and every Blackwood learned to lie politely."',
+        choices: [
+          { label: 'Ask where proof survived', next: 'ledger' },
           { label: 'End conversation', next: 'end' }
         ]
       },
       estate: {
         text: '"Hollow Oak belonged to the Blackwoods before the scandal," Mabel says. "The safe upstairs holds what my family was told to bury."',
         choices: [
+          { label: 'Ask about the secret ledger', next: 'ledger' },
           { label: 'End conversation', next: 'end' }
         ]
       },
@@ -3339,6 +3475,23 @@
     const noted = new Set();
     const bonniePosition = { x: rooms.shop.start.x, y: rooms.shop.start.y };
     let walkRequest = 0;
+    let selectedInventoryItem = null;
+    let pendingCombineItem = null;
+    let finalCompartmentOpened = false;
+    const objectVisits = {};
+
+    const itemObjectUses = {
+      brassKey: {
+        shopMusicBox: () => collectItem('tunedMusicBox', 'The old key fits the rosewood music box. Its lid opens with a music-box sigh, revealing a paper strip: "The missing heirloom was hidden after the old town fire."', document.querySelector('[data-object="shopMusicBox"]'))
+      },
+      lantern: {
+        darkStorageCorner: () => collectItem('litMessage', 'Bonnie raises the lantern into the dark storage corner. Lamp light reveals invisible ink on a shipping tag: "Return the heirloom, read the ledger, trust no pier."', document.querySelector('[data-object="darkStorageCorner"]'))
+      }
+    };
+
+    const itemCombinations = {
+      'hiddenSymbol+tornPhotograph': () => collectItem('matchedPhotograph', 'Bonnie overlays the hidden symbol on the torn photograph. The crossed circle completes a map of the upstairs office wall seam.', null)
+    };
 
     function setNarration(message) {
       window.clearInterval(typeTimer);
@@ -3462,6 +3615,82 @@
       updateJournal();
       updateEvidenceBoard();
       updateObjective();
+    }
+
+    function visitCount(objectId) {
+      objectVisits[objectId] = (objectVisits[objectId] || 0) + 1;
+      return objectVisits[objectId];
+    }
+
+    function combinationKey(firstItem, secondItem) {
+      return [firstItem, secondItem].sort().join('+');
+    }
+
+    function clearInventorySelection(message = '') {
+      selectedInventoryItem = null;
+      pendingCombineItem = null;
+      if (message) inventoryHint.textContent = message;
+      updateInventory();
+    }
+
+    function selectInventoryItem(itemId) {
+      if (!collected.has(itemId)) return;
+      if (selectedInventoryItem === itemId) {
+        clearInventorySelection('Selection cleared. Choose an item to inspect, combine, or use on a hotspot.');
+        return;
+      }
+      selectedInventoryItem = itemId;
+      inventoryHint.textContent = `${items[itemId].name} selected. Inspect it, combine it, or click a hotspot to use it there.`;
+      updateInventory();
+    }
+
+    function inspectSelectedItem() {
+      if (!selectedInventoryItem) {
+        setNarration('Bonnie opens her satchel, then chooses nothing. Select an inventory item first.');
+        return;
+      }
+      const item = items[selectedInventoryItem];
+      setNarration(`${item.name}: ${item.description}`);
+      playEffect('paper');
+    }
+
+    function combineSelectedItem() {
+      if (!selectedInventoryItem) {
+        setNarration('Select an inventory item first, then press Combine. Select the second item and press Combine again.');
+        return;
+      }
+      if (!pendingCombineItem) {
+        pendingCombineItem = selectedInventoryItem;
+        inventoryHint.textContent = `${items[pendingCombineItem].name} ready to combine. Select a second item, then press Combine.`;
+        setNarration(`Bonnie sets aside the ${items[pendingCombineItem].name.toLowerCase()} and looks for something that fits with it.`);
+        return;
+      }
+      if (pendingCombineItem === selectedInventoryItem) {
+        setNarration('Combining a clue with itself only makes Bonnie feel very organized. Choose a different second item.');
+        return;
+      }
+      const recipe = itemCombinations[combinationKey(pendingCombineItem, selectedInventoryItem)];
+      if (!recipe) {
+        setNarration(`The ${items[pendingCombineItem].name.toLowerCase()} and ${items[selectedInventoryItem].name.toLowerCase()} do not belong together yet.`);
+        pendingCombineItem = null;
+        return;
+      }
+      recipe();
+      clearInventorySelection('Combination complete. Select an item to inspect it, combine it, or use it on a hotspot.');
+    }
+
+    function tryUseSelectedItemOnObject(objectId) {
+      if (!selectedInventoryItem) return false;
+      const useHandler = itemObjectUses[selectedInventoryItem]?.[objectId];
+      if (!useHandler) {
+        setNarration(`Bonnie tries the ${items[selectedInventoryItem].name.toLowerCase()} there, but the antique gives no useful response.`);
+        playEffect('tick');
+        clearInventorySelection('That combination did not work.');
+        return true;
+      }
+      useHandler();
+      clearInventorySelection('Item used successfully.');
+      return true;
     }
 
     function updateJournal() {
@@ -3635,13 +3864,19 @@
 
       inventory.innerHTML = Array.from(collected).map((itemId) => {
         const item = items[itemId];
+        const selectedClass = itemId === selectedInventoryItem ? ' class="selected"' : '';
         return `
-          <li>
-            <span class="item-icon ${item.icon}" aria-hidden="true"></span>
-            <span><strong>${item.name}</strong>${item.description}</span>
+          <li${selectedClass}>
+            <button type="button" data-inventory-item="${itemId}" aria-pressed="${itemId === selectedInventoryItem}">
+              <span class="item-icon ${item.icon}" aria-hidden="true"></span>
+              <span><strong>${item.name}</strong>${item.description}</span>
+            </button>
           </li>
         `;
       }).join('');
+      inventory.querySelectorAll('[data-inventory-item]').forEach((button) => {
+        button.addEventListener('click', () => selectInventoryItem(button.dataset.inventoryItem));
+      });
     }
 
     function collectItem(itemId, message, button) {
@@ -3670,9 +3905,11 @@
 
     function inspectObject(objectId, button) {
       ensureAudio();
+      if (tryUseSelectedItemOnObject(objectId)) return;
+      const visits = visitCount(objectId);
       switch (objectId) {
         case 'brassKey':
-          collectItem('brassKey', 'Bonnie lifts the heavy brass key from the counter. A paper tag tied to it reads: Rosewood music box, drawer three, E. V. The mystery has begun.', button);
+          collectItem('brassKey', 'Bonnie lifts the old brass key from the counter. A paper tag tied to it reads: Rosewood music box, drawer three, E. V. The mystery has begun.', button);
           break;
         case 'oldReceipt':
           collectItem('oldReceipt', 'Bonnie smooths a curled receipt from the storage shelf. It records one rosewood music box sold to Evelyn Blackwood exactly forty years ago: the first two safe digits are 40.', button);
@@ -3693,12 +3930,38 @@
         case 'evelynPhotograph':
           collectItem('evelynPhoto', 'Bonnie lifts the small framed photograph from its hook. Evelyn Blackwood is unmistakable: the same locket, the same window, and the rosewood music box tucked under her arm.', button);
           break;
+        case 'shopMusicBox':
+          if (collected.has('tunedMusicBox')) {
+            setNarration('The opened music box shows its hidden strip about the missing Blackwood heirloom and the old town fire.');
+          } else {
+            setNarration(objectText.shopMusicBox + ' Select the old key in inventory, then click the music box to try it.');
+          }
+          break;
+        case 'storageLamp':
+          if (visits < 2 && !collected.has('lantern')) {
+            setNarration(objectText.storageLamp + ' Bonnie should inspect it once more before taking anything from Mabel\'s storage.');
+          } else {
+            collectItem('lantern', 'Bonnie unhooks the small lantern beneath the storage bulb. Its hood throws a narrow detective\'s beam into dark corners.', button);
+          }
+          break;
+        case 'darkStorageCorner':
+          if (collected.has('litMessage')) {
+            setNarration('The storage corner is readable now. Evelyn\'s warning about the heirloom and secret ledger is copied safely into Bonnie\'s notes.');
+          } else {
+            setNarration(objectText.darkStorageCorner + ' Select the lantern in inventory, then click this corner.');
+          }
+          break;
         case 'looseFloorboard':
           collectItem('floorboardScrap', 'Bonnie presses the nearly invisible raised floorboard. A scrap of paper slides free: "Hollow Oak has no bell tower. Listen underground." Zero towers—the third safe digit.', button);
           break;
         case 'wallClock':
+        case 'grandfatherClock':
           playEffect('tick');
-          setNarration(objectText.wallClock);
+          if (visits < 2) {
+            setNarration(objectText.wallClock + ' Bonnie will need to listen again when the shop is quiet.');
+          } else {
+            collectItem('clockCipher', 'On the second careful listen, the antique clock chimes four, pauses, stays silent, stays silent again, then gives nine tiny ticks: 4009.', button);
+          }
           break;
         case 'redHerringPainting':
           setNarration(objectText.redHerringPainting);
@@ -3738,6 +4001,9 @@
         case 'officeDrawer':
           inspectOfficeDrawer(button);
           break;
+        case 'finalCompartment':
+          inspectFinalCompartment(button);
+          break;
         default:
           setNarration(objectText[objectId] || 'Bonnie studies the object, but it keeps its secret for now.');
       }
@@ -3762,8 +4028,28 @@
       button.classList.add('used');
       button.setAttribute('aria-label', 'The upstairs office drawer is unlocked and open');
       playEffect('drawer');
-      collectItem('hiddenLetter', 'The brass key turns with a reluctant click. Inside the drawer, Bonnie finds an old handwritten letter, a strange crossed-circle symbol, and one chilling line: "Begin at The Hollow Oak Estate, where the bell rings without a tower."', button);
+      collectItem('hiddenLetter', 'The old key turns with a reluctant click. Inside the drawer, Bonnie finds a handwritten letter and one chilling line: "Begin at The Hollow Oak Estate, where the bell rings without a tower."', button);
+      collectItem('hiddenSymbol', 'Bonnie carefully copies the crossed-circle symbol from the letter. It looks like a mark made for matching, not decorating.', null);
       saveGame();
+    }
+
+    function inspectFinalCompartment(button) {
+      if (finalCompartmentOpened) {
+        setNarration('The hidden wall compartment stands open. Evelyn\'s secret ledger is now the proof Bonnie needed.');
+        return;
+      }
+      const missing = [];
+      if (!safeOpened) missing.push('the Blackwood deed from the safe');
+      if (!collected.has('matchedPhotograph')) missing.push('the photograph matched with the hidden symbol');
+      if (!collected.has('litMessage')) missing.push('the lamp-revealed message');
+      if (missing.length) {
+        setNarration(`The wall seam refuses to open. Bonnie still needs ${missing.join(', ')}.`);
+        return;
+      }
+      finalCompartmentOpened = true;
+      playEffect('safe');
+      collectItem('secretLedger', 'The final wall compartment clicks open. Inside, Evelyn\'s secret ledger records the old town fire, the missing Blackwood heirloom, and a final instruction: return the music box to Hollow Oak Estate before dawn.', button);
+      saveGame('Final compartment solved and game saved.');
     }
 
     function inspectWallSafe() {
@@ -3776,7 +4062,7 @@
         return;
       }
       safeModal.hidden = false;
-      safeFeedback.textContent = 'Hint: forty years, zero bell towers, Blackwood letters.';
+      safeFeedback.textContent = 'Hint: receipt, no bell tower, and the antique clock\'s four-tick cipher.';
       safeCode.value = '';
       safeCode.focus();
     }
@@ -3844,12 +4130,14 @@
     }
 
     function updateObjective() {
-      if (collected.has('safeDeed')) {
-        currentObjectiveText.textContent = 'Solved: Evelyn disappeared while following the music box trail to Hollow Oak\'s hidden cellar.';
+      if (collected.has('secretLedger')) {
+        currentObjectiveText.textContent = 'Solved: Evelyn hid the ledger to prove the heirloom survived the old town fire and belongs at Hollow Oak Estate.';
+      } else if (collected.has('safeDeed')) {
+        currentObjectiveText.textContent = 'Use the matched photograph, lamp message, and deed to open the final wall compartment.';
       } else if (collected.has('hiddenLetter') || noted.has('hiddenDeskUnderside')) {
         currentObjectiveText.textContent = 'Use the receipt, floorboard, and Blackwood clue to open the hidden safe.';
       } else if (collected.has('brassKey')) {
-        currentObjectiveText.textContent = 'Find what the brass key unlocks upstairs.';
+        currentObjectiveText.textContent = 'Find what the old key unlocks upstairs, and whether it fits the rosewood music box.';
       } else {
         currentObjectiveText.textContent = 'Find the clue that reveals why Evelyn Blackwood disappeared.';
       }
@@ -3858,10 +4146,10 @@
     function updateEvidenceBoard() {
       const discovered = {
         evelynBlackwood: collected.has('evelynDossier') || collected.has('tornPhotograph') || collected.has('evelynPhoto'),
-        hollowOak: collected.has('hiddenLetter') || collected.has('floorboardScrap') || collected.has('safeDeed'),
-        musicBox: collected.has('brassKey') || collected.has('oldReceipt'),
+        hollowOak: collected.has('hiddenLetter') || collected.has('floorboardScrap') || collected.has('safeDeed') || collected.has('secretLedger'),
+        musicBox: collected.has('brassKey') || collected.has('oldReceipt') || collected.has('tunedMusicBox'),
         tornPhotograph: collected.has('tornPhotograph') || collected.has('evelynPhoto'),
-        hiddenSymbol: collected.has('hiddenLetter') || collected.has('safeDeed')
+        hiddenSymbol: collected.has('hiddenLetter') || collected.has('hiddenSymbol') || collected.has('matchedPhotograph') || collected.has('safeDeed') || collected.has('secretLedger')
       };
 
       evidenceBoard.querySelectorAll('.evidence-node').forEach((node) => {
@@ -3887,6 +4175,8 @@
         safeRevealed,
         safeOpened,
         stormTriggered,
+        finalCompartmentOpened,
+        objectVisits,
         isMuted,
         collected: Array.from(collected),
         noted: Array.from(noted)
@@ -3911,6 +4201,9 @@
       safeRevealed = Boolean(save.safeRevealed);
       safeOpened = Boolean(save.safeOpened);
       stormTriggered = Boolean(save.stormTriggered);
+      finalCompartmentOpened = Boolean(save.finalCompartmentOpened);
+      Object.keys(objectVisits).forEach((key) => delete objectVisits[key]);
+      Object.assign(objectVisits, save.objectVisits || {});
       isMuted = Boolean(save.isMuted);
       collected.clear();
       noted.clear();
@@ -3948,7 +4241,9 @@
         tornPhotograph: 'tornPhotograph',
         looseFloorboard: 'floorboardScrap',
         officeDrawer: 'hiddenLetter',
-        wallSafe: 'safeDeed'
+        wallSafe: 'safeDeed',
+        finalCompartment: 'secretLedger',
+        darkStorageCorner: 'litMessage'
       }[objectId];
     }
 
@@ -3988,6 +4283,9 @@
       ensureAudio();
       toggleMute();
     });
+
+    inspectItemButton.addEventListener('click', inspectSelectedItem);
+    combineItemsButton.addEventListener('click', combineSelectedItem);
 
     document.querySelectorAll('[data-object]').forEach((button) => {
       button.addEventListener('click', (event) => {
