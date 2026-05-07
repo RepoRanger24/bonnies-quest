@@ -532,6 +532,44 @@
       pointer-events: none;
     }
 
+    .player-bonnie {
+      --bonnie-x: 15;
+      --bonnie-y: 86;
+      --bonnie-scale: 0.58;
+      left: calc(var(--bonnie-x) * 1%);
+      top: calc(var(--bonnie-y) * 1%);
+      bottom: auto;
+      z-index: 6;
+      transform: translate(-50%, -100%) scale(var(--bonnie-scale));
+      transform-origin: 50% 100%;
+      transition: left 90ms linear, top 90ms linear;
+      will-change: left, top, transform;
+    }
+
+    .player-bonnie.facing-left {
+      transform: translate(-50%, -100%) scale(calc(var(--bonnie-scale) * -1), var(--bonnie-scale));
+    }
+
+    .player-bonnie.walking .bonnie-portrait {
+      animation: bonnieHeadBob 360ms ease-in-out infinite;
+    }
+
+    .player-bonnie.walking .bonnie-body {
+      animation: bonnieBodyStride 360ms ease-in-out infinite;
+    }
+
+    .player-bonnie.walking .bonnie-body::before {
+      animation: bonnieArmLeft 360ms ease-in-out infinite;
+    }
+
+    .player-bonnie.walking .bonnie-body::after {
+      animation: bonnieArmRight 360ms ease-in-out infinite;
+    }
+
+    .player-bonnie.walking::before {
+      animation: bonnieShadowPulse 360ms ease-in-out infinite;
+    }
+
     .bonnie::before,
     .mabel::before {
       content: "";
@@ -642,6 +680,59 @@
       transform: rotate(-7deg);
     }
 
+    .bonnie-satchel {
+      position: absolute;
+      left: 31px;
+      top: 104px;
+      z-index: 4;
+      width: 48px;
+      height: 38px;
+      border: 2px solid rgba(42, 23, 13, 0.82);
+      border-radius: 7px 7px 12px 12px;
+      background:
+        linear-gradient(145deg, rgba(255, 222, 151, 0.18), transparent 36%),
+        linear-gradient(180deg, #8b5a32, #4a2818);
+      box-shadow: inset 0 1px 0 rgba(255, 228, 165, 0.28), 0 6px 9px rgba(0, 0, 0, 0.32);
+    }
+
+    .bonnie-satchel::before {
+      content: "";
+      position: absolute;
+      left: -7px;
+      top: -34px;
+      width: 68px;
+      height: 74px;
+      border-top: 5px solid rgba(76, 45, 25, 0.8);
+      border-radius: 50%;
+      transform: rotate(25deg);
+    }
+
+    .bonnie-boot {
+      position: absolute;
+      bottom: -2px;
+      z-index: 1;
+      width: 35px;
+      height: 20px;
+      border-radius: 16px 18px 7px 7px;
+      background: linear-gradient(90deg, #140d0a, #513326 58%, #100a08);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.34);
+    }
+
+    .bonnie-boot.left { left: 31px; }
+    .bonnie-boot.right { right: 31px; }
+
+    .player-bonnie.walking .bonnie-satchel {
+      animation: bonnieSatchelSwing 360ms ease-in-out infinite;
+    }
+
+    .player-bonnie.walking .bonnie-boot.left {
+      animation: bonnieBootLeft 360ms ease-in-out infinite;
+    }
+
+    .player-bonnie.walking .bonnie-boot.right {
+      animation: bonnieBootRight 360ms ease-in-out infinite;
+    }
+
     /* Focusable hotspots now hug props closely, preserving point-and-click clarity without oversized invisible regions. */
     .hotspot {
       position: absolute;
@@ -667,6 +758,30 @@
       opacity: 0.48;
       filter: grayscale(45%);
       cursor: default;
+    }
+
+    .scene-panel.walk-ready {
+      cursor: crosshair;
+    }
+
+    .walk-target {
+      position: absolute;
+      z-index: 5;
+      left: calc(var(--target-x, 50) * 1%);
+      top: calc(var(--target-y, 82) * 1%);
+      width: 34px;
+      height: 16px;
+      border: 1px solid rgba(255, 233, 168, 0.72);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(ellipse, rgba(255, 219, 128, 0.28), transparent 68%);
+      box-shadow: 0 0 14px rgba(255, 210, 108, 0.34);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .walk-target.visible {
+      animation: walkTargetPulse 520ms ease-out both;
     }
 
     .clue-button {
@@ -1280,6 +1395,52 @@
       margin-left: -1.1rem;
     }
 
+    @keyframes bonnieHeadBob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(4px); }
+    }
+
+    @keyframes bonnieBodyStride {
+      0%, 100% { transform: translateY(0) rotate(-0.6deg); }
+      50% { transform: translateY(3px) rotate(0.8deg); }
+    }
+
+    @keyframes bonnieArmLeft {
+      0%, 100% { transform: rotate(14deg); }
+      50% { transform: rotate(-12deg); }
+    }
+
+    @keyframes bonnieArmRight {
+      0%, 100% { transform: rotate(-14deg); }
+      50% { transform: rotate(12deg); }
+    }
+
+    @keyframes bonnieShadowPulse {
+      0%, 100% { transform: translateX(-50%) scaleX(0.92); opacity: 0.34; }
+      50% { transform: translateX(-50%) scaleX(1.08); opacity: 0.46; }
+    }
+
+    @keyframes bonnieSatchelSwing {
+      0%, 100% { transform: rotate(-4deg) translateY(0); }
+      50% { transform: rotate(5deg) translateY(2px); }
+    }
+
+    @keyframes bonnieBootLeft {
+      0%, 100% { transform: translate(0, 0) rotate(-3deg); }
+      50% { transform: translate(-8px, -2px) rotate(8deg); }
+    }
+
+    @keyframes bonnieBootRight {
+      0%, 100% { transform: translate(0, 0) rotate(4deg); }
+      50% { transform: translate(8px, 1px) rotate(-7deg); }
+    }
+
+    @keyframes walkTargetPulse {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.45); }
+      28% { opacity: 1; }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(1.45); }
+    }
+
     @keyframes dustDrift {
       0% { transform: translate3d(0, 16px, 0); opacity: 0; }
       15% { opacity: 0.65; }
@@ -1679,10 +1840,18 @@
         inset-inline: 1rem;
       }
 
-      .bonnie {
+      .bonnie:not(.player-bonnie) {
         left: 2%;
         transform: scale(0.78);
         transform-origin: bottom left;
+      }
+
+      .player-bonnie {
+        transform: translate(-50%, -100%) scale(calc(var(--bonnie-scale) * 0.86));
+      }
+
+      .player-bonnie.facing-left {
+        transform: translate(-50%, -100%) scale(calc(var(--bonnie-scale) * -0.86), calc(var(--bonnie-scale) * 0.86));
       }
 
       .counter {
@@ -1768,11 +1937,6 @@
               <span class="drawer"></span>
             </div>
 
-            <div class="bonnie" aria-label="Bonnie, a realistic silhouette of a curious antique hunter">
-              <div class="bonnie-portrait"></div>
-              <div class="bonnie-body"></div>
-            </div>
-
             <div class="mabel" aria-label="Mabel, the antique shop owner watching from behind the counter">
               <div class="mabel-face"></div>
               <div class="mabel-body"></div>
@@ -1822,6 +1986,15 @@
             <button class="hotspot portrait-hotspot" type="button" data-object="officePortrait" aria-label="Inspect the stern portrait above the desk">Inspect portrait</button>
             <button class="hotspot office-window-hotspot" type="button" data-object="officeWindow" aria-label="Look out the upstairs office window">Inspect window</button>
             <button class="hotspot loose-floorboard" type="button" data-object="looseFloorboard" aria-label="Feel along an almost invisible loose floorboard">Search floorboard</button>
+          </div>
+
+          <div id="walk-target" class="walk-target" aria-hidden="true"></div>
+          <div id="player-bonnie" class="bonnie player-bonnie" aria-label="Bonnie, a curious antique hunter ready to walk the room">
+            <div class="bonnie-portrait"></div>
+            <div class="bonnie-body"></div>
+            <span class="bonnie-satchel" aria-hidden="true"></span>
+            <span class="bonnie-boot left" aria-hidden="true"></span>
+            <span class="bonnie-boot right" aria-hidden="true"></span>
           </div>
 
           <div class="nav-controls" aria-label="Room navigation">
@@ -1948,32 +2121,52 @@
     const safeCode = document.querySelector('#safe-code');
     const safeCancel = document.querySelector('#safe-cancel');
     const safeFeedback = document.querySelector('#safe-feedback');
+    const playerBonnie = document.querySelector('#player-bonnie');
+    const walkTarget = document.querySelector('#walk-target');
 
     const SAVE_KEY = 'bonniesQuestHollowOakSave';
     const SAFE_CODE = '4009';
 
-    // Room graph: each location knows where Bonnie can go next and how it should sound.
+    // Room graph: each location knows exits, sound, walkable floor limits, and prop approach points.
     const rooms = {
       shop: {
         title: 'Main Antique Shop',
         back: null,
         forward: 'storage',
         important: false,
-        entry: 'The bell over the front door gives one soft chime. Mabel watches from behind the counter as rain stipples the windows and the Hollow Oak mystery waits in the lamplight.'
+        entry: 'The bell over the front door gives one soft chime. Mabel watches from behind the counter as rain stipples the windows and the Hollow Oak mystery waits in the lamplight.',
+        start: { x: 15, y: 87 },
+        walkArea: { minX: 8, maxX: 92, minY: 73, maxY: 91 },
+        blockers: [{ minX: 56, maxX: 93, minY: 70, maxY: 85 }],
+        targets: {
+          brassKey: { x: 59, y: 85 }, greenVase: { x: 22, y: 76 }, wallClock: { x: 48, y: 75 }, ledgerBook: { x: 55, y: 78 }, mabel: { x: 66, y: 85 }, storage: { x: 91, y: 84 }
+        }
       },
       storage: {
         title: 'Back Storage Room',
         back: 'shop',
         forward: 'office',
         important: true,
-        entry: 'Behind the velvet curtain, stacked crates lean in long shadows. A bare bulb flickers over ledgers, framed photographs, and a narrow staircase.'
+        entry: 'Behind the velvet curtain, stacked crates lean in long shadows. A bare bulb flickers over ledgers, framed photographs, and a narrow staircase.',
+        start: { x: 12, y: 86 },
+        walkArea: { minX: 7, maxX: 92, minY: 72, maxY: 91 },
+        blockers: [{ minX: 7, maxX: 66, minY: 58, maxY: 75 }, { minX: 73, maxX: 93, minY: 76, maxY: 90 }],
+        targets: {
+          oldReceipt: { x: 23, y: 76 }, tornPhotograph: { x: 41, y: 78 }, falseCompass: { x: 58, y: 82 }, lockedTrunk: { x: 72, y: 85 }, storageLamp: { x: 12, y: 73 }, office: { x: 88, y: 76 }, shop: { x: 9, y: 86 }
+        }
       },
       office: {
         title: 'Upstairs Office',
         back: 'storage',
         forward: null,
         important: true,
-        entry: 'The upstairs office smells of dust, ink, and old varnish. Rain needles the window while a hidden safe shape presses behind the portrait.'
+        entry: 'The upstairs office smells of dust, ink, and old varnish. Rain needles the window while a hidden safe shape presses behind the portrait.',
+        start: { x: 12, y: 86 },
+        walkArea: { minX: 8, maxX: 91, minY: 73, maxY: 91 },
+        blockers: [{ minX: 26, maxX: 78, minY: 66, maxY: 84 }],
+        targets: {
+          wallSafe: { x: 76, y: 77 }, officeDrawer: { x: 73, y: 85 }, typewriter: { x: 33, y: 78 }, officePortrait: { x: 77, y: 76 }, officeWindow: { x: 18, y: 75 }, looseFloorboard: { x: 20, y: 87 }, storage: { x: 9, y: 86 }
+        }
       }
     };
 
@@ -2130,6 +2323,8 @@
     let isMuted = false;
     const collected = new Set();
     const noted = new Set();
+    const bonniePosition = { x: rooms.shop.start.x, y: rooms.shop.start.y };
+    let walkRequest = 0;
 
     function setNarration(message) {
       window.clearInterval(typeTimer);
@@ -2263,20 +2458,129 @@
       questNotes.innerHTML = Array.from(noted).map((entryId) => `<li>${journalEntries[entryId]}</li>`).join('');
     }
 
-    function changeRoom(roomName, customMessage) {
+    function clamp(value, min, max) {
+      return Math.min(Math.max(value, min), max);
+    }
+
+    function nearestWalkablePoint(roomName, point) {
+      const room = rooms[roomName];
+      const area = room.walkArea;
+      const adjusted = {
+        x: clamp(point.x, area.minX, area.maxX),
+        y: clamp(point.y, area.minY, area.maxY)
+      };
+
+      // Keep Bonnie on visible floor lanes by pushing her feet to the closest edge of furniture blockers.
+      (room.blockers || []).forEach((blocker) => {
+        const insideX = adjusted.x >= blocker.minX && adjusted.x <= blocker.maxX;
+        const insideY = adjusted.y >= blocker.minY && adjusted.y <= blocker.maxY;
+        if (!insideX || !insideY) return;
+
+        const distances = [
+          { side: 'left', value: Math.abs(adjusted.x - blocker.minX) },
+          { side: 'right', value: Math.abs(blocker.maxX - adjusted.x) },
+          { side: 'top', value: Math.abs(adjusted.y - blocker.minY) },
+          { side: 'bottom', value: Math.abs(blocker.maxY - adjusted.y) }
+        ].sort((a, b) => a.value - b.value);
+
+        const side = distances[0].side;
+        if (side === 'left') adjusted.x = blocker.minX - 1.8;
+        if (side === 'right') adjusted.x = blocker.maxX + 1.8;
+        if (side === 'top') adjusted.y = blocker.minY - 1.8;
+        if (side === 'bottom') adjusted.y = blocker.maxY + 1.8;
+        adjusted.x = clamp(adjusted.x, area.minX, area.maxX);
+        adjusted.y = clamp(adjusted.y, area.minY, area.maxY);
+      });
+
+      return adjusted;
+    }
+
+    function updateBonnieScale() {
+      const room = rooms[currentRoom];
+      const progress = (bonniePosition.y - room.walkArea.minY) / (room.walkArea.maxY - room.walkArea.minY || 1);
+      playerBonnie.style.setProperty('--bonnie-scale', (0.48 + progress * 0.2).toFixed(3));
+    }
+
+    function placeBonnie(point, instant = false) {
+      const nextPoint = nearestWalkablePoint(currentRoom, point);
+      bonniePosition.x = nextPoint.x;
+      bonniePosition.y = nextPoint.y;
+      playerBonnie.style.setProperty('--bonnie-x', bonniePosition.x.toFixed(2));
+      playerBonnie.style.setProperty('--bonnie-y', bonniePosition.y.toFixed(2));
+      updateBonnieScale();
+      if (instant) playerBonnie.classList.remove('walking');
+    }
+
+    function showWalkTarget(point) {
+      walkTarget.style.setProperty('--target-x', point.x.toFixed(2));
+      walkTarget.style.setProperty('--target-y', point.y.toFixed(2));
+      walkTarget.classList.remove('visible');
+      void walkTarget.offsetWidth;
+      walkTarget.classList.add('visible');
+    }
+
+    function walkBonnieTo(point, afterWalk) {
       ensureAudio();
+      const destination = nearestWalkablePoint(currentRoom, point);
+      const distance = Math.hypot(destination.x - bonniePosition.x, destination.y - bonniePosition.y);
+      const duration = clamp(distance * 58, 280, 1800);
+      const requestId = ++walkRequest;
+
+      playerBonnie.classList.toggle('facing-left', destination.x < bonniePosition.x - 0.4);
+      playerBonnie.style.transitionDuration = `${duration}ms`;
+      showWalkTarget(destination);
+      playerBonnie.classList.add('walking');
+      setNarration('Bonnie crosses the old floorboards, careful not to brush the antiques.');
       playEffect('footsteps');
+      placeBonnie(destination);
+
+      window.setTimeout(() => {
+        if (requestId !== walkRequest) return;
+        playerBonnie.classList.remove('walking');
+        playerBonnie.style.transitionDuration = '';
+        if (afterWalk) afterWalk();
+      }, duration);
+    }
+
+    function pointFromSceneEvent(event) {
+      const rect = scenePanel.getBoundingClientRect();
+      return {
+        x: ((event.clientX - rect.left) / rect.width) * 100,
+        y: ((event.clientY - rect.top) / rect.height) * 100
+      };
+    }
+
+    function approachPointFor(button) {
+      const key = button.dataset.object || button.dataset.nav || button.dataset.dialogue;
+      if (key && rooms[currentRoom].targets[key]) return rooms[currentRoom].targets[key];
+
+      const sceneRect = scenePanel.getBoundingClientRect();
+      const buttonRect = button.getBoundingClientRect();
+      return nearestWalkablePoint(currentRoom, {
+        x: ((buttonRect.left + buttonRect.width / 2 - sceneRect.left) / sceneRect.width) * 100,
+        y: ((buttonRect.top + buttonRect.height - sceneRect.top) / sceneRect.height) * 100
+      });
+    }
+
+    function enterRoom(roomName) {
       currentRoom = roomName;
-      scenePanel.classList.add('transitioning');
-      window.setTimeout(() => scenePanel.classList.remove('transitioning'), 650);
       document.querySelectorAll('.room').forEach((room) => room.classList.remove('active'));
       document.querySelector(`#room-${roomName}`).classList.add('active');
       scenePanel.dataset.room = roomName;
       scenePanel.classList.toggle('important-room', rooms[roomName].important);
       locationHeading.textContent = rooms[roomName].title;
-      setNarration(customMessage || rooms[roomName].entry);
+      placeBonnie(rooms[roomName].start, true);
       updateNavigation();
       updateRoomMusic();
+    }
+
+    function changeRoom(roomName, customMessage) {
+      ensureAudio();
+      playEffect('footsteps');
+      scenePanel.classList.add('transitioning');
+      window.setTimeout(() => scenePanel.classList.remove('transitioning'), 650);
+      enterRoom(roomName);
+      setNarration(customMessage || rooms[roomName].entry);
       if (roomName === 'storage' && !stormTriggered) triggerStormEvent();
       saveGame();
     }
@@ -2573,16 +2877,10 @@
         const itemId = objectToItem(button.dataset.object);
         button.classList.toggle('collected', Boolean(itemId && collected.has(itemId)));
       });
-      document.querySelectorAll('.room').forEach((room) => room.classList.remove('active'));
-      document.querySelector(`#room-${currentRoom}`).classList.add('active');
-      scenePanel.dataset.room = currentRoom;
-      scenePanel.classList.toggle('important-room', rooms[currentRoom].important);
-      locationHeading.textContent = rooms[currentRoom].title;
+      enterRoom(currentRoom);
       updateInventory();
       updateJournal();
       updateEvidenceBoard();
-      updateNavigation();
-      updateRoomMusic();
       setNarration(`Bonnie returns to the ${rooms[currentRoom].title}. The saved threads of the Hollow Oak case are back on the board.`);
     }
 
@@ -2602,6 +2900,8 @@
       titleScreen.classList.remove('active');
       questScreen.classList.add('active');
       document.querySelector('[data-object="brassKey"]').focus();
+      scenePanel.classList.add('walk-ready');
+      placeBonnie(rooms[currentRoom].start, true);
       updateNavigation();
       updateRoomMusic();
     });
@@ -2612,19 +2912,36 @@
     });
 
     document.querySelectorAll('[data-object]').forEach((button) => {
-      button.addEventListener('click', () => inspectObject(button.dataset.object, button));
+      button.addEventListener('click', (event) => {
+        event.stopPropagation();
+        walkBonnieTo(approachPointFor(button), () => inspectObject(button.dataset.object, button));
+      });
     });
 
     document.querySelectorAll('[data-dialogue]').forEach((button) => {
-      button.addEventListener('click', openDialogue);
+      button.addEventListener('click', (event) => {
+        event.stopPropagation();
+        walkBonnieTo(approachPointFor(button), openDialogue);
+      });
     });
 
     document.querySelectorAll('[data-nav]').forEach((button) => {
-      button.addEventListener('click', () => changeRoom(button.dataset.nav));
+      button.addEventListener('click', (event) => {
+        event.stopPropagation();
+        walkBonnieTo(approachPointFor(button), () => changeRoom(button.dataset.nav));
+      });
     });
 
     roomMapButtons.forEach((button) => {
-      button.addEventListener('click', () => changeRoom(button.dataset.mapRoom));
+      button.addEventListener('click', () => {
+        const destination = button.dataset.mapRoom;
+        const adjacentExit = rooms[currentRoom].forward === destination || rooms[currentRoom].back === destination;
+        if (destination !== currentRoom && adjacentExit) {
+          walkBonnieTo(rooms[currentRoom].targets[destination] || rooms[currentRoom].start, () => changeRoom(destination));
+        } else {
+          changeRoom(destination);
+        }
+      });
     });
 
     document.querySelectorAll('.hotspot, [data-map-room], .nav-button, .evidence-node').forEach((button) => {
@@ -2636,12 +2953,17 @@
 
     navBack.addEventListener('click', () => {
       const destination = rooms[currentRoom].back;
-      if (destination) changeRoom(destination);
+      if (destination) walkBonnieTo(rooms[currentRoom].targets[destination] || rooms[currentRoom].start, () => changeRoom(destination));
     });
 
     navForward.addEventListener('click', () => {
       const destination = rooms[currentRoom].forward;
-      if (destination) changeRoom(destination);
+      if (destination) walkBonnieTo(rooms[currentRoom].targets[destination] || rooms[currentRoom].start, () => changeRoom(destination));
+    });
+
+    scenePanel.addEventListener('click', (event) => {
+      if (!questScreen.classList.contains('active') || event.target.closest('button, .modal')) return;
+      walkBonnieTo(pointFromSceneEvent(event));
     });
 
     saveButton.addEventListener('click', () => saveGame('Game saved in this browser.'));
