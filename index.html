@@ -15,7 +15,6 @@
       --mahogany: #5f3424;
       --oxblood: #6d2f25;
       --forest: #314331;
-      --smoke: #271a16;
       --shadow: rgba(16, 10, 7, 0.48);
       --amber-glow: rgba(255, 207, 118, 0.78);
       --lamplight: rgba(255, 222, 151, 0.36);
@@ -271,6 +270,10 @@
         linear-gradient(to bottom, #5b3b27 0 58%, #251510 58% 59%, #604028 59% 100%);
     }
 
+    .scene-panel[data-room="shop"]::after {
+      content: none;
+    }
+
     .room {
       display: none;
       position: absolute;
@@ -312,8 +315,7 @@
     }
 
     .room.asset-loaded .scene-fallback {
-      opacity: 0.2;
-      filter: blur(0.2px) saturate(0.7);
+      opacity: 0;
     }
 
     .scene-fallback,
@@ -1789,49 +1791,6 @@
       transform: translateX(-50%) translateY(-4px);
     }
 
-    .light-beam {
-      position: absolute;
-      z-index: 1;
-      pointer-events: none;
-      opacity: 0.48;
-      mix-blend-mode: screen;
-      filter: blur(0.3px);
-    }
-
-    .light-beam.shop-beam {
-      left: 42%;
-      top: 3.4rem;
-      width: 270px;
-      height: 450px;
-      clip-path: polygon(38% 0, 62% 0, 100% 100%, 0 100%);
-      background: linear-gradient(180deg, rgba(255, 236, 176, 0.42), rgba(255, 220, 150, 0.04));
-    }
-
-    .dust-motes {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      overflow: hidden;
-      pointer-events: none;
-    }
-
-    .dust-motes span {
-      position: absolute;
-      width: 3px;
-      height: 3px;
-      border-radius: 50%;
-      background: rgba(255, 236, 190, 0.72);
-      box-shadow: 0 0 9px rgba(255, 230, 172, 0.78);
-      animation: dustDrift 9s linear infinite;
-    }
-
-    .dust-motes span:nth-child(1) { left: 48%; top: 14%; animation-delay: -1s; }
-    .dust-motes span:nth-child(2) { left: 57%; top: 22%; animation-delay: -5s; animation-duration: 11s; }
-    .dust-motes span:nth-child(3) { left: 64%; top: 32%; animation-delay: -3s; animation-duration: 10s; }
-    .dust-motes span:nth-child(4) { left: 43%; top: 44%; animation-delay: -7s; animation-duration: 12s; }
-    .dust-motes span:nth-child(5) { left: 72%; top: 50%; animation-delay: -4s; }
-    .dust-motes span:nth-child(6) { left: 39%; top: 25%; animation-delay: -8s; animation-duration: 13s; }
-
     .strange-symbol {
       position: absolute;
       right: 22%;
@@ -1934,14 +1893,6 @@
       28% { opacity: 1; }
       100% { opacity: 0; transform: translate(-50%, -50%) scale(1.45); }
     }
-
-    @keyframes dustDrift {
-      0% { transform: translate3d(0, 16px, 0); opacity: 0; }
-      15% { opacity: 0.65; }
-      55% { opacity: 0.95; }
-      100% { transform: translate3d(38px, -78px, 0); opacity: 0; }
-    }
-
 
     .scene-panel.transitioning {
       animation: cinematicWipe 620ms ease both;
@@ -2525,8 +2476,8 @@
     .hotspot.blackwood-portrait-plaque { right: 14%; top: 30%; width: 120px; height: 34px; border-radius: 10px; }
 
 
-    /* Version 10 room architecture: the antique shop is now a classic point-and-click scene.
-       The rendered background image supplies the room art; only interaction layers sit above it. */
+    /* Main Antique Shop room architecture: a single photo background supplies the room art;
+       Bonnie and invisible interaction regions are the only layers above it. */
     #room-shop .scene-fallback,
     #room-shop .asset-prop,
     #room-shop .asset-marker,
@@ -2539,23 +2490,11 @@
       background: #1b100b;
     }
 
-    #room-shop .background-art::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background:
-        radial-gradient(circle at 52% 18%, rgba(255, 222, 151, .18), transparent 26rem),
-        radial-gradient(circle at 50% 100%, rgba(0, 0, 0, .22), transparent 28rem),
-        linear-gradient(90deg, rgba(0, 0, 0, .26), transparent 18%, transparent 78%, rgba(0, 0, 0, .42));
-      mix-blend-mode: multiply;
-    }
-
     #room-shop .background-art img {
       object-fit: cover;
       object-position: center center;
       image-rendering: auto;
-      filter: saturate(1.12) contrast(1.08) brightness(.98);
+      filter: none;
     }
 
     /* Hotspots are invisible until hover/focus, then reveal a subtle adventure-game glow and label. */
@@ -2687,19 +2626,6 @@
       opacity: 0;
     }
 
-    #room-shop .background-art::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-      background:
-        radial-gradient(circle at 38% 52%, rgba(255, 216, 132, .12), transparent 12rem),
-        linear-gradient(120deg, rgba(255,255,255,.035), transparent 30%, rgba(24, 10, 4, .18) 68%),
-        repeating-linear-gradient(108deg, rgba(255, 238, 188, .035) 0 2px, transparent 2px 18px);
-      mix-blend-mode: soft-light;
-    }
-
     .hotspot.grandfather-clock { left: 44.4%; top: 21.8%; width: 8.4%; height: 36.4%; border-radius: 45% 45% 14% 14%; }
     .hotspot.music-box-hotspot { left: 52.2%; top: 53.2%; width: 9.6%; height: 8.6%; border-radius: 12px; }
     .hotspot.evelyn-photo-hotspot { left: 77.1%; top: 13.2%; width: 8.4%; height: 18.4%; border-radius: 10px; }
@@ -2708,44 +2634,6 @@
     .hotspot.shop-window-hotspot { left: 6.2%; top: 31.2%; width: 13.4%; height: 22.4%; border-radius: 12px; }
     .hotspot.shop-lamp-hotspot { left: 34.6%; top: 46.2%; width: 8.4%; height: 15.2%; border-radius: 40% 40% 18% 18%; }
     .hotspot.shop-painting-hotspot { left: 6.8%; top: 9.2%; width: 28.2%; height: 15.8%; border-radius: 10px; }
-
-    .shop-hidden-symbol {
-      position: absolute;
-      z-index: 4;
-      left: 56.5%;
-      top: 56.2%;
-      width: 34px;
-      height: 34px;
-      transform: rotate(22deg) scale(.78);
-      opacity: 0;
-      border: 3px solid #2f1a11;
-      border-radius: 50%;
-      filter: drop-shadow(0 0 10px rgba(255, 215, 118, .55));
-      pointer-events: none;
-      transition: opacity 220ms ease, transform 220ms ease;
-    }
-
-    .shop-hidden-symbol::before,
-    .shop-hidden-symbol::after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 4px;
-      height: 30px;
-      border-radius: 999px;
-      background: #2f1a11;
-      transform: translate(-50%, -50%) rotate(45deg);
-    }
-
-    .shop-hidden-symbol::after {
-      transform: translate(-50%, -50%) rotate(-45deg);
-    }
-
-    .shop-hidden-symbol.visible {
-      opacity: .86;
-      transform: rotate(22deg) scale(1);
-    }
 
     .player-bonnie:not(.walking) .sprite-art {
       animation: bonnieIdle 2.8s ease-in-out infinite;
@@ -2874,14 +2762,18 @@
 
       <section id="quest-screen" class="screen quest-layout" aria-labelledby="location-heading">
         <div id="scene-panel" class="scene-panel" data-room="shop" aria-label="A warmly lit antique shop mystery scene">
-          <div class="light-beam shop-beam" aria-hidden="true"></div>
-          <div class="dust-motes" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
           <div id="hover-description" class="hover-description" aria-live="polite"></div>
           <div id="lightning-flash" class="lightning-flash" aria-hidden="true"></div>
           <div id="hallway-shadow" class="hallway-shadow" aria-hidden="true"></div>
           <div id="room-shop" class="room active" aria-label="Main Antique Shop">
-            <div class="background-art" aria-hidden="true"><img class="asset-img" src="assets/background-antique-shop.svg" alt="" /></div>
-            <div class="scene-fallback" aria-hidden="true"></div>
+            <div class="background-art" aria-hidden="true">
+              <img
+                class="asset-img"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Antique_shop_-_stock_photo.jpg/1280px-Antique_shop_-_stock_photo.jpg"
+                alt=""
+                referrerpolicy="no-referrer"
+              />
+            </div>
             <button class="hotspot grandfather-clock" type="button" data-object="grandfatherClock" data-label="Grandfather clock" aria-label="Inspect the tall grandfather clock and brass pendulum">Inspect grandfather clock</button>
             <button class="hotspot music-box-hotspot" type="button" data-object="shopMusicBox" data-label="Music box" aria-label="Inspect the rosewood music box on the shelf">Inspect music box</button>
             <button class="hotspot evelyn-photo-hotspot" type="button" data-object="evelynPhotograph" data-label="Evelyn photo" aria-label="Inspect the framed photograph of Evelyn Blackwood">Inspect Evelyn photograph</button>
@@ -2890,7 +2782,6 @@
             <button class="hotspot shop-window-hotspot" type="button" data-object="shopWindow" data-label="Window" aria-label="Inspect the rain-streaked front shop window">Inspect window</button>
             <button class="hotspot shop-lamp-hotspot" type="button" data-object="shopLamp" data-label="Antique lamp" aria-label="Inspect the glowing antique lamp">Inspect antique lamp</button>
             <button class="hotspot shop-painting-hotspot" type="button" data-object="framedPainting" data-label="Framed painting" aria-label="Inspect the large framed painting over the left wall">Inspect framed painting</button>
-            <div id="shop-symbol-art" class="shop-hidden-symbol" aria-hidden="true"></div>
           </div>
 
           <div id="room-storage" class="room" aria-label="Back Storage Room">
@@ -3142,7 +3033,6 @@
     const drawerArt = document.querySelector('#office-drawer-art');
     const hiddenNoteArt = document.querySelector('#hidden-note-art');
     const strangeSymbolArt = document.querySelector('#strange-symbol-art');
-    const shopSymbolArt = document.querySelector('#shop-symbol-art');
     const wallSafeArt = document.querySelector('#wall-safe-art');
     const dialogueBox = document.querySelector('#dialogue-box');
     const dialogueText = document.querySelector('#dialogue-text');
@@ -4002,7 +3892,6 @@
         return false;
       }
 
-      shopSymbolArt.classList.add('visible');
       collectItem('hiddenSymbol', 'Bonnie compares the old receipt number with the music box tune plate. Three pins depress with a soft chime, the lid lifts, and a crossed-circle symbol appears beneath the comb. She pins the symbol to the evidence board.', document.querySelector('[data-object="shopMusicBox"]'));
       playEffect('safe');
       return true;
@@ -4343,7 +4232,6 @@
       drawerArt.classList.toggle('unlocked', drawerUnlocked);
       hiddenNoteArt.classList.toggle('visible', drawerUnlocked);
       strangeSymbolArt.classList.toggle('visible', drawerUnlocked);
-      shopSymbolArt.classList.toggle('visible', collected.has('hiddenSymbol'));
       wallSafeArt.classList.toggle('revealed', safeRevealed || safeOpened);
       wallSafeArt.classList.toggle('open', safeOpened);
       document.querySelectorAll('[data-object]').forEach((button) => {

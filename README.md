@@ -12,8 +12,8 @@ A single-file, browser-based cinematic cozy mystery adventure inspired by classi
 - Reference-inspired cinematic one-screen layout with an immersive left room scene, polished right sidebar, and bottom action/evidence panels
 - Cinematic room transitions, typewriter-style narration, and soft camera zoom effects when clues are discovered
 - Ambient generated antique-shop music, suspense tones in important rooms, optional mute button, and generated sound effects
-- Image-based adventure room architecture: the antique shop uses the full rendered background art instead of CSS-drawn furniture layers
-- Invisible point-and-click hotspot regions over clocks, gramophone, counter, drawers, music box, photographs, paintings, lamp, shelves, window, rug, dark corners, and hidden compartments
+- Image-based adventure room architecture: the Main Antique Shop uses one full photographic background scene instead of CSS-drawn furniture or procedural prop layers
+- Invisible point-and-click hotspot regions layered over the Main Antique Shop photograph, with labels and subtle outlines appearing only on hover or keyboard focus
 - Subtle hover/focus glow rings, object-name tooltips, short hover descriptions, and smooth Bonnie walk-to-object movement
 - Layered high-detail Bonnie sprite with smoother walking animation over the static room background
 - Quest Notes journal that updates automatically as Bonnie discovers real clues, multi-step object interactions, final-compartment evidence, and red herrings
@@ -40,3 +40,5 @@ python3 -m http.server 8000
 Then visit <http://localhost:8000>.
 
 > Note: Browser audio starts after the first player interaction, which keeps the game compatible with modern autoplay rules. Saved games are stored only in the current browser with local storage.
+>
+> The Main Antique Shop room background is the CC0 Wikimedia Commons photograph “Antique shop - stock photo.jpg” by Peter Heeling / Skitterphoto.
