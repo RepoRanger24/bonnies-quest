@@ -1160,6 +1160,40 @@
     .hotspot.gallery-photos-hotspot { left: 8%; top: 9%; width: 88px; height: 74px; border-radius: 8px; }
     .hotspot.shop-painting-hotspot { right: 9%; top: 9%; width: 96px; height: 80px; border-radius: 8px; }
     .hotspot.hidden-counter-mark { right: 34%; bottom: 8.65rem; width: 34px; height: 22px; border-radius: 50%; opacity: 0.08; }
+    .hotspot.winding-key-hotspot { left: 36.2%; top: 61.4%; width: 5.6%; height: 5.8%; border-radius: 999px; }
+
+    .rain-ambience,
+    .moving-shadows {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .rain-ambience {
+      z-index: 4;
+      opacity: .23;
+      mix-blend-mode: screen;
+      background:
+        repeating-linear-gradient(106deg, transparent 0 12px, rgba(176, 207, 223, .34) 13px 15px, transparent 16px 32px),
+        linear-gradient(180deg, rgba(33, 54, 65, .16), transparent 58%);
+      background-size: 34px 72px, 100% 100%;
+      animation: rainFall 1.35s linear infinite;
+    }
+
+    .moving-shadows {
+      z-index: 4;
+      opacity: .36;
+      mix-blend-mode: multiply;
+      background:
+        radial-gradient(ellipse at 20% 70%, rgba(0,0,0,.34), transparent 16rem),
+        linear-gradient(75deg, transparent 0 35%, rgba(0,0,0,.18) 43%, transparent 58%);
+      animation: slowShadowDrift 11s ease-in-out infinite alternate;
+    }
+
+    @keyframes slowShadowDrift {
+      from { transform: translateX(-1.4%) skewX(-1deg); opacity: .24; }
+      to { transform: translateX(1.8%) skewX(1deg); opacity: .42; }
+    }
 
     .storage-rack {
       position: absolute;
@@ -2639,13 +2673,23 @@
       animation: bonnieIdle 2.8s ease-in-out infinite;
     }
 
+    .player-bonnie.stopping .sprite-art {
+      animation: bonnieStopSettle 420ms cubic-bezier(.2, .65, .2, 1) both;
+    }
+
     .player-bonnie.facing-right {
       transform: translate(-50%, -100%) scale(var(--bonnie-scale));
     }
 
     @keyframes bonnieIdle {
-      0%, 100% { transform: translateY(0) rotate(0); }
-      50% { transform: translateY(-1.5px) rotate(.25deg); }
+      0%, 100% { transform: translateY(0) rotate(0) scaleY(1); }
+      50% { transform: translateY(-1.5px) rotate(.25deg) scaleY(1.006); }
+    }
+
+    @keyframes bonnieStopSettle {
+      0% { transform: translateY(-3px) rotate(.4deg); }
+      58% { transform: translateY(1px) rotate(-.16deg); }
+      100% { transform: translateY(0) rotate(0); }
     }
 
 
@@ -2867,6 +2911,8 @@
           <div id="hover-description" class="hover-description" aria-live="polite"></div>
           <div id="lightning-flash" class="lightning-flash" aria-hidden="true"></div>
           <div id="hallway-shadow" class="hallway-shadow" aria-hidden="true"></div>
+          <div class="rain-ambience" aria-hidden="true"></div>
+          <div class="moving-shadows" aria-hidden="true"></div>
           <div id="room-shop" class="room active" aria-label="Main Antique Shop">
             <div class="background-art" aria-hidden="true">
               <img
@@ -2884,6 +2930,8 @@
             <button class="hotspot shop-window-hotspot" type="button" data-object="shopWindow" data-label="Window" aria-label="Inspect the rain-streaked front shop window">Inspect window</button>
             <button class="hotspot shop-lamp-hotspot" type="button" data-object="shopLamp" data-label="Antique lamp" aria-label="Inspect the glowing antique lamp">Inspect antique lamp</button>
             <button class="hotspot shop-painting-hotspot" type="button" data-object="framedPainting" data-label="Framed painting" aria-label="Inspect the large framed painting over the left wall">Inspect framed painting</button>
+            <button class="hotspot winding-key-hotspot" type="button" data-object="windingKey" data-label="Tiny key" aria-label="Search the lamplit counter edge for a hidden winding key">Search hidden key</button>
+            <button class="hotspot mabel-hotspot" type="button" data-dialogue="mabel" data-label="Mabel" aria-label="Speak with Mabel about the Hollow Oak clues">Talk to Mabel</button>
           </div>
 
           <div id="room-storage" class="room" aria-label="Back Storage Room">
@@ -3185,7 +3233,7 @@
         walkArea: { minX: 8, maxX: 92, minY: 73, maxY: 91 },
         blockers: [{ minX: 56, maxX: 93, minY: 70, maxY: 85 }],
         targets: {
-          grandfatherClock: { x: 48, y: 76 }, shopMusicBox: { x: 56, y: 80 }, evelynPhotograph: { x: 80, y: 78 }, frontCounter: { x: 68, y: 85 }, lockedDrawer: { x: 76, y: 86 }, shopWindow: { x: 18, y: 80 }, shopLamp: { x: 39, y: 80 }, framedPainting: { x: 22, y: 77 }
+          grandfatherClock: { x: 48, y: 76 }, shopMusicBox: { x: 56, y: 80 }, evelynPhotograph: { x: 80, y: 78 }, frontCounter: { x: 68, y: 85 }, lockedDrawer: { x: 76, y: 86 }, shopWindow: { x: 18, y: 80 }, shopLamp: { x: 39, y: 80 }, framedPainting: { x: 22, y: 77 }, windingKey: { x: 39, y: 84 }, mabel: { x: 66, y: 84 }
         }
       },
       storage: {
@@ -3222,6 +3270,36 @@
         name: 'Old Key',
         icon: 'key',
         description: 'Tagged "Rosewood music box, drawer three, E. V."'
+      },
+      photoSymbol: {
+        name: 'Photo Symbol',
+        icon: 'photo',
+        description: "A tiny crossed-circle engraving is visible in the background of Evelyn's framed photograph."
+      },
+      musicBoxSymbol: {
+        name: 'Music Box Carving',
+        icon: 'note',
+        description: 'The rosewood music box carries the same crossed-circle mark Bonnie noticed behind Evelyn.'
+      },
+      windingKey: {
+        name: 'Tiny Winding Key',
+        icon: 'key',
+        description: "A delicate brass winding key hidden under the counter lip, warm from the shop lamp."
+      },
+      hollowOakMap: {
+        name: 'Hollow Oak Map',
+        icon: 'note',
+        description: "A folded estate map showing the oldest oak, three cellar doors, and no bell tower at all."
+      },
+      trainTicket: {
+        name: 'Old Train Ticket',
+        icon: 'receipt',
+        description: "A one-way ticket to Hollow Oak Station, punched the night Evelyn vanished."
+      },
+      crypticClue: {
+        name: 'Handwritten Clue',
+        icon: 'note',
+        description: "Evelyn's note reads: \"When the song remembers, follow the track past the oak with no bell.\""
       },
       tunedMusicBox: {
         name: 'Opened Music Box',
@@ -3302,6 +3380,12 @@
 
     const journalEntries = {
       brassKey: 'The old key is tagged for drawer three and marked E. V.; it likely belongs upstairs or in the rosewood music box.',
+      photoSymbol: 'The Evelyn photograph hides a crossed-circle engraving in the background; it is too deliberate to be wallpaper.',
+      musicBoxSymbol: 'The same crossed-circle mark is carved into the rosewood music box, proving the photograph and box are part of one puzzle.',
+      windingKey: "A tiny winding key was hidden under Mabel's counter lip, where lamplight and shadow made it nearly invisible.",
+      hollowOakMap: 'The music box compartment held a folded Hollow Oak Estate map with the oldest oak and three cellar doors marked.',
+      trainTicket: 'An old one-way train ticket places Evelyn on the Hollow Oak line the night she vanished.',
+      crypticClue: "Evelyn's handwritten clue ties the melody, the train route, and the bell-less oak together.",
       tunedMusicBox: 'The old key opens the rosewood music box; inside is the first part of Evelyn\'s warning about the missing heirloom.',
       oldReceipt: 'The rosewood music box was sold to E. Vale exactly forty years ago; the first safe clue may be 40.',
       tornPhotograph: 'The torn photograph shows a woman with a bell-shaped locket at Mabel\'s front window.',
@@ -3338,7 +3422,7 @@
       officePortrait: 'The portrait\'s stern eyes resemble the woman in the torn photograph. A scratched plaque reads: "Evelyn Blackwood, collector and heir."',
       officeWindow: 'Rain runs down the upstairs window. In the reflection, Bonnie sees the shop sign and a crossed-circle symbol briefly align.',
       shopShelves: 'The shelves sag with candlesticks, chipped figurines, and books that smell like pepper and dust. Bonnie finds labeled aisles: clocks, letters, Blackwood consignments.',
-      shopMusicBox: 'The rosewood music box is shut and silent. A tiny brass tune plate has a blank space where a receipt number should tell Bonnie which pins to press.',
+      shopMusicBox: 'The rosewood music box is shut and silent. Bonnie sees hand-rubbed rosewood, dulled brass hinges, and—if the photograph is right—a place where the crossed-circle crest may be carved under the dust.',
       lockedDrawer: 'The counter drawer is locked, but the Evelyn photograph gives Bonnie leverage: the drawer label E. V. matches Evelyn Vale, the name on Mabel’s oldest consignments.',
       shopPhotos: 'Faded shop photos show Mabel younger, the counter older, and the same front window Evelyn stood beside in the torn photograph.',
       shopLamp: 'The antique lamp casts a honey-colored pool across the counter. Scratches in the brass base show the same careful hand that labeled the Evelyn photograph.',
@@ -3369,10 +3453,10 @@
       pictureBin: 'Frames lean together in the picture bin. A landscape of Hollow Oak has been turned backward, hiding a penciled route to the cellar garden wall.',
       hatBoxes: 'The hat boxes smell of lavender and rain. One lid is labeled Blackwood winter things, but the box is empty except for a strand of gray silk ribbon.',
       oldCamera: 'The folding camera still holds a cracked glass plate. In the ghosted image, Evelyn stands in this very shop with the rosewood music box under one arm.',
-      frontCounter: 'Mabel’s counter is polished to a mirror-dark shine. Under the glass, a drawer label reads E. V.; beside it sits an empty slot exactly the size of an old receipt.',
+      frontCounter: 'Mabel’s counter is polished to a mirror-dark shine. Under the glass, a drawer label reads E. V.; beneath the counter lip, something tiny catches the lamp for half a second.',
       gramophone: 'The brass gramophone is beautiful, loud, and wrong for this case: its crank is decorative and the record is a modern pressing. A convincing red herring for anyone chasing music instead of mechanisms.',
       shopWindow: 'Rain slides down the front window. The reflection lines up Mabel\'s sign, the road outside, and a faint crossed-circle scratched into the lower pane.',
-      evelynPhotograph: 'A framed photograph shows Evelyn Blackwood standing beside this same window with the rosewood music box under her arm. Her bell-shaped locket matches the empty velvet impression in the cabinet.',
+      evelynPhotograph: 'A framed photograph shows Evelyn Blackwood standing beside this same window with the rosewood music box under her arm. Bonnie leans closer: in the blurred wall behind Evelyn, a crossed-circle symbol has been engraved into the wood paneling.',
       estateMap: 'A rolled estate map shows Hollow Oak from above: no bell tower, three cellar doors, and a small X drawn beneath the oldest oak tree.',
       blackwoodCrate: 'The Blackwood crate is newer than the dust around it. Fresh pry marks suggest someone recently searched it, then tried to make the room look untouched.',
       photoEnvelope: 'The brittle envelope contains duplicates of Evelyn\'s shop photograph. Someone circled Mabel\'s counter in red pencil on every copy.',
@@ -3387,6 +3471,12 @@
 
     const hoverText = {
       brassKey: 'A warm brass key rests on the counter, tagged in old ink.',
+      photoSymbol: 'The photo hides a tiny crossed-circle mark in its background.',
+      musicBoxSymbol: "The music box carving matches Evelyn's photograph.",
+      windingKey: 'A pinprick of brass glints under the counter lip.',
+      hollowOakMap: 'A folded Hollow Oak map smells of rain and cedar.',
+      trainTicket: 'A brittle train ticket peeks from the compartment.',
+      crypticClue: 'A cramped handwritten clue waits inside the box.',
       mabel: 'Mabel waits with too many answers and not enough calm.',
       greenVase: 'A green vase catches lamplight and a ring of undisturbed dust.',
       wallClock: 'The wall clock ticks softly above the gallery frames.',
@@ -3405,7 +3495,7 @@
       storage: 'Footsteps lead through the curtain into the back room.',
       office: 'The narrow stairs climb toward the upstairs office.',
       shopShelves: 'Crowded shelves invite a careful look.',
-      shopMusicBox: 'A rosewood music box waits for the receipt clue.',
+      shopMusicBox: 'A rosewood music box waits for the symbol and its tiny winding key.',
       lockedDrawer: 'A drawer labeled E. V. sits beneath Mabel’s counter.',
       shopPhotos: 'Faded photographs lean in a dusty stack.',
       shopLamp: 'Amber light pools under the antique lamp.',
@@ -3460,6 +3550,37 @@
           { label: 'Ask about the missing heirloom', next: 'heirloom' },
           { label: 'Ask about Mabel\'s family', next: 'family', clue: 'familySecret' },
           { label: 'Follow the North Pier rumor', next: 'pier', note: 'misleadingMabel' }
+        ]
+      },
+      photoSeen: {
+        text: "Mabel notices Bonnie studying the photograph. \"You saw the mark behind Evelyn, didn't you? That symbol was carved in this shop before I was brave enough to ask why.\"",
+        choices: [
+          { label: 'Ask where the symbol appears again', next: 'music' },
+          { label: 'Ask why Evelyn hid it in a photo', next: 'evelyn', clue: 'evelynDossier' },
+          { label: 'End conversation', next: 'end' }
+        ]
+      },
+      boxMatched: {
+        text: "Mabel's voice softens. \"Photo and music box. Same crest. Evelyn wanted the right person to notice both before turning any key.\"",
+        choices: [
+          { label: 'Ask about the winding key', next: 'tinyKey' },
+          { label: 'Ask about Hollow Oak', next: 'estate' },
+          { label: 'End conversation', next: 'end' }
+        ]
+      },
+      tinyKey: {
+        text: '"Small keys hide best where hands hesitate," Mabel says, glancing below the lamplit counter. "Evelyn trusted shadows more than locks."',
+        choices: [
+          { label: 'Ask what the box may contain', next: 'music' },
+          { label: 'End conversation', next: 'end' }
+        ]
+      },
+      boxOpened: {
+        text: 'Mabel exhales when Bonnie mentions the map and ticket. "Then Evelyn reached Hollow Oak by train. The note is not poetry, child—it is a route."',
+        choices: [
+          { label: 'Ask about the old train line', next: 'estate' },
+          { label: 'Ask about the missing heirloom', next: 'heirloom' },
+          { label: 'End conversation', next: 'end' }
         ]
       },
       evelyn: {
@@ -3548,6 +3669,8 @@
     let rainSource;
     let creakTimer;
     let tickTimer;
+    let thunderTimer;
+    let melodyGain;
     let typeTimer;
     let isMuted = false;
     const collected = new Set();
@@ -3563,8 +3686,10 @@
       oldReceipt: {
         shopMusicBox: () => revealShopMusicBoxSymbol()
       },
+      windingKey: {
+        shopMusicBox: () => openMusicBoxCompartment()
+      },
       brassKey: {
-        shopMusicBox: () => revealShopMusicBoxSymbol(),
         officeDrawer: () => inspectOfficeDrawer(document.querySelector('[data-object="officeDrawer"]'))
       },
       lantern: {
@@ -3613,6 +3738,7 @@
       startRoomAmbience();
       tickTimer = window.setInterval(() => playEffect('tick'), 2400);
       creakTimer = window.setInterval(() => playEffect('creak'), 9000);
+      thunderTimer = window.setInterval(() => playEffect('thunder'), 26000);
     }
 
     function createNoiseBuffer(duration = 2) {
@@ -3771,6 +3897,10 @@
       } else if (effectName === 'reveal') {
         playNoiseBurst(0.38, 0.055, 820);
         playTone(392, 0.18, 'sine', 0.075, 0.08);
+      } else if (effectName === 'musicBoxMelody') {
+        [659.25, 587.33, 523.25, 392, 523.25, 659.25].forEach((note, index) => {
+          playTone(note, 0.22, 'triangle', 0.055, index * 0.18);
+        });
       }
     }
 
@@ -3960,7 +4090,7 @@
       updateBonnieScale();
       updateCameraDrift();
       updateHotspotProximity();
-      if (instant) playerBonnie.classList.remove('walking');
+      if (instant) playerBonnie.classList.remove('walking', 'stopping');
     }
 
     function showWalkTarget(point) {
@@ -3991,6 +4121,8 @@
       window.setTimeout(() => {
         if (requestId !== walkRequest) return;
         playerBonnie.classList.remove('walking');
+        playerBonnie.classList.add('stopping');
+        window.setTimeout(() => playerBonnie.classList.remove('stopping'), 430);
         playerBonnie.style.transitionDuration = '';
         if (afterWalk) afterWalk();
       }, duration);
@@ -4120,18 +4252,36 @@
     }
 
     function revealShopMusicBoxSymbol() {
-      if (collected.has('hiddenSymbol')) {
-        setNarration('The music box rests open, its crossed-circle symbol already copied onto Bonnie’s evidence board. The Main Antique Shop clue chain is complete.');
+      if (collected.has('musicBoxSymbol')) {
+        setNarration('The carved crossed-circle mark on the music box already matches the engraving hidden in Evelyn’s photograph. Now Bonnie needs the tiny winding key.');
         return false;
       }
 
-      if (!collected.has('oldReceipt')) {
-        setNarration('Bonnie studies the rosewood music box, but the pin order is missing. The old receipt should explain which tune plate to press.');
+      if (!collected.has('photoSymbol')) {
+        setNarration('The rosewood music box is beautiful, but Bonnie needs a reason to study every carved mark. Evelyn’s photograph may provide that reason.');
         return false;
       }
 
-      collectItem('hiddenSymbol', 'Bonnie compares the old receipt number with the music box tune plate. Three pins depress with a soft chime, the lid lifts, and a crossed-circle symbol appears beneath the comb. She pins the symbol to the evidence board.', document.querySelector('[data-object="shopMusicBox"]'));
-      playEffect('safe');
+      collectItem('musicBoxSymbol', 'Bonnie dusts the rosewood music box with her sleeve. There it is: the same crossed-circle symbol engraved into the underside, shallow but deliberate. The photograph and box belong to the same mystery.', document.querySelector('[data-object="shopMusicBox"]'));
+      return true;
+    }
+
+    function openMusicBoxCompartment() {
+      if (collected.has('crypticClue')) {
+        setNarration('The music box compartment is open. The map, ticket, and handwritten clue are already pinned to Bonnie’s investigation. A faint melody keeps turning in the brass teeth.');
+        playEffect('musicBoxMelody');
+        return false;
+      }
+      if (!collected.has('musicBoxSymbol')) {
+        setNarration('The tiny winding key fits the music box, but Bonnie hesitates. She should confirm the carved symbol matches Evelyn’s photograph before forcing the mechanism.');
+        return false;
+      }
+
+      playEffect('unlock');
+      playEffect('musicBoxMelody');
+      collectItem('hollowOakMap', 'The winding key turns with a delicate click. The music box lid rises, not to reveal jewelry, but a folded Hollow Oak Estate map hidden beneath the velvet lining.', null);
+      collectItem('trainTicket', 'Behind the map, Bonnie finds a brittle one-way train ticket to Hollow Oak Station, punched on the night Evelyn Blackwood vanished.', null);
+      collectItem('crypticClue', 'Last, Bonnie unfolds Evelyn’s cramped note: "When the song remembers, follow the track past the oak with no bell." The evidence board connects the photograph, symbol, music box, map, ticket, and clue.', document.querySelector('[data-object="shopMusicBox"]'));
       return true;
     }
 
@@ -4160,7 +4310,8 @@
           saveGame();
           break;
         case 'evelynPhotograph':
-          collectItem('evelynPhoto', 'Bonnie lifts the small framed photograph from its hook. Evelyn Blackwood is unmistakable: the same locket, the same window, and the rosewood music box tucked under her arm. The initials E. V. match the locked counter drawer.', button);
+          collectItem('evelynPhoto', 'Bonnie lifts the small framed photograph from its hook. Evelyn Blackwood is unmistakable: the same locket, the same window, and the rosewood music box tucked under her arm. Bonnie whispers, "Wait—the wall behind her is engraved."', button);
+          collectItem('photoSymbol', 'Bonnie copies the tiny crossed-circle symbol from the photograph background. It is too carefully placed to be accidental.', null);
           break;
         case 'lockedDrawer':
           if (!collected.has('evelynPhoto')) {
@@ -4173,12 +4324,22 @@
           setNarration(objectText.framedPainting);
           break;
         case 'shopMusicBox':
-          if (collected.has('hiddenSymbol')) {
-            setNarration('The music box rests open. The hidden crossed-circle symbol is copied on the evidence board, linking Evelyn, Hollow Oak, and the antique shop.');
-          } else if (collected.has('oldReceipt')) {
-            setNarration(objectText.shopMusicBox + ' Select the old receipt in inventory, then click the music box to press the tune plate in the receipt order.');
+          if (collected.has('crypticClue')) {
+            setNarration('The rosewood music box rests open, integrated with the room like it has always been waiting here. The soft melody now points Bonnie toward Hollow Oak Estate.');
+            playEffect('musicBoxMelody');
+          } else if (!collected.has('musicBoxSymbol')) {
+            revealShopMusicBoxSymbol();
+          } else if (!collected.has('windingKey')) {
+            setNarration('The matching symbol is found. Bonnie feels around the side: the box needs a tiny winding key, not the old drawer key. Something that small could be hidden in the shop shadows.');
           } else {
-            setNarration(objectText.shopMusicBox + ' Bonnie needs the old receipt before she can play the correct mechanism.');
+            setNarration('Bonnie selects the tiny winding key from her satchel, then lines it up with the music box keyhole.');
+          }
+          break;
+        case 'windingKey':
+          if (!collected.has('musicBoxSymbol')) {
+            setNarration('A pinprick of brass glints beneath Mabel’s counter, but Bonnie does not yet know why such a tiny key matters. The music box and Evelyn’s photograph should come first.');
+          } else {
+            collectItem('windingKey', 'Bonnie slides her fingers under the counter lip and frees a tiny brass winding key. It is warm from the lamp and sized exactly for the rosewood music box.', button);
           }
           break;
         case 'storageLamp':
@@ -4331,10 +4492,18 @@
       saveGame('Safe opened and game saved.');
     }
 
+    function mabelOpeningNode() {
+      if (collected.has('crypticClue')) return 'boxOpened';
+      if (collected.has('windingKey')) return 'tinyKey';
+      if (collected.has('musicBoxSymbol')) return 'boxMatched';
+      if (collected.has('photoSymbol')) return 'photoSeen';
+      return 'start';
+    }
+
     function openDialogue() {
       ensureAudio();
       dialogueBox.hidden = false;
-      renderDialogue('start');
+      renderDialogue(mabelOpeningNode());
     }
 
     function renderDialogue(nodeId) {
@@ -4378,10 +4547,18 @@
     function updateObjective() {
       if (collected.has('secretLedger')) {
         currentObjectiveText.textContent = 'Solved: Evelyn hid the ledger to prove the heirloom survived the old town fire and belongs at Hollow Oak Estate.';
+      } else if (collected.has('crypticClue')) {
+        currentObjectiveText.textContent = 'Music box opened: map, ticket, and clue point Bonnie toward Hollow Oak Estate.';
+      } else if (collected.has('windingKey')) {
+        currentObjectiveText.textContent = 'Use the tiny winding key on the rosewood music box.';
+      } else if (collected.has('musicBoxSymbol')) {
+        currentObjectiveText.textContent = 'Find the tiny winding key hidden somewhere in the shop.';
+      } else if (collected.has('photoSymbol')) {
+        currentObjectiveText.textContent = 'Inspect the rosewood music box for the same engraved symbol.';
       } else if (collected.has('safeDeed')) {
         currentObjectiveText.textContent = 'Use the matched photograph, lamp message, and deed to open the final wall compartment.';
       } else if (collected.has('hiddenSymbol')) {
-        currentObjectiveText.textContent = 'The music box symbol is pinned to the evidence board; the Main Antique Shop vertical slice is solved.';
+        currentObjectiveText.textContent = 'The hidden symbol is pinned to the evidence board; keep following the Hollow Oak trail.';
       } else if (collected.has('oldReceipt')) {
         currentObjectiveText.textContent = 'Use the old receipt clue on the rosewood music box.';
       } else if (collected.has('evelynPhoto')) {
@@ -4398,10 +4575,10 @@
     function updateEvidenceBoard() {
       const discovered = {
         evelynBlackwood: collected.has('evelynDossier') || collected.has('tornPhotograph') || collected.has('evelynPhoto'),
-        hollowOak: collected.has('hiddenLetter') || collected.has('floorboardScrap') || collected.has('safeDeed') || collected.has('secretLedger'),
-        musicBox: collected.has('brassKey') || collected.has('oldReceipt') || collected.has('tunedMusicBox') || collected.has('hiddenSymbol'),
-        tornPhotograph: collected.has('tornPhotograph') || collected.has('evelynPhoto'),
-        hiddenSymbol: collected.has('hiddenLetter') || collected.has('hiddenSymbol') || collected.has('matchedPhotograph') || collected.has('safeDeed') || collected.has('secretLedger')
+        hollowOak: collected.has('hollowOakMap') || collected.has('trainTicket') || collected.has('crypticClue') || collected.has('hiddenLetter') || collected.has('floorboardScrap') || collected.has('safeDeed') || collected.has('secretLedger'),
+        musicBox: collected.has('musicBoxSymbol') || collected.has('windingKey') || collected.has('crypticClue') || collected.has('brassKey') || collected.has('oldReceipt') || collected.has('tunedMusicBox') || collected.has('hiddenSymbol'),
+        tornPhotograph: collected.has('tornPhotograph') || collected.has('evelynPhoto') || collected.has('photoSymbol'),
+        hiddenSymbol: collected.has('photoSymbol') || collected.has('musicBoxSymbol') || collected.has('hiddenLetter') || collected.has('hiddenSymbol') || collected.has('matchedPhotograph') || collected.has('safeDeed') || collected.has('secretLedger')
       };
 
       evidenceBoard.querySelectorAll('.evidence-node').forEach((node) => {
@@ -4492,6 +4669,7 @@
         oldReceipt: 'oldReceipt',
         lockedDrawer: 'oldReceipt',
         evelynPhotograph: 'evelynPhoto',
+        windingKey: 'windingKey',
         tornPhotograph: 'tornPhotograph',
         looseFloorboard: 'floorboardScrap',
         officeDrawer: 'hiddenLetter',
@@ -4519,7 +4697,7 @@
       ensureAudio();
       titleScreen.classList.remove('active');
       questScreen.classList.add('active');
-      document.querySelector('[data-object="brassKey"]').focus();
+      document.querySelector('[data-object="evelynPhotograph"]').focus();
       scenePanel.classList.add('walk-ready');
       placeBonnie(rooms[currentRoom].start, true);
       updateNavigation();
