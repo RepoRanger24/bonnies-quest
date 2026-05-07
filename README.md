@@ -11,14 +11,14 @@ A single-file, browser-based cinematic cozy mystery adventure inspired by classi
 - Missing antique collector Evelyn Blackwood and a hidden family secret tied to Mabel's Antiques
 - Reference-inspired cinematic one-screen layout with an immersive left room scene, polished right sidebar, and bottom action/evidence panels
 - Cinematic room transitions, typewriter-style narration, and soft camera zoom effects when clues are discovered
-- Ambient generated antique-shop music, suspense tones in important rooms, optional mute button, and generated sound effects
-- Image-based adventure room architecture: the Main Antique Shop uses one full photographic background scene instead of CSS-drawn furniture or procedural prop layers
-- Invisible point-and-click hotspot regions layered over the Main Antique Shop photograph, with labels and subtle outlines appearing only on hover or keyboard focus
-- Subtle hover/focus glow rings, object-name tooltips, short hover descriptions, and smooth Bonnie walk-to-object movement
-- Layered high-detail Bonnie sprite with smoother walking animation over the static room background
+- Ambient generated antique-shop music, rain bed, ticking clocks, creaking wood, soft room tone, suspense tones in important rooms, optional mute button, and generated sound effects
+- Image-based adventure room architecture: all three existing rooms now use cinematic full-scene art layers instead of relying on CSS-drawn furniture
+- Invisible point-and-click hotspot regions layered over the room art, with labels and subtle glints appearing only on hover, keyboard focus, or Bonnie proximity
+- Subtle hover/focus glow rings, object-name tooltips, short hover descriptions, smooth Bonnie walk-to-object movement, and gentle camera drift
+- More realistic high-detail Bonnie sprite with improved proportions, room-matched shadowing, idle breathing, and smoother walking animation over the static room background
 - Quest Notes journal that updates automatically as Bonnie discovers real clues, multi-step object interactions, final-compartment evidence, and red herrings
 - Inventory for collected clues with selectable inspection, item-on-hotspot use, and item combination puzzles
-- Inventory combinations including old key + music box, torn photograph + hidden symbol, and lantern + dark storage corner
+- Inventory combinations and item-on-object puzzle chains including old key + receipt + music box, torn photograph + hidden symbol, old key + office drawer, and lantern + dark storage corner
 - Investigation Board that visually connects Evelyn Blackwood, Hollow Oak Estate, the music box, torn photograph, and hidden symbol
 - Upstairs Office locked-drawer puzzle unlocked by the Old Key
 - Hidden wall safe with a four-digit code-breaking puzzle built from clues across multiple rooms
