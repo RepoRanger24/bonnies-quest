@@ -1,12 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="glowing examine marker">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="tiny glowing dust ring hotspot indicator">
   <defs>
-    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-      <stop offset="0" stop-color="#fff7c7" stop-opacity="1"/>
-      <stop offset=".35" stop-color="#ffd36d" stop-opacity=".9"/>
-      <stop offset="1" stop-color="#b86b2a" stop-opacity="0"/>
-    </radialGradient>
+    <radialGradient id="dust" cx="50%" cy="50%" r="50%"><stop stop-color="#fff4bf" stop-opacity=".96"/><stop offset=".28" stop-color="#ffd786" stop-opacity=".48"/><stop offset=".62" stop-color="#e0a048" stop-opacity=".18"/><stop offset="1" stop-color="#e0a048" stop-opacity="0"/></radialGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="1.4"/></filter>
   </defs>
-  <circle cx="32" cy="32" r="30" fill="url(#glow)" opacity=".85"/>
-  <circle cx="32" cy="32" r="17" fill="none" stroke="#fff1aa" stroke-width="4"/>
-  <path d="M32 13v11M32 40v11M13 32h11M40 32h11" stroke="#5b2b17" stroke-width="3" stroke-linecap="round" opacity=".85"/>
+  <circle cx="32" cy="32" r="18" fill="none" stroke="#ffdf91" stroke-width="2.2" stroke-dasharray="2 7" opacity=".72"/>
+  <g fill="#ffe7a8" opacity=".86">
+    <circle cx="32" cy="13" r="2.2"/><circle cx="48" cy="25" r="1.5"/><circle cx="43" cy="45" r="2"/><circle cx="21" cy="49" r="1.6"/><circle cx="15" cy="29" r="1.3"/><circle cx="25" cy="18" r="1.1"/>
+  </g>
+  <circle cx="32" cy="32" r="26" fill="url(#dust)" opacity=".42" filter="url(#blur)"/>
 </svg>

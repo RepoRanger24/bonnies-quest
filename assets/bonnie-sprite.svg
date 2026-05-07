@@ -1,56 +1,45 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 460" role="img" aria-label="Realistic painted adventure game sprite of Bonnie with detailed face, hair, field coat, satchel, boots, and soft floor shadow">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 360" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Realistic semi-painted Bonnie adventure game character in warm lamplight">
   <defs>
-    <linearGradient id="skin" x1="0" x2="1"><stop stop-color="#8c5240"/><stop offset=".28" stop-color="#d59b78"/><stop offset=".52" stop-color="#f2c69f"/><stop offset=".78" stop-color="#b97759"/><stop offset="1" stop-color="#64372d"/></linearGradient>
-    <linearGradient id="coat" x1="0" x2="1"><stop stop-color="#0f160e"/><stop offset=".22" stop-color="#25361f"/><stop offset=".54" stop-color="#67744f"/><stop offset=".82" stop-color="#283521"/><stop offset="1" stop-color="#0b100a"/></linearGradient>
-    <linearGradient id="coatEdge" y1="0" y2="1"><stop stop-color="#9aa36d"/><stop offset="1" stop-color="#26301d"/></linearGradient>
-    <linearGradient id="shirt" y1="0" y2="1"><stop stop-color="#fff0ce"/><stop offset=".5" stop-color="#ddc296"/><stop offset="1" stop-color="#95724d"/></linearGradient>
-    <linearGradient id="denim" x1="0" x2="1"><stop stop-color="#0c141d"/><stop offset=".5" stop-color="#526a79"/><stop offset="1" stop-color="#0a1016"/></linearGradient>
-    <linearGradient id="leather" x1="0" x2="1"><stop stop-color="#35180f"/><stop offset=".46" stop-color="#a96f38"/><stop offset=".72" stop-color="#70401f"/><stop offset="1" stop-color="#1c0d08"/></linearGradient>
-    <radialGradient id="hair" cx="48%" cy="20%" r="82%"><stop stop-color="#8e6a51"/><stop offset=".34" stop-color="#4d3024"/><stop offset=".76" stop-color="#1b0e0b"/><stop offset="1" stop-color="#080302"/></radialGradient>
-    <radialGradient id="eyeGlow" cx="50%" cy="40%" r="60%"><stop stop-color="#2a2019"/><stop offset=".55" stop-color="#15100d"/><stop offset="1" stop-color="#050303"/></radialGradient>
-    <filter id="paintShadow" x="-35%" y="-25%" width="170%" height="160%"><feDropShadow dx="9" dy="18" stdDeviation="9" flood-color="#050303" flood-opacity=".45"/></filter>
-    <filter id="softBlur"><feGaussianBlur stdDeviation="2.2"/></filter>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".78" numOctaves="3" seed="47"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 .08"/></feComponentTransfer></filter>
+    <linearGradient id="skin" x1="0" x2="1"><stop stop-color="#8b523e"/><stop offset=".28" stop-color="#d99c78"/><stop offset=".52" stop-color="#f0bf9a"/><stop offset=".74" stop-color="#b46d52"/><stop offset="1" stop-color="#5b3028"/></linearGradient>
+    <radialGradient id="hair" cx="44%" cy="22%" r="72%"><stop stop-color="#765441"/><stop offset=".34" stop-color="#38231d"/><stop offset="1" stop-color="#110b09"/></radialGradient>
+    <linearGradient id="coat" x1="0" x2="1"><stop stop-color="#10150f"/><stop offset=".24" stop-color="#31422c"/><stop offset=".52" stop-color="#475d3d"/><stop offset=".76" stop-color="#1f2b1f"/><stop offset="1" stop-color="#0b100b"/></linearGradient>
+    <linearGradient id="linen" x1="0" x2="1"><stop stop-color="#8b775c"/><stop offset=".45" stop-color="#edd8aa"/><stop offset="1" stop-color="#806446"/></linearGradient>
+    <linearGradient id="leather" x1="0" x2="1"><stop stop-color="#2b130b"/><stop offset=".48" stop-color="#93613a"/><stop offset="1" stop-color="#170905"/></linearGradient>
   </defs>
+  <ellipse cx="111" cy="336" rx="82" ry="16" fill="#030202" opacity=".46"/>
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <!-- legs and boots use darker paint so Bonnie sits into the room shadows. -->
+    <path d="M83 211c-10 40-13 76-20 115" stroke="#17100c" stroke-width="22"/>
+    <path d="M130 211c8 39 16 76 27 113" stroke="#18100c" stroke-width="22"/>
+    <path d="M44 331c24 8 47 8 64-3" stroke="#1a0d08" stroke-width="20"/>
+    <path d="M132 328c21 10 45 12 66 5" stroke="#1a0d08" stroke-width="20"/>
 
-  <ellipse cx="132" cy="433" rx="84" ry="19" fill="#030202" opacity=".42" filter="url(#softBlur)"/>
-  <ellipse cx="132" cy="427" rx="54" ry="8" fill="#28130c" opacity=".3"/>
+    <!-- tailored coat with realistic folds and lapels. -->
+    <path d="M63 122c-27 54-30 107-8 163 35 23 84 24 116-2 18-60 9-115-16-162-23-18-67-19-92 1z" fill="url(#coat)" stroke="#090604" stroke-width="5"/>
+    <path d="M84 130l27 60 28-60" fill="url(#linen)" stroke="#2a1a12" stroke-width="4"/>
+    <path d="M83 129c6 41 3 95-9 148M139 129c-4 43 0 95 13 147" stroke="#11170f" stroke-width="4" opacity=".6"/>
+    <path d="M91 170c13 9 27 10 43 0M83 215c18 9 46 10 65 0M70 254c29 14 62 15 93 0" stroke="#e5d2a2" stroke-width="3" opacity=".2"/>
 
-  <g filter="url(#paintShadow)">
-    <path d="M79 183c-28 56-34 141-19 218 28 8 109 9 139 0 14-77 8-162-21-218-26-23-73-25-99 0z" fill="url(#coat)"/>
-    <path d="M86 183c20-15 67-20 91 0-5 35-18 71-46 104-27-34-40-69-45-104z" fill="url(#shirt)"/>
-    <path d="M102 188l28 94 30-94" fill="none" stroke="#f6e2b5" stroke-width="5" opacity=".42"/>
-    <path d="M78 190c23-17 78-23 106 0" fill="none" stroke="#c9d299" stroke-width="4" opacity=".23" stroke-linecap="round"/>
-    <path d="M130 280v106" stroke="#11190f" stroke-width="6" opacity=".74"/>
-    <path d="M82 204c-31 41-43 96-33 156l31-8c-4-49 6-91 31-124z" fill="#22321e"/>
-    <path d="M178 204c31 41 43 96 33 156l-31-8c4-49-6-91-31-124z" fill="#22321e"/>
-    <path d="M52 352c15 20 34 34 57 42" stroke="url(#skin)" stroke-width="18" stroke-linecap="round" fill="none"/>
-    <path d="M208 352c-15 20-35 34-58 42" stroke="url(#skin)" stroke-width="18" stroke-linecap="round" fill="none"/>
-    <path d="M86 349l44 4-10 79H75z" fill="url(#denim)"/>
-    <path d="M140 353l44-4 12 83h-45z" fill="url(#denim)"/>
-    <path d="M99 357c-5 24-7 50-6 73M165 357c7 24 10 50 10 73" stroke="#d7e4ef" stroke-width="3" opacity=".17"/>
-    <path d="M64 424h58v24H58c-9-10-6-20 6-24z" fill="#100906"/>
-    <path d="M146 424h61v24h-69c-7-10-3-20 8-24z" fill="#100906"/>
+    <!-- arms and satchel. -->
+    <path d="M62 139c-27 31-36 70-30 112" stroke="#243622" stroke-width="22"/>
+    <path d="M155 139c28 34 35 72 27 112" stroke="#1d2b1d" stroke-width="22"/>
+    <path d="M34 251c6 8 15 10 24 4" stroke="url(#skin)" stroke-width="14"/>
+    <path d="M164 252c7 8 16 9 24 2" stroke="url(#skin)" stroke-width="14"/>
+    <path d="M74 147c33 28 61 62 84 101" stroke="#5b351f" stroke-width="8" opacity=".86"/>
+    <rect x="124" y="216" width="48" height="45" rx="9" fill="url(#leather)" stroke="#160905" stroke-width="4"/>
+    <path d="M131 230h34" stroke="#c69954" stroke-width="3" opacity=".55"/>
 
-    <path d="M173 255c19 21 24 59 13 104" stroke="#764821" stroke-width="20" stroke-linecap="round" fill="none"/>
-    <rect x="164" y="312" width="58" height="61" rx="10" fill="url(#leather)" stroke="#29140b" stroke-width="5"/>
-    <path d="M176 326h34M175 347h36" stroke="#d7aa66" stroke-width="3" opacity=".48"/>
-    <path d="M153 222c14 26 19 56 12 91" stroke="#7b4724" stroke-width="5" opacity=".55" fill="none"/>
-
-    <path d="M72 63c-40 23-51 77-36 130 28 18 119 18 150 0 20-61 0-112-43-130-18-13-53-13-71 0z" fill="url(#hair)"/>
-    <path d="M56 107c-7 51 15 97 73 102 58-5 78-51 71-102-29-24-115-24-144 0z" fill="url(#skin)"/>
-    <path d="M63 108c21-22 77-34 130 0-10-59-106-70-130 0z" fill="#22110d"/>
-    <path d="M46 143c-15 2-14 31 5 36M209 143c15 2 14 31-5 36" fill="#ba7a5d"/>
-    <path d="M82 100c12-27 52-41 91-31" stroke="#f4d09b" stroke-width="5" opacity=".16" stroke-linecap="round"/>
-    <path d="M82 129c18-14 35-17 52-14M141 115c21-3 38 2 52 15" stroke="#25130e" stroke-width="7" stroke-linecap="round" opacity=".76"/>
-    <g fill="url(#eyeGlow)"><ellipse cx="105" cy="147" rx="6" ry="8.3"/><ellipse cx="151" cy="147" rx="6" ry="8.3"/></g>
-    <g fill="#f6e2c1" opacity=".62"><circle cx="103" cy="144" r="1.4"/><circle cx="149" cy="144" r="1.4"/></g>
-    <path d="M128 152l-8 25h15" fill="none" stroke="#81503e" stroke-width="3.4" stroke-linecap="round"/>
-    <path d="M108 188c13 10 29 11 43 0" fill="none" stroke="#743434" stroke-width="5" stroke-linecap="round"/>
-    <path d="M73 119c12 27 82 33 122 4" stroke="#120806" stroke-width="11" stroke-linecap="round" opacity=".5"/>
-    <path d="M80 232c22 8 76 8 100 0" stroke="#9aa36d" stroke-width="4" opacity=".45"/>
-    <circle cx="130" cy="248" r="4" fill="#d9b66a"/><circle cx="130" cy="278" r="4" fill="#d9b66a"/><circle cx="130" cy="308" r="4" fill="#d9b66a"/>
-    <path d="M183 183c29 62 34 142 22 220" stroke="#f4c36d" stroke-width="4" opacity=".18" fill="none"/>
-    <path d="M73 199c13 58 12 126 1 201" stroke="url(#coatEdge)" stroke-width="5" opacity=".35" fill="none"/>
-    <path d="M188 196c12 59 12 128 0 203" stroke="#0a0f09" stroke-width="5" opacity=".4" fill="none"/>
+    <!-- head, hair, and grounded semi-realistic expression. -->
+    <path d="M67 39c-22 32-21 75-2 101 22 28 75 29 99 0 20-27 19-71-4-101-25-28-68-28-93 0z" fill="url(#hair)"/>
+    <path d="M70 72c-7 50 12 82 40 84 31 1 54-34 47-86-24-18-62-18-87 2z" fill="url(#skin)" stroke="#4a271d" stroke-width="3"/>
+    <path d="M69 83c26-21 58-24 90-6-4-43-79-57-90 6z" fill="#1c100d"/>
+    <path d="M57 94c-7 35-2 60 18 78M164 92c6 35 0 61-21 80" stroke="#1b100e" stroke-width="18" opacity=".9"/>
+    <path d="M86 107c10-6 20-6 29-2M123 105c12-4 23-3 33 5" stroke="#2d1711" stroke-width="5" opacity=".7"/>
+    <ellipse cx="99" cy="121" rx="4" ry="6" fill="#1a0d09"/><ellipse cx="136" cy="121" rx="4" ry="6" fill="#1a0d09"/>
+    <path d="M118 127l-6 18 12 1" fill="none" stroke="#6f372b" stroke-width="3"/>
+    <path d="M101 158c14 9 28 9 42 0" fill="none" stroke="#7b3332" stroke-width="4"/>
+    <path d="M74 88c28-20 58-24 85-9" stroke="#72513f" stroke-width="7" opacity=".58"/>
   </g>
+  <rect width="220" height="360" filter="url(#grain)" opacity=".8"/>
 </svg>
