@@ -8,7 +8,7 @@ A single-file, browser-based cinematic cozy mystery adventure inspired by classi
 - Three explorable rooms: Main Antique Shop, Back Storage Room, and Upstairs Office
 - Mabel dialogue interactions with branching choices, clue reveals, and deliberate misdirection
 - Missing antique collector Evelyn Blackwood and a hidden family secret tied to Mabel's Antiques
-- CSS-painted cozy antique shop visuals with richer wood, wall textures, warm lighting, rain, moving shadows, dust motes, and more realistic illustrated character styling
+- CSS-painted cozy antique shop visuals with richer wood, wall textures, warm lighting, rain, moving shadows, dust motes, and layered semi-realistic portrait-style character art
 - Cinematic room transitions, typewriter-style narration, and soft camera zoom effects when clues are discovered
 - Ambient generated antique-shop music, suspense tones in important rooms, optional mute button, and generated sound effects
 - Accurate compact hotspots with subtle hover outlines and short hover descriptions for clickable objects
@@ -19,7 +19,7 @@ A single-file, browser-based cinematic cozy mystery adventure inspired by classi
 - Hidden wall safe with a four-digit code-breaking puzzle built from clues across multiple rooms
 - Timed atmospheric lightning, power flicker, and hidden hallway shadow event
 - Browser save/load system using local storage
-- Compact responsive desktop layout that keeps the scene, inventory, quest notes, and room navigation visible without unnecessary scrolling
+- Fixed-width centered desktop layout that keeps the full scene, slim side panels, inventory, quest notes, and room navigation visible without horizontal or vertical scrolling on standard desktop monitors
 
 ## How to run
 
