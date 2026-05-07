@@ -775,7 +775,7 @@
       box-shadow: 0 0 8px rgba(255, 208, 105, 0.42);
     }
 
-    /* Layered gradients build warmer, painted portrait figures without external assets. */
+    /* Layered gradients support asset fallback portraits without replacing the realistic sprite. */
     .bonnie {
       position: absolute;
       left: 4.5%;
@@ -2316,7 +2316,7 @@
 
 
 
-    /* Reference-inspired cinematic pass: image-led scenes, compact dark-gold UI, visible hotspot rings. */
+    /* Reference-inspired cinematic pass: photographic room plates, compact dark-gold UI, subtle hotspot glints. */
     .game-shell {
       width: min(calc(100vw - 16px), 1280px);
       height: min(calc(100vh - 16px), 760px);
@@ -2873,7 +2873,7 @@
       }
     }
 
-    /* Full cinematic realism pass: unified painted assets, atmospheric grading, and premium antique UI. */
+    /* Full cinematic realism pass: photographic assets, atmospheric grading, and premium antique UI. */
     :root {
       --cinema-black: #070403;
       --polished-walnut: #241009;
@@ -3148,6 +3148,172 @@
     @keyframes bonnieCinematicIdle {
       0%, 100% { transform: translateY(0) rotate(0deg) scaleY(1); filter: brightness(.98); }
       50% { transform: translateY(-1px) rotate(.18deg) scaleY(1.004); filter: brightness(1.02); }
+    }
+
+
+    /* Realistic cinematic correction: keep the photographic room plates dominant and remove illustrated overlays. */
+    .room.asset-loaded .scene-fallback,
+    .room.asset-loaded .asset-prop,
+    .room.asset-loaded .asset-marker {
+      display: none;
+    }
+
+    .background-art {
+      background: #070403;
+    }
+
+    .background-art img {
+      image-rendering: auto;
+      filter: saturate(.9) contrast(1.18) brightness(.86) sepia(.08);
+      transform: scale(1.006);
+    }
+
+    #room-shop .background-art img {
+      filter: saturate(.92) contrast(1.2) brightness(.86) sepia(.08);
+    }
+
+    #room-storage .background-art img,
+    #room-office .background-art img {
+      filter: saturate(.86) contrast(1.2) brightness(.82) sepia(.1);
+    }
+
+    .room.active {
+      filter: saturate(.96) contrast(1.12) brightness(.92);
+    }
+
+    .scene-panel::before {
+      z-index: 6;
+      background:
+        radial-gradient(circle at 36% 27%, rgba(255, 210, 128, .11), transparent 18rem),
+        radial-gradient(circle at 72% 19%, rgba(255, 228, 160, .08), transparent 14rem),
+        linear-gradient(90deg, rgba(0,0,0,.58), transparent 20%, transparent 72%, rgba(0,0,0,.68)),
+        radial-gradient(ellipse at 50% 105%, rgba(0,0,0,.54), transparent 30rem),
+        radial-gradient(circle at 50% 50%, transparent 47%, rgba(0,0,0,.58));
+      mix-blend-mode: multiply;
+    }
+
+    .scene-panel::after {
+      z-index: 7;
+      background:
+        linear-gradient(118deg, transparent 0 24%, rgba(255, 232, 170, .065) 29%, transparent 36% 100%),
+        radial-gradient(circle at 68% 18%, rgba(255, 219, 137, .105), transparent 18rem);
+      animation: cinematicLightDrift 9.5s ease-in-out infinite alternate;
+      mix-blend-mode: screen;
+    }
+
+    .background-art::before {
+      opacity: .24;
+      filter: blur(.2px);
+      mix-blend-mode: screen;
+    }
+
+    .background-art::after {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.018), transparent 38%),
+        radial-gradient(ellipse at 52% 82%, rgba(255, 210, 124, .08), transparent 18rem),
+        radial-gradient(ellipse at 50% 95%, rgba(0,0,0,.34), transparent 20rem);
+      mix-blend-mode: soft-light;
+    }
+
+    .rain-ambience {
+      opacity: .22;
+      background:
+        repeating-linear-gradient(103deg, transparent 0 14px, rgba(198, 222, 232, .34) 15px 16px, transparent 17px 38px),
+        repeating-linear-gradient(96deg, transparent 0 52px, rgba(226, 238, 242, .14) 53px 55px, transparent 56px 120px);
+      background-size: 44px 98px, 150px 190px;
+      animation: rainFall 1.15s linear infinite;
+      mix-blend-mode: screen;
+      -webkit-mask-image: linear-gradient(#000, #000);
+      mask-image: linear-gradient(#000, #000);
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-size: 13.4% 22.4%;
+      mask-size: 13.4% 22.4%;
+      -webkit-mask-position: 6.2% 31.2%;
+      mask-position: 6.2% 31.2%;
+    }
+
+    .scene-panel[data-room="storage"] .rain-ambience {
+      opacity: .1;
+      -webkit-mask-size: 16% 28%;
+      mask-size: 16% 28%;
+      -webkit-mask-position: 3% 4%;
+      mask-position: 3% 4%;
+    }
+
+    .scene-panel[data-room="office"] .rain-ambience {
+      opacity: .28;
+      -webkit-mask-size: 20% 20%;
+      mask-size: 20% 20%;
+      -webkit-mask-position: 7% 9%;
+      mask-position: 7% 9%;
+    }
+
+    .moving-shadows {
+      opacity: .3;
+      mix-blend-mode: multiply;
+      filter: blur(1px);
+    }
+
+    .hotspot,
+    #room-shop .hotspot {
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+      opacity: 1;
+    }
+
+    .hotspot:not(.clue-button)::before,
+    #room-shop .hotspot::before {
+      inset: calc(50% - 9px);
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 224, 145, 0);
+      background: radial-gradient(circle, rgba(255, 240, 190, 0), rgba(255, 210, 112, 0) 58%, transparent 72%);
+      box-shadow: none;
+      opacity: 0;
+      transform: scale(.82);
+    }
+
+    .hotspot.nearby:not(.collected)::before {
+      border-color: rgba(255, 225, 150, .14);
+      background: radial-gradient(circle, rgba(255, 236, 180, .16), rgba(255, 210, 112, .035) 60%, transparent 76%);
+      box-shadow: 0 0 10px rgba(255, 214, 116, .14);
+      opacity: .42;
+    }
+
+    .hotspot:hover:not(.collected)::before,
+    .hotspot:focus-visible:not(.collected)::before,
+    #room-shop .hotspot:hover::before,
+    #room-shop .hotspot:focus-visible::before {
+      border-color: rgba(255, 229, 157, .46);
+      background: radial-gradient(circle, rgba(255, 243, 201, .34), rgba(255, 213, 116, .07) 62%, transparent 78%);
+      box-shadow: 0 0 15px rgba(255, 218, 122, .34), 0 0 28px rgba(255, 204, 100, .12);
+      opacity: .9;
+      transform: scale(1);
+    }
+
+    .hotspot:hover,
+    .hotspot:focus-visible,
+    #room-shop .hotspot:hover,
+    #room-shop .hotspot:focus-visible {
+      outline: 0;
+      background: transparent;
+      filter: none;
+    }
+
+    .player-bonnie {
+      filter:
+        drop-shadow(18px 27px 20px rgba(0,0,0,.74))
+        drop-shadow(-6px -8px 11px rgba(230, 176, 92, .08))
+        saturate(.92) contrast(1.13) brightness(.86);
+    }
+
+    .sprite-art img {
+      filter:
+        saturate(.9) contrast(1.16) brightness(.86) sepia(.04)
+        drop-shadow(12px 22px 18px rgba(0,0,0,.58));
     }
 
   </style>
