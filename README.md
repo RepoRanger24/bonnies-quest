@@ -28,13 +28,22 @@ A single-file, browser-based cinematic cozy mystery adventure inspired by classi
 - Browser save/load system using local storage
 - Fixed-width centered desktop layout that keeps the full scene, slim side panels, inventory, quest notes, and room navigation visible without horizontal or vertical scrolling on standard desktop monitors
 
-## Using uploaded realistic room images
+## Asset folders
 
-Place the provided antique room images in `assets/rooms/` using these filenames so the game loads them as the actual in-game environments without generating replacement room art:
+Game assets are organized by purpose so future replacements are easier to maintain:
 
-- `assets/rooms/main-antique-shop.webp` (or `.jpg` / `.png`)
-- `assets/rooms/back-storage-room.webp` (or `.jpg` / `.png`)
-- `assets/rooms/upstairs-office.webp` (or `.jpg` / `.png`)
+- `assets/backgrounds/` — room plates and background fallback art
+- `assets/props/` — collectible objects and character sprites
+- `assets/ui/` — interface portraits, markers, and other UI artwork
+- `assets/audio/` — music, ambience, and sound-effect files
+
+## Using organized asset folders and uploaded realistic room images
+
+Place the provided antique room images in `assets/backgrounds/` using these filenames so the game loads them as the actual in-game environments without generating replacement room art:
+
+- `assets/backgrounds/main-antique-shop.webp` (or `.jpg` / `.png`)
+- `assets/backgrounds/storage-room.webp` (or `.jpg` / `.png`)
+- `assets/backgrounds/upstairs-office.webp` (or `.jpg` / `.png`)
 
 The browser automatically uses the first matching realistic plate it can load. Bonnie, Mabel, prop callouts, invisible hotspots, interaction zones, cinematic lighting, rain, dust, and shadow atmosphere are layered on top of those backgrounds. The existing SVG room art remains only as a development fallback if the uploaded images are not present.
 
