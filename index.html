@@ -3397,6 +3397,167 @@
       opacity: .34;
     }
 
+
+    /* Clarity pass: preserve imported photographic room plates and remove artificial fog, rain,
+       blur, animated light masks, and dark grading overlays while keeping practical interaction cues. */
+    .room.active {
+      transform: none !important;
+      filter: none !important;
+      transition: opacity 220ms ease;
+    }
+
+    .background-art,
+    .room.realistic-room-loaded .background-art,
+    #room-shop .background-art {
+      inset: 0;
+      background: #120c08;
+      overflow: hidden;
+    }
+
+    .background-art img,
+    #room-shop .background-art img,
+    #room-storage .background-art img,
+    #room-office .background-art img,
+    .room.realistic-room-loaded .background-art img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      image-rendering: auto;
+      transform: none;
+      filter: saturate(1.06) contrast(1.08) brightness(1.04) !important;
+    }
+
+    .scene-panel::before,
+    .scene-panel::after,
+    .scene-panel.important-room::before,
+    .background-art::before,
+    .background-art::after,
+    .rain-ambience,
+    .moving-shadows,
+    .lightning-flash,
+    .hallway-shadow,
+    .window::after {
+      content: none !important;
+      display: none !important;
+      opacity: 0 !important;
+      animation: none !important;
+      background: none !important;
+      filter: none !important;
+      mix-blend-mode: normal !important;
+      -webkit-mask-image: none !important;
+      mask-image: none !important;
+    }
+
+    .scene-panel,
+    .scene-panel.transitioning,
+    .scene-panel.clue-discovered,
+    .scene-panel.storm-event {
+      background: #080504;
+      animation: none !important;
+      filter: none !important;
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 231, 171, .08),
+        0 20px 42px rgba(0, 0, 0, .46);
+    }
+
+    .room.realistic-room-loaded::after {
+      display: none;
+    }
+
+    .player-bonnie {
+      z-index: 9;
+      width: 138px;
+      height: 238px;
+      filter:
+        drop-shadow(10px 16px 12px rgba(0, 0, 0, .34))
+        drop-shadow(-3px -4px 5px rgba(238, 197, 118, .14))
+        saturate(1.02) contrast(1.04) brightness(1.03) !important;
+    }
+
+    .sprite-art img {
+      filter:
+        saturate(1.02) contrast(1.04) brightness(1.03)
+        drop-shadow(8px 14px 10px rgba(0, 0, 0, .28)) !important;
+    }
+
+    .bonnie::before,
+    .mabel::before {
+      bottom: 0;
+      height: 14px;
+      width: 82%;
+      background: radial-gradient(ellipse, rgba(0, 0, 0, .34), rgba(0, 0, 0, .1) 58%, transparent 74%);
+      filter: none !important;
+      transform: translateX(-50%) scaleX(1.08);
+    }
+
+    .mabel {
+      right: 22.5%;
+      bottom: 6.45rem;
+      z-index: 5;
+      filter:
+        drop-shadow(7px 12px 8px rgba(0, 0, 0, .28))
+        drop-shadow(-2px -3px 5px rgba(238, 197, 118, .12)) !important;
+    }
+
+    .room.realistic-room-loaded .asset-prop {
+      opacity: .96;
+      filter:
+        saturate(1.02) contrast(1.04) brightness(1.03)
+        drop-shadow(0 10px 10px rgba(0, 0, 0, .28)) !important;
+    }
+
+    .hotspot,
+    #room-shop .hotspot {
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+      opacity: 1;
+      filter: none !important;
+    }
+
+    .hotspot:not(.clue-button)::before,
+    #room-shop .hotspot::before {
+      inset: calc(50% - 10px);
+      width: 20px;
+      height: 20px;
+      border: 1px solid rgba(255, 232, 165, 0);
+      background: transparent;
+      box-shadow: none;
+      opacity: 0;
+      transform: scale(.9);
+      transition: opacity 160ms ease, transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+    }
+
+    .hotspot.nearby:not(.collected)::before,
+    .hotspot:hover:not(.collected)::before,
+    .hotspot:focus-visible:not(.collected)::before,
+    #room-shop .hotspot:hover::before,
+    #room-shop .hotspot:focus-visible::before {
+      border-color: rgba(255, 226, 146, .5);
+      background: rgba(255, 223, 138, .08);
+      box-shadow: 0 0 12px rgba(255, 218, 124, .28);
+      opacity: .9;
+      transform: scale(1);
+    }
+
+    .hotspot::after {
+      background: rgba(42, 24, 14, .92);
+      border-color: rgba(218, 166, 79, .72);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, .28);
+    }
+
+    .hotspot.grandfather-clock { left: 44.4%; top: 21.4%; width: 8.2%; height: 36.8%; }
+    .hotspot.music-box-hotspot { left: 51.4%; top: 52.4%; width: 11%; height: 10%; }
+    .hotspot.evelyn-photo-hotspot { left: 76.4%; top: 12.4%; width: 9.8%; height: 20%; }
+    .hotspot.front-counter-hotspot { left: 62%; top: 61.6%; width: 31.8%; height: 17.8%; }
+    .hotspot.locked-drawer-hotspot { left: 73.2%; top: 69.4%; width: 15.2%; height: 9.8%; }
+    .hotspot.shop-window-hotspot { left: 6%; top: 30.8%; width: 13.8%; height: 22.8%; }
+    .hotspot.shop-lamp-hotspot { left: 34.2%; top: 45.8%; width: 9%; height: 15.8%; }
+    .hotspot.shop-painting-hotspot { left: 6.4%; top: 8.8%; width: 28.8%; height: 16.4%; }
+    .hotspot.mabel-hotspot { left: 62%; top: 39%; width: 13.4%; height: 27.6%; }
+    .hotspot.winding-key-hotspot { left: 69.2%; top: 62%; width: 8%; height: 7.4%; }
+
   </style>
 </head>
 <body>
@@ -3434,10 +3595,6 @@
       <section id="quest-screen" class="screen quest-layout" aria-labelledby="location-heading">
         <div id="scene-panel" class="scene-panel" data-room="shop" aria-label="A warmly lit antique shop mystery scene">
           <div id="hover-description" class="hover-description" aria-live="polite"></div>
-          <div id="lightning-flash" class="lightning-flash" aria-hidden="true"></div>
-          <div id="hallway-shadow" class="hallway-shadow" aria-hidden="true"></div>
-          <div class="rain-ambience" aria-hidden="true"></div>
-          <div class="moving-shadows" aria-hidden="true"></div>
           <div id="room-shop" class="room active" data-room-tone="Original antique shop plate" aria-label="Main Antique Shop">
             <div class="background-art" aria-hidden="true">
               <img
@@ -4612,17 +4769,16 @@
     function updateBonnieScale() {
       const room = rooms[currentRoom];
       const progress = (bonniePosition.y - room.walkArea.minY) / (room.walkArea.maxY - room.walkArea.minY || 1);
-      playerBonnie.style.setProperty('--bonnie-scale', (0.48 + progress * 0.2).toFixed(3));
+      // Keep Bonnie scaled to the photographic plates without making her dominate foreground props.
+      playerBonnie.style.setProperty('--bonnie-scale', (0.44 + progress * 0.17).toFixed(3));
     }
 
     function updateCameraDrift() {
-      const xDrift = ((50 - bonniePosition.x) * 0.025).toFixed(2);
-      const yDrift = ((82 - bonniePosition.y) * 0.018).toFixed(2);
-      const scale = (0.965 + Math.max(0, bonniePosition.y - 78) * 0.0012).toFixed(3);
+      // Preserve the imported room photography exactly in-frame; no artificial camera zoom or drift.
       document.querySelectorAll('.room.active').forEach((room) => {
-        room.style.setProperty('--camera-x', `${xDrift}%`);
-        room.style.setProperty('--camera-y', `${yDrift}%`);
-        room.style.setProperty('--camera-scale', scale);
+        room.style.setProperty('--camera-x', '0%');
+        room.style.setProperty('--camera-y', '0%');
+        room.style.setProperty('--camera-scale', '1');
       });
     }
 
