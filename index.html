@@ -3847,7 +3847,7 @@
     }
 
 
-    /* Version 12 playtest fixes: keep the existing top-panel layout, prioritize the
+    /* Version 13 visual and gameplay fixes: keep the existing top-panel layout, prioritize the
        realistic asset plates, keep the room warmly brighter, and make interactions
        visible only on hover/focus instead of permanent marker boxes. */
     .dialogue-portrait-asset {
@@ -3960,6 +3960,163 @@
       width: 12.6%;
       height: 12%;
       border-radius: 40% 50% 42% 48%;
+    }
+
+
+
+    /* Version 13 reference-matching pass: brighter realistic plates, layered antique-shop depth,
+       hover-only glints, and a reliable under-counter key pickup. */
+    .scene-panel,
+    .scene-panel.transitioning,
+    .scene-panel.clue-discovered,
+    .scene-panel.storm-event {
+      background: #0d0704;
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 231, 171, .12),
+        inset 0 -30px 58px rgba(255, 174, 74, .08),
+        0 22px 44px rgba(0, 0, 0, .44);
+    }
+
+    .scene-panel::before,
+    .scene-panel::after,
+    .background-art::before,
+    .background-art::after {
+      content: "" !important;
+      display: block !important;
+      pointer-events: none !important;
+    }
+
+    .background-art img,
+    #room-shop .background-art img,
+    #room-storage .background-art img,
+    #room-office .background-art img,
+    .room.realistic-room-loaded .background-art img {
+      filter: saturate(1.2) contrast(1.08) brightness(1.28) sepia(.035) !important;
+      transform: scale(1.002);
+    }
+
+    .scene-panel::before {
+      z-index: 6;
+      background:
+        radial-gradient(circle at 34% 17%, rgba(255, 222, 150, .23), transparent 17rem),
+        radial-gradient(circle at 69% 39%, rgba(255, 189, 90, .15), transparent 16rem),
+        radial-gradient(ellipse at 45% 88%, rgba(255, 193, 93, .18), transparent 23rem),
+        linear-gradient(90deg, rgba(0, 0, 0, .2), transparent 18%, transparent 77%, rgba(0, 0, 0, .26)) !important;
+      mix-blend-mode: screen !important;
+      opacity: .9 !important;
+    }
+
+    .scene-panel::after {
+      z-index: 7;
+      background:
+        radial-gradient(ellipse at 47% 92%, rgba(255, 214, 126, .2), transparent 17rem),
+        linear-gradient(180deg, transparent 0 55%, rgba(0, 0, 0, .18) 100%),
+        linear-gradient(112deg, transparent 0 23%, rgba(255, 231, 164, .055) 30%, transparent 38% 100%) !important;
+      mix-blend-mode: soft-light !important;
+      opacity: .78 !important;
+      animation: cinematicLightDrift 10s ease-in-out infinite alternate !important;
+    }
+
+    .background-art::before {
+      z-index: 3;
+      background:
+        radial-gradient(circle at 18% 28%, rgba(255, 241, 194, .32) 0 1px, transparent 1.8px),
+        radial-gradient(circle at 62% 36%, rgba(255, 228, 164, .22) 0 1px, transparent 1.8px),
+        radial-gradient(circle at 79% 52%, rgba(255, 218, 141, .18) 0 1px, transparent 1.8px);
+      background-size: 210px 180px, 270px 220px, 330px 260px;
+      opacity: .25 !important;
+      mix-blend-mode: screen !important;
+      animation: dustMotes 18s linear infinite !important;
+    }
+
+    .background-art::after {
+      z-index: 4;
+      background:
+        radial-gradient(ellipse at 43% 82%, rgba(255, 202, 101, .2), transparent 20rem),
+        radial-gradient(ellipse at 73% 77%, rgba(0, 0, 0, .2), transparent 19rem);
+      mix-blend-mode: soft-light !important;
+      opacity: .8 !important;
+    }
+
+    .player-bonnie {
+      width: 112px;
+      height: 198px;
+      z-index: 9;
+      filter:
+        drop-shadow(9px 15px 10px rgba(0, 0, 0, .36))
+        drop-shadow(-3px -4px 6px rgba(239, 202, 129, .16))
+        saturate(1.06) contrast(1.04) brightness(1.07) !important;
+    }
+
+    .player-bonnie::before {
+      bottom: -3px;
+      width: 78%;
+      height: 12px;
+      background: radial-gradient(ellipse, rgba(0, 0, 0, .38), rgba(0, 0, 0, .15) 56%, transparent 78%);
+      filter: blur(2.25px) !important;
+      opacity: .92;
+      transform: translateX(-50%) scaleX(1.22);
+    }
+
+    #room-shop .asset-prop.brass-key-art {
+      left: 71.4%;
+      top: 65.2%;
+      width: 62px;
+      height: 28px;
+      opacity: .95;
+      transform: rotate(-8deg);
+      transition: opacity 180ms ease, transform 180ms ease, filter 180ms ease;
+    }
+
+    #room-shop .asset-prop.brass-key-art.collected {
+      opacity: 0;
+      transform: translateY(-8px) rotate(-8deg) scale(.7);
+    }
+
+    .hotspot.winding-key-hotspot {
+      left: 69.8%;
+      top: 61.5%;
+      width: 9.6%;
+      height: 7.8%;
+      border-radius: 42% 46% 45% 48%;
+      z-index: 12 !important;
+    }
+
+    .hotspot:not(.clue-button)::before,
+    #room-shop .hotspot::before,
+    .hotspot.nearby:not(.collected)::before,
+    .hotspot.nearby:not(.collected)::after {
+      opacity: 0 !important;
+      animation: none !important;
+    }
+
+    .hotspot:hover:not(.collected)::before,
+    .hotspot:focus-visible:not(.collected)::before,
+    #room-shop .hotspot:hover:not(.collected)::before,
+    #room-shop .hotspot:focus-visible:not(.collected)::before {
+      width: 26px;
+      height: 26px;
+      inset: calc(50% - 13px);
+      border: 1px solid rgba(255, 233, 164, .78);
+      background: radial-gradient(circle, rgba(255, 246, 205, .44), rgba(255, 211, 104, .18) 58%, transparent 76%);
+      box-shadow: 0 0 14px rgba(255, 224, 126, .58), 0 0 32px rgba(255, 183, 62, .2);
+      opacity: 1 !important;
+      transform: scale(1);
+    }
+
+    .hover-description {
+      bottom: 4.4rem;
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .scene-panel.pickup-feedback::after {
+      animation: pickupGleam 760ms ease-out both !important;
+    }
+
+    @keyframes pickupGleam {
+      0% { opacity: 0; filter: brightness(1); }
+      32% { opacity: .95; filter: brightness(1.18); }
+      100% { opacity: .48; filter: brightness(1); }
     }
 
     @media (max-width: 860px) {
@@ -4075,7 +4232,7 @@
             </div>
             <div class="asset-prop gramophone-art" aria-hidden="true"><img class="asset-img" src="assets/props/gramophone.svg" alt="" /></div>
             <div class="asset-prop evelyn-photo-art" aria-hidden="true"><img class="asset-img" src="assets/props/evelyn-photo.svg" alt="" /></div>
-            <div class="asset-prop brass-key-art" aria-hidden="true"><img class="asset-img" src="assets/props/brass-key.svg" alt="" /></div>
+            <div id="under-counter-key-art" class="asset-prop brass-key-art" aria-hidden="true"><img class="asset-img" src="assets/props/brass-key.svg" alt="" /></div>
             <div class="mabel" aria-hidden="true">
               <div class="sprite-art"><img class="asset-img" src="assets/props/mabel-sprite.svg" alt="" /></div>
               <div class="mabel-face"></div>
@@ -4268,7 +4425,7 @@
     </div>
 
     <footer>
-      Version 12
+      Version 13
     </footer>
   </div>
 
@@ -4372,7 +4529,17 @@
         walkArea: { minX: 8, maxX: 92, minY: 73, maxY: 91 },
         blockers: [{ minX: 56, maxX: 93, minY: 70, maxY: 85 }],
         targets: {
-          grandfatherClock: { x: 48, y: 76 }, shopMusicBox: { x: 56, y: 80 }, evelynPhotograph: { x: 80, y: 78 }, frontCounter: { x: 68, y: 85 }, lockedDrawer: { x: 76, y: 86 }, shopWindow: { x: 18, y: 80 }, shopLamp: { x: 39, y: 80 }, framedPainting: { x: 22, y: 77 }, windingKey: { x: 70, y: 86 }, mabel: { x: 66, y: 84 }
+          grandfatherClock: { x: 48, y: 76 },
+          shopMusicBox: { x: 56, y: 80 },
+          evelynPhotograph: { x: 80, y: 78 },
+          frontCounter: { x: 68, y: 85 },
+          lockedDrawer: { x: 76, y: 86 },
+          shopWindow: { x: 18, y: 80 },
+          shopLamp: { x: 39, y: 80 },
+          framedPainting: { x: 22, y: 77 },
+          // Bonnie approaches the hidden counter key from the floor aisle, not from inside the counter blocker.
+          windingKey: { x: 69.5, y: 86.6 },
+          mabel: { x: 66, y: 84 }
         }
       },
       storage: {
@@ -5376,6 +5543,8 @@
         button.classList.add('collected');
         button.setAttribute('aria-label', `${items[itemId].name} has already been collected`);
       }
+      syncCollectibleRoomArt();
+      playPickupFeedback(itemId, button);
       playEffect('paper');
       playEffect('reveal');
       setNarration(message);
@@ -5387,6 +5556,37 @@
       updateObjective();
       saveGame();
       return true;
+    }
+
+    function syncCollectibleRoomArt() {
+      const underCounterKey = document.querySelector('#under-counter-key-art');
+      const keyHotspot = document.querySelector('[data-object="windingKey"]');
+
+      if (underCounterKey) {
+        underCounterKey.classList.toggle('collected', collected.has('windingKey'));
+      }
+
+      if (keyHotspot) {
+        keyHotspot.classList.toggle('collected', collected.has('windingKey'));
+        keyHotspot.setAttribute(
+          'aria-label',
+          collected.has('windingKey')
+            ? 'Tiny Winding Key has already been collected'
+            : 'Search the lamplit counter edge for a hidden winding key'
+        );
+      }
+    }
+
+    function playPickupFeedback(itemId, button) {
+      if (itemId !== 'windingKey') return;
+
+      scenePanel.classList.remove('pickup-feedback');
+      void scenePanel.offsetWidth;
+      scenePanel.classList.add('pickup-feedback');
+      window.setTimeout(() => scenePanel.classList.remove('pickup-feedback'), 900);
+
+      const label = button?.dataset.label || items[itemId].name;
+      inventoryHint.textContent = `${label} added to inventory. Select it when the rosewood music box is ready.`;
     }
 
     function revealShopMusicBoxSymbol() {
@@ -5791,6 +5991,7 @@
       });
       enterRoom(currentRoom);
       updateInventory();
+      syncCollectibleRoomArt();
       updateJournal();
       updateEvidenceBoard();
       updateObjective();
