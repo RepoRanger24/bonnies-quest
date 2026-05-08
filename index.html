@@ -4605,6 +4605,265 @@
       100% { background-position: 80px -180px, -70px -210px, 110px -170px, -120px -240px; transform: translate3d(.45%, -1.1%, 0); }
     }
 
+
+    /* Version 16 atmosphere pass: foreground parallax silhouettes, warmer dust,
+       stronger Bonnie contact shadows, and proximity-first hotspot labels. */
+    .foreground-depth-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      pointer-events: none;
+      overflow: hidden;
+      border-radius: inherit;
+      opacity: .86;
+    }
+
+    .foreground-depth-layer::before,
+    .foreground-depth-layer::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .foreground-depth-layer::before {
+      background:
+        linear-gradient(90deg, rgba(7, 4, 3, .44), transparent 9%, transparent 91%, rgba(7, 4, 3, .46)),
+        linear-gradient(180deg, rgba(0, 0, 0, .18), transparent 18%, transparent 76%, rgba(0, 0, 0, .26));
+      mix-blend-mode: multiply;
+    }
+
+    .foreground-depth-layer::after {
+      background:
+        radial-gradient(ellipse at -4% 62%, rgba(0, 0, 0, .36), transparent 15rem),
+        radial-gradient(ellipse at 105% 72%, rgba(0, 0, 0, .42), transparent 17rem),
+        linear-gradient(112deg, transparent 0 78%, rgba(24, 12, 7, .26) 88%, rgba(10, 5, 3, .42));
+      filter: blur(.4px);
+      opacity: .82;
+      mix-blend-mode: multiply;
+    }
+
+    .foreground-shelf,
+    .foreground-hanging,
+    .foreground-floor-shadow {
+      position: absolute;
+      display: block;
+      pointer-events: none;
+    }
+
+    .foreground-shelf {
+      top: 6%;
+      width: 18%;
+      height: 58%;
+      border-radius: 12px;
+      background:
+        linear-gradient(90deg, rgba(255, 226, 154, .08), transparent 28%),
+        repeating-linear-gradient(180deg, rgba(255, 223, 142, .055) 0 2px, transparent 2px 18px),
+        linear-gradient(90deg, rgba(36, 18, 10, .82), rgba(89, 49, 25, .58) 48%, rgba(18, 9, 5, .9));
+      filter: blur(2.6px) saturate(.92);
+      box-shadow: 0 22px 30px rgba(0, 0, 0, .38), inset 0 0 24px rgba(0, 0, 0, .42);
+      opacity: .58;
+    }
+
+    .foreground-shelf-left {
+      left: -14%;
+      transform: perspective(260px) rotateY(-8deg) rotateZ(.7deg);
+    }
+
+    .foreground-shelf-right {
+      right: -15%;
+      top: 12%;
+      height: 54%;
+      transform: perspective(260px) rotateY(8deg) rotateZ(-.5deg);
+      opacity: .5;
+    }
+
+    .foreground-hanging {
+      top: -3%;
+      width: 54px;
+      height: 142px;
+      transform-origin: top center;
+      opacity: .52;
+      filter: blur(1.1px) drop-shadow(0 16px 10px rgba(0, 0, 0, .46));
+      animation: v16HangingSway 18s ease-in-out infinite alternate;
+    }
+
+    .foreground-hanging::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 0;
+      width: 2px;
+      height: 82px;
+      transform: translateX(-50%);
+      background: linear-gradient(180deg, rgba(44, 23, 13, .78), rgba(91, 57, 31, .36));
+    }
+
+    .foreground-hanging::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 72px;
+      width: 42px;
+      height: 54px;
+      transform: translateX(-50%);
+      border-radius: 48% 48% 42% 42%;
+      background:
+        radial-gradient(circle at 42% 32%, rgba(255, 222, 139, .22), transparent 28%),
+        linear-gradient(135deg, rgba(88, 51, 27, .74), rgba(20, 10, 6, .88));
+      box-shadow: inset 0 0 18px rgba(0, 0, 0, .42);
+    }
+
+    .foreground-hanging-left { left: 24%; }
+    .foreground-hanging-right {
+      right: 18%;
+      top: -5%;
+      transform: scale(.82) rotate(-1deg);
+      opacity: .38;
+      animation-duration: 22s;
+    }
+
+    .foreground-floor-shadow {
+      left: 8%;
+      right: 8%;
+      bottom: -7%;
+      height: 28%;
+      background:
+        radial-gradient(ellipse at 49% 38%, rgba(38, 18, 8, .22), transparent 27rem),
+        linear-gradient(180deg, transparent, rgba(0, 0, 0, .28));
+      filter: blur(1.5px);
+      mix-blend-mode: multiply;
+      opacity: .68;
+    }
+
+    .scene-panel[data-room="storage"] .foreground-shelf-left,
+    .scene-panel[data-room="storage"] .foreground-shelf-right {
+      opacity: .68;
+      filter: blur(3px) saturate(.82);
+    }
+
+    .scene-panel[data-room="office"] .foreground-shelf {
+      top: 10%;
+      height: 48%;
+      opacity: .42;
+    }
+
+    .scene-panel[data-room="office"] .foreground-hanging-left {
+      left: 12%;
+      opacity: .3;
+    }
+
+    .scene-panel[data-room="office"] .foreground-hanging-right {
+      right: 8%;
+      opacity: .28;
+    }
+
+    .background-art::before {
+      background:
+        radial-gradient(circle at 8% 24%, rgba(255, 236, 186, .22) 0 .9px, transparent 1.6px),
+        radial-gradient(circle at 32% 70%, rgba(255, 219, 145, .2) 0 1px, transparent 1.7px),
+        radial-gradient(circle at 58% 32%, rgba(255, 230, 166, .16) 0 .9px, transparent 1.6px),
+        radial-gradient(circle at 84% 74%, rgba(255, 199, 116, .15) 0 1px, transparent 1.7px) !important;
+      background-size: 240px 210px, 360px 290px, 300px 250px, 430px 330px;
+      opacity: .16 !important;
+      animation: v16DustFloat 42s linear infinite !important;
+      filter: blur(.22px);
+      mix-blend-mode: screen !important;
+    }
+
+    .room::after {
+      background:
+        linear-gradient(180deg, rgba(255, 244, 209, .055), transparent 28%, rgba(0, 0, 0, .08) 78%),
+        radial-gradient(circle at 34% 24%, rgba(255, 218, 137, .36), transparent 16rem),
+        radial-gradient(circle at 13% 22%, rgba(151, 190, 205, .12), transparent 17rem),
+        radial-gradient(circle at 78% 44%, rgba(255, 183, 77, .12), transparent 18rem) !important;
+      opacity: .76;
+    }
+
+    .room::before {
+      background:
+        radial-gradient(ellipse at 49% 106%, rgba(0, 0, 0, .32), transparent 28rem),
+        radial-gradient(circle at 50% 51%, transparent 46%, rgba(0, 0, 0, .42) 100%),
+        linear-gradient(90deg, rgba(0, 0, 0, .3), transparent 17%, transparent 79%, rgba(0, 0, 0, .42)) !important;
+      opacity: .72;
+    }
+
+    .scene-panel::before {
+      background:
+        radial-gradient(circle at 34% 21%, rgba(255, 218, 137, .28), transparent 17rem),
+        radial-gradient(circle at 13% 24%, rgba(159, 198, 214, .13), transparent 16rem),
+        radial-gradient(circle at 74% 42%, rgba(255, 187, 85, .12), transparent 16rem),
+        linear-gradient(90deg, rgba(0, 0, 0, .2), transparent 18%, transparent 78%, rgba(0, 0, 0, .32)) !important;
+    }
+
+    .player-bonnie::before {
+      bottom: -7px;
+      width: 96%;
+      height: 18px;
+      background:
+        radial-gradient(ellipse, rgba(0, 0, 0, .54), rgba(0, 0, 0, .22) 55%, transparent 78%),
+        radial-gradient(ellipse at 50% 42%, rgba(71, 34, 13, .24), transparent 68%);
+      filter: blur(3.5px) !important;
+      opacity: .94;
+      transform: translateX(-50%) scaleX(1.38);
+    }
+
+    .player-bonnie::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -2px;
+      width: 58%;
+      height: 8px;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(58, 27, 10, .36), rgba(0, 0, 0, .12) 58%, transparent 78%);
+      filter: blur(1.4px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .player-bonnie.walking::after {
+      animation: bonnieShadowPulse 620ms ease-in-out infinite;
+    }
+
+    .hotspot::after {
+      opacity: 0;
+      transform: translateX(-50%) translateY(6px);
+      transition: opacity 240ms ease, transform 240ms ease, box-shadow 240ms ease;
+    }
+
+    .hotspot.nearby:not(.collected)::after {
+      opacity: .86 !important;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .hotspot:hover:not(.collected)::before,
+    .hotspot:focus-visible:not(.collected)::before,
+    #room-shop .hotspot:hover:not(.collected)::before,
+    #room-shop .hotspot:focus-visible:not(.collected)::before {
+      animation: v16HotspotGlowPulse 1.7s ease-in-out infinite;
+      box-shadow:
+        0 0 16px rgba(255, 226, 130, .66),
+        0 0 34px rgba(255, 183, 62, .22),
+        inset 0 0 12px rgba(255, 244, 205, .18);
+    }
+
+    @keyframes v16DustFloat {
+      0% { background-position: 0 0, 20px 80px, 70px 30px, 30px 120px; transform: translate3d(0, 0, 0); }
+      100% { background-position: 120px -260px, -110px -300px, 150px -240px, -150px -340px; transform: translate3d(.3%, -1.4%, 0); }
+    }
+
+    @keyframes v16HangingSway {
+      from { transform: rotate(-.8deg) translateY(0); }
+      to { transform: rotate(.9deg) translateY(2px); }
+    }
+
+    @keyframes v16HotspotGlowPulse {
+      0%, 100% { transform: scale(1.02); opacity: .92; }
+      50% { transform: scale(1.12); opacity: 1; }
+    }
+
   </style>
 </head>
 <body>
@@ -4694,6 +4953,13 @@
 
         <div id="scene-panel" class="scene-panel" data-room="shop" aria-label="A warmly lit antique shop mystery scene">
           <div id="hover-description" class="hover-description" aria-live="polite"></div>
+          <div class="foreground-depth-layer" aria-hidden="true">
+            <span class="foreground-shelf foreground-shelf-left"></span>
+            <span class="foreground-shelf foreground-shelf-right"></span>
+            <span class="foreground-hanging foreground-hanging-left"></span>
+            <span class="foreground-hanging foreground-hanging-right"></span>
+            <span class="foreground-floor-shadow"></span>
+          </div>
           <div id="room-shop" class="room active" data-room-tone="Original antique shop plate" aria-label="Main Antique Shop">
             <div class="background-art" aria-hidden="true">
               <img
@@ -4899,7 +5165,7 @@
     </div>
 
     <footer>
-      Version 15
+      Version 16
     </footer>
   </div>
 
