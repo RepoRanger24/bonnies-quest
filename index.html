@@ -3846,6 +3846,122 @@
       opacity: .82;
     }
 
+
+    /* Version 12 playtest fixes: keep the existing top-panel layout, prioritize the
+       realistic asset plates, keep the room warmly brighter, and make interactions
+       visible only on hover/focus instead of permanent marker boxes. */
+    .dialogue-portrait-asset {
+      inset: .18rem;
+      border-radius: 9px;
+    }
+
+    .dialogue-portrait-asset img {
+      object-fit: contain !important;
+      object-position: center center !important;
+      transform: scale(.94);
+      filter: saturate(1.04) contrast(1.04) brightness(1.06);
+    }
+
+    .background-art img,
+    #room-shop .background-art img,
+    #room-storage .background-art img,
+    #room-office .background-art img,
+    .room.realistic-room-loaded .background-art img {
+      filter: saturate(1.14) contrast(1.12) brightness(1.19) sepia(.045) !important;
+    }
+
+    .scene-panel::before {
+      background:
+        radial-gradient(circle at 48% 10%, rgba(255, 222, 143, .18), transparent 18rem),
+        radial-gradient(circle at 34% 58%, rgba(255, 184, 88, .1), transparent 15rem),
+        linear-gradient(180deg, rgba(255, 218, 137, .055), rgba(0, 0, 0, .005)) !important;
+      box-shadow: inset 0 0 22px rgba(255, 205, 118, .055) !important;
+    }
+
+    #room-shop .asset-prop.gramophone-art,
+    #room-shop .asset-prop.evelyn-photo-art {
+      display: none;
+    }
+
+    #room-shop .asset-prop.brass-key-art {
+      left: 72%;
+      top: 66%;
+      right: auto;
+      bottom: auto;
+      width: 70px;
+      height: 32px;
+      z-index: 4;
+      transform: rotate(-7deg);
+      opacity: .88;
+      filter: saturate(1.02) contrast(1.08) brightness(1.06) drop-shadow(0 7px 7px rgba(0, 0, 0, .34)) !important;
+    }
+
+    .player-bonnie {
+      --bonnie-scale: .5;
+      z-index: 6;
+      width: 118px;
+      height: 208px;
+    }
+
+    .player-bonnie::before {
+      bottom: -1px;
+      width: 72%;
+      height: 10px;
+      background: radial-gradient(ellipse, rgba(0, 0, 0, .34), rgba(0, 0, 0, .14) 54%, transparent 76%);
+      filter: blur(2.5px) !important;
+      opacity: .9;
+    }
+
+    .asset-marker {
+      opacity: 0 !important;
+      animation: none !important;
+    }
+
+    .hotspot,
+    #room-shop .hotspot {
+      z-index: 8;
+      border: 0 !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      opacity: 1 !important;
+      cursor: pointer;
+    }
+
+    .hotspot:not(.clue-button)::before,
+    #room-shop .hotspot::before,
+    .hotspot.nearby:not(.collected)::before,
+    .hotspot.nearby:not(.collected)::after {
+      opacity: 0;
+      animation: none !important;
+    }
+
+    .hotspot:hover:not(.collected)::before,
+    .hotspot:focus-visible:not(.collected)::before,
+    #room-shop .hotspot:hover::before,
+    #room-shop .hotspot:focus-visible::before {
+      width: 24px;
+      height: 24px;
+      inset: calc(50% - 12px);
+      border: 1px solid rgba(255, 232, 156, .74);
+      background: radial-gradient(circle, rgba(255, 244, 198, .36), rgba(255, 207, 95, .13) 58%, transparent 76%);
+      box-shadow: 0 0 13px rgba(255, 222, 122, .52), 0 0 28px rgba(255, 182, 64, .18);
+      opacity: .94;
+      transform: scale(1);
+    }
+
+    .hotspot:hover::after,
+    .hotspot:focus-visible::after {
+      opacity: 1;
+    }
+
+    .hotspot.winding-key-hotspot {
+      left: 69.8%;
+      top: 62.4%;
+      width: 12.6%;
+      height: 12%;
+      border-radius: 40% 50% 42% 48%;
+    }
+
     @media (max-width: 860px) {
       .quest-layout,
       .quest-layout.active {
@@ -3953,7 +4069,7 @@
                 class="asset-img room-plate-img"
                 src="assets/backgrounds/main-antique-shop.svg"
                 data-fallback-src="assets/backgrounds/main-antique-shop.svg"
-                data-realistic-candidates="assets/backgrounds/main-antique-shop.webp,assets/backgrounds/main-antique-shop.jpg,assets/backgrounds/main-antique-shop.png"
+                data-realistic-candidates="assets/backgrounds/main-antique-shop.svg"
                 alt=""
               />
             </div>
@@ -3980,7 +4096,7 @@
           </div>
 
           <div id="room-storage" class="room" data-room-tone="Original storage room plate" aria-label="Back Storage Room">
-            <div class="background-art" aria-hidden="true"><img class="asset-img room-plate-img" src="assets/backgrounds/storage-room.svg" data-fallback-src="assets/backgrounds/storage-room.svg" data-realistic-candidates="assets/backgrounds/storage-room.webp,assets/backgrounds/storage-room.jpg,assets/backgrounds/storage-room.png" alt="" /></div>
+            <div class="background-art" aria-hidden="true"><img class="asset-img room-plate-img" src="assets/backgrounds/storage-room.svg" data-fallback-src="assets/backgrounds/storage-room.svg" data-realistic-candidates="assets/backgrounds/storage-room.svg" alt="" /></div>
             <div class="scene-fallback" aria-hidden="true">
             <div class="flicker-bulb" aria-hidden="true"></div>
             <div class="staircase" aria-hidden="true"></div>
@@ -4019,7 +4135,7 @@
           </div>
 
           <div id="room-office" class="room" data-room-tone="Original upstairs office plate" aria-label="Upstairs Office">
-            <div class="background-art" aria-hidden="true"><img class="asset-img room-plate-img" src="assets/backgrounds/upstairs-office.svg" data-fallback-src="assets/backgrounds/upstairs-office.svg" data-realistic-candidates="assets/backgrounds/upstairs-office.webp,assets/backgrounds/upstairs-office.jpg,assets/backgrounds/upstairs-office.png" alt="" /></div>
+            <div class="background-art" aria-hidden="true"><img class="asset-img room-plate-img" src="assets/backgrounds/upstairs-office.svg" data-fallback-src="assets/backgrounds/upstairs-office.svg" data-realistic-candidates="assets/backgrounds/upstairs-office.svg" alt="" /></div>
             <div class="scene-fallback" aria-hidden="true">
             <div class="window" aria-hidden="true"></div>
             <div class="portrait" aria-hidden="true"></div>
@@ -4152,7 +4268,7 @@
     </div>
 
     <footer>
-      Version 12: top clue deck, brightened realistic room plates, grounded Bonnie sprite, and cleaner warm hotspot glints.
+      Version 12
     </footer>
   </div>
 
@@ -5358,11 +5474,7 @@
           }
           break;
         case 'windingKey':
-          if (!collected.has('musicBoxSymbol')) {
-            setNarration('A pinprick of brass glints beneath Mabel’s counter, but Bonnie does not yet know why such a tiny key matters. The music box and Evelyn’s photograph should come first.');
-          } else {
-            collectItem('windingKey', 'Bonnie slides her fingers under the counter lip and frees a tiny brass winding key. It is warm from the lamp and sized exactly for the rosewood music box.', button);
-          }
+          collectItem('windingKey', 'Bonnie walks to the counter, reaches beneath the shadowed lip, and frees a tiny brass winding key. It slips safely into her satchel for the rosewood music box.', button);
           break;
         case 'storageLamp':
           if (visits < 2 && !collected.has('lantern')) {
