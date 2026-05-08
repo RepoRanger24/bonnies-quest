@@ -3748,6 +3748,116 @@
       }
     }
 
+
+    /* Final requested UI pass: keep the imported realistic backgrounds, move the
+       clue deck above only the main scene, and leave the right sidebar full-height. */
+    .quest-layout {
+      grid-template-columns: minmax(0, 1fr) 286px;
+      grid-template-rows: 166px minmax(0, 1fr);
+      grid-template-areas:
+        "top sidebar"
+        "scene sidebar";
+    }
+
+    .top-panels {
+      grid-template-columns: minmax(180px, .9fr) minmax(260px, 1.42fr) minmax(260px, 1.32fr);
+      align-items: stretch;
+    }
+
+    .side-panel {
+      grid-area: sidebar;
+      min-height: 0;
+    }
+
+    .scene-panel {
+      grid-area: scene;
+    }
+
+    /* Brighten the actual room plates 10-15% while retaining amber antique warmth. */
+    .background-art img,
+    #room-shop .background-art img,
+    #room-storage .background-art img,
+    #room-office .background-art img,
+    .room.realistic-room-loaded .background-art img {
+      filter: saturate(1.12) contrast(1.1) brightness(1.16) sepia(.045) !important;
+    }
+
+    .scene-panel::before {
+      background:
+        radial-gradient(circle at 50% 10%, rgba(255, 218, 132, .22), transparent 20rem),
+        radial-gradient(circle at 20% 54%, rgba(255, 185, 88, .12), transparent 16rem),
+        linear-gradient(180deg, rgba(255, 218, 137, .075), rgba(35, 18, 8, .015)) !important;
+      mix-blend-mode: screen !important;
+      box-shadow: inset 0 0 30px rgba(255, 205, 118, .08) !important;
+    }
+
+    /* Bonnie is slightly smaller, planted lower on the walk line, and grounded by
+       a soft floor contact shadow that belongs to the photographic room. */
+    .player-bonnie {
+      width: 126px;
+      height: 220px;
+      filter:
+        drop-shadow(8px 12px 9px rgba(0, 0, 0, .28))
+        drop-shadow(-3px -4px 6px rgba(238, 197, 118, .12))
+        saturate(1.03) contrast(1.05) brightness(1.05) !important;
+    }
+
+    .player-bonnie::before {
+      bottom: -2px;
+      width: 76%;
+      height: 12px;
+      background: radial-gradient(ellipse, rgba(0, 0, 0, .32), rgba(0, 0, 0, .12) 56%, transparent 76%);
+      filter: blur(2px) !important;
+      transform: translateX(-50%) scaleX(1.18);
+    }
+
+    .player-bonnie .sprite-art img {
+      filter:
+        saturate(1.03) contrast(1.05) brightness(1.05) sepia(.015)
+        drop-shadow(5px 9px 7px rgba(0, 0, 0, .22)) !important;
+    }
+
+    /* Smaller, cleaner warm hotspot glints: visible, not cartoonish. */
+    .hotspot:not(.clue-button)::before,
+    #room-shop .hotspot::before {
+      width: 16px;
+      height: 16px;
+      inset: calc(50% - 8px);
+      border-radius: 50%;
+      transition: opacity 160ms ease, transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    }
+
+    .hotspot.nearby:not(.collected)::before,
+    .hotspot:hover:not(.collected)::before,
+    .hotspot:focus-visible:not(.collected)::before,
+    #room-shop .hotspot:hover::before,
+    #room-shop .hotspot:focus-visible::before {
+      width: 22px;
+      height: 22px;
+      inset: calc(50% - 11px);
+      border: 1px solid rgba(255, 229, 150, .72);
+      background: radial-gradient(circle, rgba(255, 242, 190, .32) 0 28%, rgba(255, 207, 95, .12) 58%, transparent 76%);
+      box-shadow: 0 0 12px rgba(255, 219, 118, .48), 0 0 24px rgba(255, 182, 64, .16);
+      opacity: .92;
+      transform: scale(1);
+    }
+
+    .hotspot.nearby:not(.collected)::after {
+      opacity: .82;
+    }
+
+    @media (max-width: 860px) {
+      .quest-layout,
+      .quest-layout.active {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto minmax(520px, 62vh) auto;
+        grid-template-areas:
+          "top"
+          "scene"
+          "sidebar";
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -4042,7 +4152,7 @@
     </div>
 
     <footer>
-      Version 11: image-based point-and-click room scenes with invisible hotspots, layered Bonnie sprite animation, and polished dark-gold UI.
+      Version 12: top clue deck, brightened realistic room plates, grounded Bonnie sprite, and cleaner warm hotspot glints.
     </footer>
   </div>
 
