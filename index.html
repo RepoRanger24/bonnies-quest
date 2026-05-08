@@ -2591,7 +2591,8 @@
     .hotspot.shop-shelves { left: 4.2%; top: 16.2%; width: 67.8%; height: 43.8%; border-radius: 12px; }
     .hotspot.shop-window-hotspot { left: 6.2%; top: 31.2%; width: 13.4%; height: 22.4%; border-radius: 12px; }
     .hotspot.shop-rug { left: 14.8%; top: 76.8%; width: 42%; height: 13.2%; border-radius: 50%; }
-    .hotspot.hidden-counter-mark { left: 70.8%; top: 63.8%; width: 5%; height: 4.8%; border-radius: 50%; opacity: 1; }
+    .hotspot.hidden-counter-mark,
+    .hotspot.winding-key-hotspot { left: 69.6%; top: 62.2%; width: 7.4%; height: 7%; border-radius: 50%; opacity: 1; }
 
     /* Secondary shop hotspots remain available, but they also map onto the single background image. */
     .hotspot.clue-button { left: 58%; top: 62%; width: 9%; height: 7%; border-radius: 50%; }
@@ -2658,10 +2659,10 @@
     }
 
     .hotspot.grandfather-clock { left: 44.4%; top: 21.8%; width: 8.4%; height: 36.4%; border-radius: 45% 45% 14% 14%; }
-    .hotspot.music-box-hotspot { left: 52.2%; top: 53.2%; width: 9.6%; height: 8.6%; border-radius: 12px; }
-    .hotspot.evelyn-photo-hotspot { left: 77.1%; top: 13.2%; width: 8.4%; height: 18.4%; border-radius: 10px; }
+    .hotspot.music-box-hotspot { left: 51.6%; top: 52.6%; width: 10.8%; height: 9.8%; border-radius: 12px; }
+    .hotspot.evelyn-photo-hotspot { left: 76.6%; top: 12.6%; width: 9.4%; height: 19.6%; border-radius: 10px; }
     .hotspot.front-counter-hotspot { left: 62.2%; top: 61.8%; width: 31.5%; height: 17.5%; border-radius: 16px; }
-    .hotspot.locked-drawer-hotspot { left: 74.1%; top: 70.4%; width: 13.4%; height: 8.2%; border-radius: 9px; }
+    .hotspot.locked-drawer-hotspot { left: 73.4%; top: 69.7%; width: 14.8%; height: 9.4%; border-radius: 9px; }
     .hotspot.shop-window-hotspot { left: 6.2%; top: 31.2%; width: 13.4%; height: 22.4%; border-radius: 12px; }
     .hotspot.shop-lamp-hotspot { left: 34.6%; top: 46.2%; width: 8.4%; height: 15.2%; border-radius: 40% 40% 18% 18%; }
     .hotspot.shop-painting-hotspot { left: 6.8%; top: 9.2%; width: 28.2%; height: 15.8%; border-radius: 10px; }
@@ -3063,6 +3064,24 @@
       cursor: pointer;
     }
 
+    /* Important puzzle targets get the top interaction layer and a safer minimum touch area. */
+    .room > .hotspot,
+    #room-shop .hotspot,
+    .hotspot.important-hotspot {
+      z-index: 10;
+    }
+
+    .hotspot.important-hotspot {
+      min-width: 48px;
+      min-height: 42px;
+    }
+
+    #room-shop .hotspot.winding-key-hotspot {
+      z-index: 11;
+      min-width: 58px;
+      min-height: 46px;
+    }
+
     .hotspot:not(.clue-button)::before,
     #room-shop .hotspot::before {
       inset: calc(50% - 13px);
@@ -3274,10 +3293,15 @@
     }
 
     .hotspot.nearby:not(.collected)::before {
-      border-color: rgba(255, 225, 150, .14);
-      background: radial-gradient(circle, rgba(255, 236, 180, .16), rgba(255, 210, 112, .035) 60%, transparent 76%);
-      box-shadow: 0 0 10px rgba(255, 214, 116, .14);
-      opacity: .42;
+      border-color: rgba(255, 225, 150, .38);
+      background: radial-gradient(circle, rgba(255, 242, 194, .34), rgba(255, 210, 112, .09) 60%, transparent 76%);
+      box-shadow: 0 0 16px rgba(255, 218, 124, .34), 0 0 34px rgba(255, 205, 94, .12);
+      opacity: .78;
+    }
+
+    .hotspot.nearby:not(.collected)::after {
+      opacity: .9;
+      transform: translateX(-50%) translateY(0);
     }
 
     .hotspot:hover:not(.collected)::before,
@@ -3435,14 +3459,14 @@
             <span class="asset-marker mabel-marker" aria-hidden="true"><img src="assets/hotspot-marker.svg" alt="" /></span>
             <span class="asset-marker key-marker" aria-hidden="true"><img src="assets/hotspot-marker.svg" alt="" /></span>
             <button class="hotspot grandfather-clock" type="button" data-object="grandfatherClock" data-label="Grandfather clock" aria-label="Inspect the tall grandfather clock and brass pendulum">Inspect grandfather clock</button>
-            <button class="hotspot music-box-hotspot" type="button" data-object="shopMusicBox" data-label="Music box" aria-label="Inspect the rosewood music box on the shelf">Inspect music box</button>
-            <button class="hotspot evelyn-photo-hotspot" type="button" data-object="evelynPhotograph" data-label="Evelyn photo" aria-label="Inspect the framed photograph of Evelyn Blackwood">Inspect Evelyn photograph</button>
+            <button class="hotspot music-box-hotspot important-hotspot" type="button" data-object="shopMusicBox" data-label="Music box" aria-label="Inspect the rosewood music box on the shelf">Inspect music box</button>
+            <button class="hotspot evelyn-photo-hotspot important-hotspot" type="button" data-object="evelynPhotograph" data-label="Evelyn photo" aria-label="Inspect the framed photograph of Evelyn Blackwood">Inspect Evelyn photograph</button>
             <button class="hotspot front-counter-hotspot" type="button" data-object="frontCounter" data-label="Mabel’s counter" aria-label="Inspect Mabel's polished front counter and display case">Inspect Mabel's counter</button>
-            <button class="hotspot locked-drawer-hotspot" type="button" data-object="lockedDrawer" data-label="Locked drawer" aria-label="Inspect the locked drawer below Mabel's counter">Inspect locked drawer</button>
+            <button class="hotspot locked-drawer-hotspot important-hotspot" type="button" data-object="lockedDrawer" data-label="Locked drawer" aria-label="Inspect the locked drawer below Mabel's counter">Inspect locked drawer</button>
             <button class="hotspot shop-window-hotspot" type="button" data-object="shopWindow" data-label="Window" aria-label="Inspect the rain-streaked front shop window">Inspect window</button>
             <button class="hotspot shop-lamp-hotspot" type="button" data-object="shopLamp" data-label="Antique lamp" aria-label="Inspect the glowing antique lamp">Inspect antique lamp</button>
             <button class="hotspot shop-painting-hotspot" type="button" data-object="framedPainting" data-label="Framed painting" aria-label="Inspect the large framed painting over the left wall">Inspect framed painting</button>
-            <button class="hotspot winding-key-hotspot" type="button" data-object="windingKey" data-label="Tiny key" aria-label="Search the lamplit counter edge for a hidden winding key">Search hidden key</button>
+            <button class="hotspot winding-key-hotspot important-hotspot" type="button" data-object="windingKey" data-label="Tiny key" aria-label="Search the lamplit counter edge for a hidden winding key">Search hidden key</button>
             <button class="hotspot mabel-hotspot" type="button" data-dialogue="mabel" data-label="Mabel" aria-label="Speak with Mabel about the Hollow Oak clues">Talk to Mabel</button>
           </div>
 
@@ -3464,8 +3488,8 @@
             <span class="asset-marker trunk-marker" aria-hidden="true"><img src="assets/hotspot-marker.svg" alt="" /></span>
             <span class="asset-marker stairs-marker" aria-hidden="true"><img src="assets/hotspot-marker.svg" alt="" /></span>
 
-            <button class="hotspot receipt" type="button" data-label="Receipt" data-object="oldReceipt" aria-label="Inspect the curled old receipt on the storage shelf">Inspect receipt</button>
-            <button class="hotspot torn-photo" type="button" data-label="Photo" data-object="tornPhotograph" aria-label="Inspect the torn photograph wedged between boxes">Inspect photograph</button>
+            <button class="hotspot receipt important-hotspot" type="button" data-label="Receipt" data-object="oldReceipt" aria-label="Inspect the curled old receipt on the storage shelf">Inspect receipt</button>
+            <button class="hotspot torn-photo important-hotspot" type="button" data-label="Photo" data-object="tornPhotograph" aria-label="Inspect the torn photograph wedged between boxes">Inspect photograph</button>
             <button class="hotspot false-compass" type="button" data-label="Compass" data-object="falseCompass" aria-label="Inspect a tarnished compass near the floor">Inspect compass</button>
             <button class="hotspot trunk-lock" type="button" data-label="Trunk" data-object="lockedTrunk" aria-label="Inspect the brass-bound storage trunk">Inspect trunk</button>
             <button class="hotspot storage-lamp" type="button" data-label="Light" data-object="storageLamp" aria-label="Inspect the flickering storage room light">Inspect light</button>
@@ -3482,7 +3506,7 @@
             <button class="hotspot blackwood-crate-hotspot" type="button" data-object="blackwoodCrate" data-label="B.W. crate" aria-label="Inspect a Blackwood-stamped crate">Inspect Blackwood crate</button>
             <button class="hotspot photo-envelope-hotspot" type="button" data-object="photoEnvelope" data-label="Envelope" aria-label="Inspect a brittle envelope of old photographs">Inspect photo envelope</button>
             <button class="hotspot stair-banister-hotspot" type="button" data-object="stairBanister" data-label="Banister" aria-label="Inspect the carved stair banister">Inspect banister</button>
-            <button class="hotspot dark-storage-corner" type="button" data-object="darkStorageCorner" data-label="Dark corner" aria-label="Inspect a dark storage corner behind the trunk">Inspect dark corner</button>
+            <button class="hotspot dark-storage-corner important-hotspot" type="button" data-object="darkStorageCorner" data-label="Dark corner" aria-label="Inspect a dark storage corner behind the trunk">Inspect dark corner</button>
           </div>
 
           <div id="room-office" class="room" data-room-tone="Original upstairs office plate" aria-label="Upstairs Office">
@@ -3503,8 +3527,8 @@
             <span class="asset-marker safe-marker" aria-hidden="true"><img src="assets/hotspot-marker.svg" alt="" /></span>
             <span class="asset-marker drawer-marker" aria-hidden="true"><img src="assets/hotspot-marker.svg" alt="" /></span>
 
-            <button class="hotspot wall-safe-hotspot" type="button" data-label="Safe" data-object="wallSafe" aria-label="Inspect the hidden wall safe behind the portrait">Inspect safe</button>
-            <button class="hotspot office-drawer-hotspot" type="button" data-label="Drawer" data-object="officeDrawer" aria-label="Try the locked upstairs office drawer">Inspect drawer</button>
+            <button class="hotspot wall-safe-hotspot important-hotspot" type="button" data-label="Safe" data-object="wallSafe" aria-label="Inspect the hidden wall safe behind the portrait">Inspect safe</button>
+            <button class="hotspot office-drawer-hotspot important-hotspot" type="button" data-label="Drawer" data-object="officeDrawer" aria-label="Try the locked upstairs office drawer">Inspect drawer</button>
             <button class="hotspot typewriter-hotspot" type="button" data-label="Typewriter" data-object="typewriter" aria-label="Inspect the old office typewriter">Inspect typewriter</button>
             <button class="hotspot portrait-hotspot" type="button" data-label="Portrait" data-object="officePortrait" aria-label="Inspect the stern portrait above the desk">Inspect portrait</button>
             <button class="hotspot office-window-hotspot" type="button" data-label="Window" data-object="officeWindow" aria-label="Look out the upstairs office window">Inspect window</button>
@@ -3513,14 +3537,14 @@
             <button class="hotspot desk-blotter-hotspot" type="button" data-object="deskBlotter" data-label="Blotter" aria-label="Inspect the ink-stained desk blotter">Inspect blotter</button>
             <button class="hotspot bookcase-ledgers-hotspot" type="button" data-object="officeLedgers" data-label="Ledgers" aria-label="Inspect the old ledgers on the desk shelf">Inspect ledgers</button>
             <button class="hotspot safe-plaque-hotspot" type="button" data-object="safePlaque" data-label="Plaque" aria-label="Inspect a small brass plaque near the safe">Inspect plaque</button>
-            <button class="hotspot office-floor-marks" type="button" data-object="officeFloorMarks" data-label="Floor marks" aria-label="Inspect scuff marks on the office floor">Inspect floor marks</button>
+            <button class="hotspot office-floor-marks important-hotspot" type="button" data-object="officeFloorMarks" data-label="Floor marks" aria-label="Inspect scuff marks on the office floor">Inspect floor marks</button>
             <button class="hotspot cabinet-doors-hotspot" type="button" data-object="cabinetDoors" data-label="Cabinet" aria-label="Inspect the lower cabinet doors">Inspect cabinet</button>
             <button class="hotspot hidden-desk-underside" type="button" data-object="hiddenDeskUnderside" data-label="Underside" aria-label="Inspect hidden writing under the desk lip">Inspect underside</button>
             <button class="hotspot rain-streaks-hotspot" type="button" data-object="rainStreaks" data-label="Rain" aria-label="Inspect the rain-streaked upstairs window details">Inspect rain streaks</button>
             <button class="hotspot blackwood-portrait-plaque" type="button" data-object="portraitPlaque" data-label="Nameplate" aria-label="Inspect the Blackwood portrait nameplate">Inspect nameplate</button>
             <button class="hotspot inkwell-hotspot" type="button" data-object="inkwell" data-label="Inkwell" aria-label="Inspect the antique inkwell on the desk">Inspect inkwell</button>
             <button class="hotspot safe-shadow-hotspot" type="button" data-object="safeShadow" data-label="Safe outline" aria-label="Inspect the faint safe outline behind the portrait">Inspect safe outline</button>
-            <button class="hotspot final-compartment-hotspot" type="button" data-object="finalCompartment" data-label="Wall seam" aria-label="Inspect a hidden wall compartment seam">Inspect wall seam</button>
+            <button class="hotspot final-compartment-hotspot important-hotspot" type="button" data-object="finalCompartment" data-label="Wall seam" aria-label="Inspect a hidden wall compartment seam">Inspect wall seam</button>
           </div>
 
           <div id="walk-target" class="walk-target" aria-hidden="true"></div>
@@ -3774,7 +3798,7 @@
         walkArea: { minX: 8, maxX: 92, minY: 73, maxY: 91 },
         blockers: [{ minX: 56, maxX: 93, minY: 70, maxY: 85 }],
         targets: {
-          grandfatherClock: { x: 48, y: 76 }, shopMusicBox: { x: 56, y: 80 }, evelynPhotograph: { x: 80, y: 78 }, frontCounter: { x: 68, y: 85 }, lockedDrawer: { x: 76, y: 86 }, shopWindow: { x: 18, y: 80 }, shopLamp: { x: 39, y: 80 }, framedPainting: { x: 22, y: 77 }, windingKey: { x: 39, y: 84 }, mabel: { x: 66, y: 84 }
+          grandfatherClock: { x: 48, y: 76 }, shopMusicBox: { x: 56, y: 80 }, evelynPhotograph: { x: 80, y: 78 }, frontCounter: { x: 68, y: 85 }, lockedDrawer: { x: 76, y: 86 }, shopWindow: { x: 18, y: 80 }, shopLamp: { x: 39, y: 80 }, framedPainting: { x: 22, y: 77 }, windingKey: { x: 70, y: 86 }, mabel: { x: 66, y: 84 }
         }
       },
       storage: {
@@ -4618,7 +4642,7 @@
       document.querySelectorAll('.room.active .hotspot').forEach((button) => {
         const center = hotspotCenter(button);
         const distance = Math.hypot(center.x - bonniePosition.x, center.y - bonniePosition.y);
-        button.classList.toggle('nearby', distance < 15);
+        button.classList.toggle('nearby', !button.classList.contains('collected') && distance < 18);
       });
     }
 
