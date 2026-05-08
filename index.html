@@ -1650,7 +1650,7 @@
       text-align: center;
     }
 
-    .bottom-panels {
+    .top-panels {
       grid-column: 1 / -1;
       min-height: 0;
       display: grid;
@@ -1658,7 +1658,7 @@
       gap: 0.48rem;
     }
 
-    .bottom-panels .info-box {
+    .top-panels .info-box {
       min-height: 0;
       overflow: hidden;
     }
@@ -2424,7 +2424,7 @@
 
     .inventory-list strong { color: #ffd98b; }
 
-    .bottom-panels {
+    .top-panels {
       grid-template-columns: .95fr 1.5fr 1.45fr;
     }
 
@@ -3558,6 +3558,196 @@
     .hotspot.mabel-hotspot { left: 62%; top: 39%; width: 13.4%; height: 27.6%; }
     .hotspot.winding-key-hotspot { left: 69.2%; top: 62%; width: 8%; height: 7.4%; }
 
+
+    /* Reference layout direction: place the information deck above the room while
+       preserving the right investigation sidebar and photographic antique rooms. */
+    .game-shell {
+      height: min(calc(100vh - 16px), 790px);
+    }
+
+    .quest-layout {
+      grid-template-columns: minmax(0, 1fr) 286px;
+      grid-template-rows: 158px minmax(0, 1fr);
+      gap: .52rem;
+      grid-template-areas:
+        "top top"
+        "scene sidebar";
+    }
+
+    .top-panels {
+      grid-area: top;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: .95fr 1.5fr 1.45fr;
+      gap: .52rem;
+    }
+
+    .top-panels .info-box {
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .scene-panel {
+      grid-area: scene;
+      min-height: 0;
+    }
+
+    .side-panel {
+      grid-area: sidebar;
+    }
+
+    /* Warmer, cleaner antique UI: lighter panels, stronger gold edges, and larger
+       readable text without adding heavy full-screen overlays. */
+    .scene-panel,
+    .side-panel,
+    .info-box {
+      border-color: rgba(218, 180, 98, .82);
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 230, 166, .12),
+        0 10px 24px rgba(0, 0, 0, .32);
+    }
+
+    .info-box {
+      background:
+        linear-gradient(180deg, rgba(52, 30, 17, .88), rgba(25, 14, 9, .9)),
+        radial-gradient(circle at 18% 0, rgba(240, 183, 91, .24), transparent 12rem);
+      padding: .62rem;
+      line-height: 1.32;
+    }
+
+    .info-box h3,
+    .side-panel h2,
+    .dialogue-content h3 {
+      margin-bottom: .34rem;
+      color: #ffd36f;
+      text-shadow: 0 1px 8px rgba(0, 0, 0, .42);
+    }
+
+    .how-to-list,
+    .dialogue-content p,
+    .side-panel p,
+    .journal-list,
+    .inventory-hint {
+      color: #f1dbad;
+    }
+
+    .how-to-list {
+      gap: .16rem;
+      font-size: .72rem;
+      line-height: 1.34;
+    }
+
+    .dialogue-content p {
+      font-size: .76rem;
+      line-height: 1.36;
+    }
+
+    .side-panel p,
+    .journal-list,
+    .inventory-list li {
+      font-size: .72rem;
+      line-height: 1.28;
+    }
+
+    .inventory-hint {
+      font-size: .66rem !important;
+      line-height: 1.3;
+    }
+
+    .evidence-panel .evidence-board {
+      min-height: 106px;
+    }
+
+    .evidence-board {
+      background:
+        radial-gradient(circle at 42% 35%, rgba(185, 89, 40, .18), transparent 7rem),
+        repeating-linear-gradient(105deg, rgba(255, 220, 148, .06) 0 1px, transparent 1px 12px),
+        linear-gradient(180deg, rgba(95, 57, 28, .92), rgba(42, 23, 13, .94));
+    }
+
+    /* Keep realistic room plates, but brighten them with warm practical lamplight
+       instead of dark grading or mystery fog. */
+    .background-art img,
+    #room-shop .background-art img,
+    #room-storage .background-art img,
+    #room-office .background-art img,
+    .room.realistic-room-loaded .background-art img {
+      filter: saturate(1.1) contrast(1.06) brightness(1.13) sepia(.04) !important;
+    }
+
+    .scene-panel::before {
+      content: "" !important;
+      display: block !important;
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 50% 8%, rgba(255, 216, 126, .2), transparent 20rem),
+        radial-gradient(circle at 18% 50%, rgba(255, 180, 83, .1), transparent 16rem),
+        linear-gradient(180deg, rgba(255, 210, 118, .06), rgba(0, 0, 0, .04));
+      mix-blend-mode: screen !important;
+      opacity: 1 !important;
+      box-shadow: inset 0 0 36px rgba(255, 197, 101, .08) !important;
+    }
+
+    .scene-panel::after,
+    .background-art::before,
+    .background-art::after,
+    .moving-shadows,
+    .rain-ambience,
+    .hallway-shadow {
+      content: none !important;
+      display: none !important;
+    }
+
+    /* Brighter hotspot glows: still tasteful, but visible enough to guide players. */
+    .hotspot.nearby:not(.collected)::before,
+    .hotspot:hover:not(.collected)::before,
+    .hotspot:focus-visible:not(.collected)::before,
+    #room-shop .hotspot:hover::before,
+    #room-shop .hotspot:focus-visible::before {
+      width: 32px;
+      height: 32px;
+      inset: calc(50% - 16px);
+      border: 2px solid rgba(255, 232, 149, .82);
+      background: radial-gradient(circle, rgba(255, 244, 196, .42), rgba(255, 204, 86, .18) 58%, transparent 74%);
+      box-shadow:
+        0 0 18px rgba(255, 220, 118, .72),
+        0 0 44px rgba(255, 184, 68, .28),
+        inset 0 0 16px rgba(255, 247, 213, .22);
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .hotspot::after {
+      color: #ffe9b5;
+      background: rgba(34, 18, 10, .94);
+      border-color: rgba(235, 181, 83, .9);
+      font-size: .72rem;
+      letter-spacing: .03em;
+    }
+
+    @media (max-width: 860px) {
+      .quest-layout,
+      .quest-layout.active {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto minmax(520px, 62vh) auto;
+        grid-template-areas:
+          "top"
+          "scene"
+          "sidebar";
+      }
+
+      .top-panels {
+        grid-template-columns: 1fr;
+      }
+
+      .scene-panel {
+        min-height: 520px;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -3593,6 +3783,58 @@
       </section>
 
       <section id="quest-screen" class="screen quest-layout" aria-labelledby="location-heading">
+        <section class="top-panels" aria-label="How to play, dialogue, and evidence board">
+          <div class="info-box how-to-card">
+            <h3>How to Play</h3>
+            <ul class="how-to-list">
+              <li>Click the floor to walk Bonnie around the room.</li>
+              <li>Move near objects or hover the scene to reveal subtle clue glints.</li>
+              <li>Examine everything; some clues unlock puzzles.</li>
+              <li>Select inventory items to inspect, combine, or use them on hotspots.</li>
+              <li>Some antiques need repeated examinations before they reveal a clue.</li>
+              <li>Use Rooms, Inventory, Notes, Save/Load, and Sound as you investigate.</li>
+            </ul>
+            <button id="game-directions-button" class="directions-inline" type="button">Full Guide</button>
+          </div>
+
+          <div class="info-box bonnie-dialogue-panel">
+            <div class="bonnie-cameo" aria-hidden="true">
+              <div class="dialogue-portrait-asset"><img class="asset-img" src="assets/ui/bonnie-portrait.svg" alt="" /></div>
+              <div class="bonnie">
+                <div class="bonnie-portrait"></div>
+                <div class="bonnie-body"></div>
+                <span class="bonnie-satchel"></span>
+                <span class="bonnie-boot left"></span>
+                <span class="bonnie-boot right"></span>
+              </div>
+            </div>
+            <div class="dialogue-content">
+              <h3>Bonnie</h3>
+              <p id="story-text">
+                Bonnie adjusts her green field coat beneath the amber shop lamps.
+                "Every old thing has a story," she says. "We just have to listen carefully."
+              </p>
+              <div class="dialogue-box" id="dialogue-box" hidden>
+                <h3 id="speaker-name">Mabel</h3>
+                <p id="dialogue-text"></p>
+                <div id="dialogue-choices" class="dialogue-choices"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-box evidence-panel">
+            <h3>Evidence Board</h3>
+            <div id="evidence-board" class="evidence-board" aria-label="Evidence board showing visual links between discovered clues">
+              <span class="evidence-connection c1"></span><span class="evidence-connection c2"></span><span class="evidence-connection c3"></span><span class="evidence-connection c4"></span>
+              <button type="button" class="evidence-node" data-evidence="evelynBlackwood">Evelyn Blackwood</button>
+              <button type="button" class="evidence-node" data-evidence="hollowOak">Hollow Oak Estate</button>
+              <button type="button" class="evidence-node" data-evidence="musicBox">music box</button>
+              <button type="button" class="evidence-node" data-evidence="tornPhotograph">torn photograph</button>
+              <button type="button" class="evidence-node" data-evidence="hiddenSymbol">hidden symbol</button>
+            </div>
+          </div>
+        </section>
+
         <div id="scene-panel" class="scene-panel" data-room="shop" aria-label="A warmly lit antique shop mystery scene">
           <div id="hover-description" class="hover-description" aria-live="polite"></div>
           <div id="room-shop" class="room active" data-room-tone="Original antique shop plate" aria-label="Main Antique Shop">
@@ -3761,57 +4003,6 @@
           </div>
         </aside>
 
-        <section class="bottom-panels" aria-label="How to play, dialogue, and evidence board">
-          <div class="info-box how-to-card">
-            <h3>How to Play</h3>
-            <ul class="how-to-list">
-              <li>Click the floor to walk Bonnie around the room.</li>
-              <li>Move near objects or hover the scene to reveal subtle clue glints.</li>
-              <li>Examine everything; some clues unlock puzzles.</li>
-              <li>Select inventory items to inspect, combine, or use them on hotspots.</li>
-              <li>Some antiques need repeated examinations before they reveal a clue.</li>
-              <li>Use Rooms, Inventory, Notes, Save/Load, and Sound as you investigate.</li>
-            </ul>
-            <button id="game-directions-button" class="directions-inline" type="button">Full Guide</button>
-          </div>
-
-          <div class="info-box bonnie-dialogue-panel">
-            <div class="bonnie-cameo" aria-hidden="true">
-              <div class="dialogue-portrait-asset"><img class="asset-img" src="assets/ui/bonnie-portrait.svg" alt="" /></div>
-              <div class="bonnie">
-                <div class="bonnie-portrait"></div>
-                <div class="bonnie-body"></div>
-                <span class="bonnie-satchel"></span>
-                <span class="bonnie-boot left"></span>
-                <span class="bonnie-boot right"></span>
-              </div>
-            </div>
-            <div class="dialogue-content">
-              <h3>Bonnie</h3>
-              <p id="story-text">
-                Bonnie adjusts her green field coat beneath the amber shop lamps.
-                "Every old thing has a story," she says. "We just have to listen carefully."
-              </p>
-              <div class="dialogue-box" id="dialogue-box" hidden>
-                <h3 id="speaker-name">Mabel</h3>
-                <p id="dialogue-text"></p>
-                <div id="dialogue-choices" class="dialogue-choices"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="info-box evidence-panel">
-            <h3>Evidence Board</h3>
-            <div id="evidence-board" class="evidence-board" aria-label="Evidence board showing visual links between discovered clues">
-              <span class="evidence-connection c1"></span><span class="evidence-connection c2"></span><span class="evidence-connection c3"></span><span class="evidence-connection c4"></span>
-              <button type="button" class="evidence-node" data-evidence="evelynBlackwood">Evelyn Blackwood</button>
-              <button type="button" class="evidence-node" data-evidence="hollowOak">Hollow Oak Estate</button>
-              <button type="button" class="evidence-node" data-evidence="musicBox">music box</button>
-              <button type="button" class="evidence-node" data-evidence="tornPhotograph">torn photograph</button>
-              <button type="button" class="evidence-node" data-evidence="hiddenSymbol">hidden symbol</button>
-            </div>
-          </div>
-        </section>
       </section>
     </main>
 
